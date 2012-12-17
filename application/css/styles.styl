@@ -1,0 +1,124 @@
+@import url( "http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css" )
+
+.right
+  float right
+
+.left
+  float left
+
+.clearfix:after
+  visibility hidden
+  display block
+  font-size 0
+  content " "
+  clear both
+  height 0
+  
+.clearfix
+  display inline-block
+  clear both
+  
+/* start commented backslash hack \*/
+* html .clearfix
+  height 1%
+
+.group
+  display block
+/* close commented backslash hack */
+
+
+.stretch
+  width 100%
+  position relative
+
+.center
+  width 960px
+  margin 0 auto
+  position relative
+
+
+
+
+
+/*    ////////////////////////////////////////////////////////////////////////////////  */
+  
+//                                           $MIXINS
+
+/*    ////////////////////////////////////////////////////////////////////////////////  */
+
+
+
+
+
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  -ms-{prop} args
+  -o-{prop} args
+  {prop} args
+
+border-radius()
+  vendor( 'border-radius' , arguments )
+
+appearance()
+  vendor( 'appearance' , arguments )
+
+Gradient(startPoint, startColor, startInterval, endColor, endInterval, deprecatedWebkitStartPoint = false, deprecatedWebkitEndPoint = false)
+  background-color startColor
+  if deprecatedWebkitStartPoint && deprecatedWebkitEndPoint
+    background-image -webkit-gradient(linear, deprecatedWebkitStartPoint, deprecatedWebkitEndPoint, color-stop(startInterval, startColor), color-stop(endInterval, endColor))
+  background-image -webkit-linear-gradient(startPoint, startColor startInterval, endColor endInterval)
+  background-image -moz-linear-gradient(startPoint, startColor startInterval, endColor endInterval)
+  background-image -ms-linear-gradient(startPoint, startColor startInterval, endColor endInterval)
+  background-image -o-linear-gradient(startPoint, startColor startInterval, endColor endInterval)
+  background-image linear-gradient(startPoint, startColor startInterval, endColor endInterval)
+
+text-shadow( color , mode = darken )
+  color color
+  text-shadow 1px 1px 0px mode( color , 35% )
+
+
+/*  DEFINE COLORS  */
+
+red = #a52027
+green = #6bc5b9
+black = #353636
+blue = #425b63
+lime = #dbe259
+white = #ffffff
+
+
+
+// End of General Classes
+
+// Start of Key Structure Definitions
+
+body,
+html,
+#wrapper
+  min-width 100%
+  min-height 100%
+  font-size 14px // define em value
+
+#header
+  width 100%
+  height 60px
+  background #454545
+  
+  #logo
+    width 200px
+    height 50px
+    background #fff
+    float left
+    
+
+
+
+
+
+
+
+#footer
+  width 100%
+  height 30px
+  background #454545

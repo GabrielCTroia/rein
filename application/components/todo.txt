@@ -1,0 +1,2 @@
+//components - spit posts / tell me to connect to the service if I got there by mistake
+//components - load the views/template

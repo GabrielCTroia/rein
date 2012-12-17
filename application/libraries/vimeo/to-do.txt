@@ -1,0 +1,105 @@
+source: http://zinclabs.com/VimeoAPIforPHP.html
+
+OVERVIEW
+
+This guide explains how to use the Vimeo Advanced API from a PHP-based website. It was written for ModX, but should be easily adaptable to any PHP CMS.
+
+If you find this useful, feel free to help me feed my kids or buy me a beer!
+
+In order to make use of the Vimeo Advanced API from our own website, we need four OAuth Tokens:
+(1) a CONSUMER KEY; (2) a CONSUMER SECRET; (3) an OAUTH ACCESS TOKEN; and (4) an OAUTH ACCESS TOKEN SECRET.
+
+We are going to do the following:
+(A) Install the Vimeo API on our modx site.
+(B) Register our site with Vimeo and get our Consumer Keys.
+(C) Authorize our site and get our OAuth Tokens.
+(D) Start using the Advanced API for our Vimeo Gallery!
+
+
+PART A Ð INSTALL THE VIMEO API LIBRARY ON YOUR SITE 
+
+1.	Download the "Advanced API PHP Library" from this page: http://www.vimeo.com/api/docs/downloads 
+2.	From that zip, upload "vimeo.php" and "index.php" to a folder called "vimeo" on the root of your website (i.e., so it's in the same folder as your "assets" and "manager" folders.)
+3.	Create a folder within "vimeo" called "cache" with permissions 777.
+4.	You need the full absolute server path to vimeo.php. For example, on DreamHost, my absolute path would be /home/danzg/mycoolsite.com/vimeo/vimeo.php. 
+
+
+PART B Ð REGISTER YOUR SITE AS AN API APPLICATION ON VIMEO
+
+5. Login to your vimeo account, and register your website as a new "app" athttp://www.vimeo.com/api/applications/new 
+6. Use the URL of your website as the "Application URL".
+7. IMPORTANT: Enter the URL to the index.php you just uploaded as the "Application Callback URL". (In my example, this would be "http://mycoolsite.com/vimeo/index.php ")
+If it's your first time registering an app, you MAY have to wait for a human to authorize the request.
+8. Get your Consumer Key and Consumer Secret and SAVE THESE TWO CODES. YOU WILL NEED THEM. 
+
+
+PART C Ð AUTHORIZE YOUR SITE 
+Now you need to do a 1-time authorization of your site.
+
+9. Edit line 6 of vimeo/index.php (on your site) and put in the values you just obtained.
+	$vimeo = new phpVimeo('CONSUMER_KEY', 'CONSUMER_SECRET');
+should become something like:
+	$vimeo = new phpVimeo('3bab4a234d4c0e345df678ac669548ca', 'a9a44ed654e123a');
+
+10. Around line 60 of vimeo/index.php, there is a comment "// Set the token". The next line is:
+	$vimeo->setToken($_SESSION['oauth_access_token'], $_SESSION['oauth_access_token_secret']);
+insert these lines right after it:
+echo "";
+echo "Your oauth access token: ";
+echo $_SESSION['oauth_access_token'];
+echo "";           
+echo "Your oath access token secret: ";
+echo $_SESSION['oauth_access_token_secret'];
+echo "";
+
+11. Go to your browser and open up your vimeo/index.php page, e.g., I would go tohttp://mycoolsite.com/vimeo/index.php
+At the bottom it will say:
+"Click the link to go to Vimeo to authorize your account."
+Go ahead and click that long nasty link (which should contain an OAuth token).
+
+12. This will take you to Vimeo, where you may need to sign in.
+You should see:
+"Do you want to authorize this app? ... Yes, authorize ... "
+
+Go ahead and authorize, and, if you entered your callback URL correctly, it should take you back to your index.php, where, at the top, you will see:
+
+Your oauth access token: xxxxxxxxxxxxx
+Your oath access token secret: xxxxxxxxxxxxxxxxx
+
+SAVE THESE TWO CODES. YOU WILL NEED THEM.
+
+Congratulations!
+You have now authorized your website for full access to your vimeo account, and you can now use all the cool methods in the API, which you can peruse here:
+http://vimeo.com/api/docs/methods 
+
+13. DO NOT LOAD THE vimeo/index.php PAGE AGAIN, or I believe you will end up re-setting your tokens. Might want to just delete it. You should only have to do the above steps once.
+
+14. DO NOT DELETE THE vimeo/vimeo.php FILE -- that is needed by any PHP code / snippets that call the Vimeo API.
+
+Now, any time you want to call the Advanced API, your PHP will start with these 3 lines:
+require_once('/absolute/path/to/vimeo.php');
+$vimeo = new phpVimeo('YourConsumerKey', 'YourConsumerSecret');
+$vimeo->setToken('YourOAuthAccessToken','YourOAuthAccessTokenSecret');
+
+Finally, here is the revised snippet which is not limited to 20 videos, and should get you started taking advantage of the Advanced API. As before, call it with the album ID for which you want a gallery (see my previous post for info on obtaining album IDs)
+<?php
+require_once('/absolute/path/to/vimeo.php');
+$vimeo = new phpVimeo('YourConsumerKey', 'YourConsumerSecret');
+$vimeo->setToken('YourOAuthAccessToken','YourOAuthAccessTokenSecret');
+ 
+$output = '<div class="albumGallery">';
+$result = $vimeo->call('vimeo.albums.getVideos', array('album_id' => $albumID,full_response => '1'));
+$videos = $result->videos->video;
+foreach ($videos as $video) {
+   $output .= ' <a href="'.$video->urls->url[0]->_content.'" title="'.$video->title.'" rel="zoombox[group]">';
+   $output .= '  <div class="albumGalleryItem">';
+   $output .= '   <div class="ImgContainer"><img src="'.$video->thumbnails->thumbnail[1]->_content.'"></div>';
+   $output .= '   <div class="albumGalleryCaption">'.$video->title.'</div>';
+   $output .= '   <div class="albumGalleryDescription">'.nl2br($video->description).'</div>';
+   $output .= '  </div>';
+   $output .= ' </a>';
+}
+ 
+$output .= '</div>';
+ 
+return $output;
