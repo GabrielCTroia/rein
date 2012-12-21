@@ -38,16 +38,16 @@
 |
 */
 
-$route['default_controller'] = "init";
-$route['login'] = "login";
+$route[ 'default_controller' ] = 'init';
+$route[ 'login' ] = 'login';
 
-$route['home'] = "home";
-$route['home/(:any)'] = "home/$1";
+$route[ 'home' ] = 'home';
+$route[ 'home/(:any)' ] = 'home/$1';
 
-$route['sign-up'] = "sign_up";
-$route['sign-up/(:any)'] = "sign_up/$1";
+$route[ 'sign-up' ] = 'connect/signup';
+$route[ 'connect/(:any)' ] = 'connect/$1';
 
-$route['404_override'] = '';
+$route[ '404_override' ] = '';
 
 
 /* End of file routes.php */

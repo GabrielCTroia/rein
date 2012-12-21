@@ -1,13 +1,18 @@
 @import url("http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css");
+body{font-size:14px}
+input{display:block;margin-bottom:1em}
 .right{float:right}
 .left{float:left}
-.group:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
-.group{display:inline-block;clear:both}
-* html .group{height:1%}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+.clearfix{display:inline-block;clear:both}
+* html .clearfix{height:1%}
 .group{display:block}
+.error{color:#f00;font-weight:bolder}
 .stretch{width:100%;position:relative}
 .center{width:960px;margin:0 auto;position:relative}
-body,html,#wrapper{min-width:100%;min-height:100%;font-size:14px}
+.section{margin:5%;padding:5%;background:#ccc;position:relative;}
+.section .inner{width:100%;height:100%}
+body,html,#wrapper{min-width:100%;min-height:100%}
 #header{width:100%;height:60px;background:#454545;}
 #header #logo{width:200px;height:50px;background:#fff;float:left}
 #footer{width:100%;height:30px;background:#454545}

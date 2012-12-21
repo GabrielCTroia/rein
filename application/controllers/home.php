@@ -25,7 +25,7 @@ class Home extends CI_Controller {
 		
 		$this->logged_in();
 		
-		$session_data = $this->$this->session->userdata( 'logged_in' );
+		$session_data = $this->session->userdata( 'logged_in' );
 		$data[ 'username' ] = $session_data[ 'username' ];
 		$this->load->view( 'home_view', $data );
 	}
@@ -58,19 +58,15 @@ class Home extends CI_Controller {
 		
 		//check the services against the active_services and write a 
 		// status='active' if the same
-		//not sure if the best solution 		
-		foreach ( $data['services'] as $service )
-		{
-			if( $data['active_services'] )
-			{
+		//not sure if the best solution
+		if( $data['active_services'] ) {	
+		
+		  foreach ( $data['services'] as $service ) {
 
-				foreach ( $data['active_services'] as $active_service )	
-				{
+				foreach ( $data['active_services'] as $active_service )	{
 					
 					if ( $active_service->service_id == $service->service_id )
-					{
-						$service->status = "active";
-					} 
+						  $service->status = "active";
 					
 				}
 			}

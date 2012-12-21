@@ -25,20 +25,21 @@
         	<div class="right">			
         		<p>Connect with:</p>
         		
-        		<?php foreach ( $services as $service ): ?>
-        						
-        				<?php if( isset( $service->status ) ) : ?>
-        					
-        					<span ><?php echo $service->service_name; ?></span>
-        				
-        				<?php else: ?>
-        					
-        					<a href="/?service=<?php echo $service->service_name; ?>&method=AUTH" class="text-orange"><?php echo $service->service_name; ?></a>
-        					
-        				<?php endif; ?>
-        				
-        		<?php endforeach; ?>
-        		
+        		<?php if( isset( $services ) ):?>
+          		<?php foreach ( $services as $service ): ?>
+          						
+          				<?php if( isset( $service->status ) ) : ?>
+          					
+          					<span ><?php echo $service->service_name; ?></span>
+          				
+          				<?php else: ?>
+          					
+          					<a href="/?service=<?php echo $service->service_name; ?>&method=AUTH" class="text-orange"><?php echo $service->service_name; ?></a>
+          					
+          				<?php endif; ?>
+          				
+          		<?php endforeach; ?>
+        		<?php endif;?>
         		
         	</div>
 		      
