@@ -2,18 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="<?php echo APPPATH; ?>/css/general.css" />
+		<link rel="stylesheet" href="/<?php echo APPPATH; ?>css/general.css" />
 	
 	</head>
 	<body>
-		
-		<div id="page" class="page-<?php echo $page->name; ?> grain full-height">
-			<?php $this->load->view( $page->path ); ?>
-		</div><!-- eof #page -->
-		
-		<footer>
-		
-		</footer>
-		
+        
+			<?php $this->load->view( $page->url ); ?>
+					
 	</body>
 </html>
