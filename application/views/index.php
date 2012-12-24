@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="<?php echo APPPATH; ?>/css/general.css" />
-	
-	</head>
-	<body>
+		<link rel="stylesheet" href="/<?php echo APPPATH; ?>css/styles.css" />
 		
-		<div id="page" class="page-<?php echo $page->name; ?> grain full-height">
-			<?php $this->load->view( $page->path ); ?>
-		</div><!-- eof #page -->
+		<script src="/<?php echo APPPATH; ?>javascript/modernizr.js"></script>
+		<script src="/<?php echo APPPATH; ?>javascript/loader.js"></script>
+  </head>
+  <body>
 		
-		<footer>
+		<div id="wrapper">
 		
-		</footer>
+			<?php $this->load->view( $page->url ); ?>
+
+		</div>
 		
 	</body>
 </html>

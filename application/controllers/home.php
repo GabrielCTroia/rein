@@ -40,21 +40,21 @@ class Home extends CI_Controller {
   	$data['posts'] = "";
 		
 		//load the Posts model
-		$this->load->model( 'Posts', '', false );
+		$this->load->model( 'Posts' , '' , false );
 		
 		$this->Posts->set_user( $this->session->userdata['logged_in']['user_id'] );
 		
 		//load the Services model
-		$this->load->model( 'Services', '', false );
+		$this->load->model( 'Services' , '' , false );
 		
-		$data['services'] = $this->Services->get_services();
+		$data[ 'services' ] = $this->Services->get_services();
 
 		//load the Access model
-		$this->load->model( 'Access', '', false );
-		$this->Access->initialize( $this->session->userdata['logged_in']['user_id'] );
+		$this->load->model( 'Access' , '' , false );
+		$this->Access->initialize( $this->session->userdata[ 'logged_in' ][ 'user_id' ] );
 		
 		
-		$data['active_services'] = $this->Access->get_active_accesses();
+		$data[ 'active_services' ] = $this->Access->get_active_accesses();
 		
 		//check the services against the active_services and write a 
 		// status='active' if the same
