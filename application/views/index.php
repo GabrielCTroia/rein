@@ -14,6 +14,5 @@
 			<?php $this->load->view( $page->url ); ?>
 
 		</div>
-		
 	</body>
 </html>
