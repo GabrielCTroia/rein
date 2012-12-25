@@ -7,8 +7,15 @@ class Home extends CI_Controller {
 	function __construct() {
 	
 		parent::__construct();
-		$this->load->model( 'user', '', true) ;
-		$page = $data['page'] = new StdClass();
+		
+		$this->logged_in();
+		
+		$this->load->model( 'User' , '' , TRUE );
+		
+		$this->load->model( 'Pager' , '' , FALSE );
+    $this->load->model( 'Components' , '' , FALSE );
+    
+    $this->Pager->init( 'home' );
 	}
 	
 	
@@ -20,15 +27,22 @@ class Home extends CI_Controller {
 		}
 	}
 	
-	
-	public function index() {
-		
-		$this->logged_in();
-		
-		$session_data = $this->session->userdata( 'logged_in' );
-		$data[ 'username' ] = $session_data[ 'username' ];
-		$this->load->view( 'home_view', $data );
+	public function config() {
+  	
+  	$this->Components->init( 'config' );
+  	
+  	$this->load->view( 'index' );
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public function feed() {

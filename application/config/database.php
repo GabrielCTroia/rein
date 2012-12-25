@@ -49,8 +49,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'rein_user';
-$db['default']['password'] = 'liberty1234';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'root';
 $db['default']['database'] = 'rein_db';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

@@ -39,12 +39,15 @@
 */
 
 $route[ 'default_controller' ] = 'init';
-$route[ 'login' ] = 'login';
 
 $route[ 'home' ] = 'home';
 $route[ 'home/(:any)' ] = 'home/$1';
 
-$route[ 'sign-up' ] = 'connect/signup';
+$route[ 'sign-up' ] = 'init/signup';
+$route[ 'login' ] = 'init/login';
+
+$route[ 'config' ] = 'home/config';
+
 $route[ 'connect/(:any)' ] = 'connect/$1';
 
 $route[ '404_override' ] = '';

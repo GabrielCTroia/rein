@@ -9,9 +9,9 @@
   </head>
   <body>
 		
-		<div id="wrapper">
+		<div class="wrapper">
 		
-			<?php $this->load->view( $page->url ); ?>
+			<?php $this->load->view( 'pages/init/page' ); ?>
 
 		</div>
 	</body>

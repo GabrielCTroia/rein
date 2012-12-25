@@ -6,12 +6,6 @@
     
     echo form_open( 'connect/signup' );
     
-    echo form_label( 'Name:' , 'su-name' );
-    echo form_input( array(
-          'name' => 'name',
-          'id' => 'su-name'
-        ) );
-    
     echo form_label( 'User Name:' , 'su-userName' );
     echo form_input( array(
           'name' => 'user_name',
