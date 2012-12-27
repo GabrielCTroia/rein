@@ -10,8 +10,8 @@
   <body>
 		
 		<div class="wrapper">
-		
-			<?php $this->load->view( 'pages/init/page' ); ?>
+		    
+			<?php $this->load->view( $this->Pager->url() ); ?>
 
 		</div>
 	</body>

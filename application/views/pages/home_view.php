@@ -1,3 +1,6 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+
 <div id="top-bar" class="light-grey spacer padding padding-horizontal" style="height:50px">
 	
 	<p class="left"> Welcome back <?php echo $this->session->userdata['logged_in']['email']; ?></p>

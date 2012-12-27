@@ -21,6 +21,7 @@ Class Components extends CI_Model {
     $safe_name = preg_replace( '/\s/' , '_' , $name );
     $this->path .= $safe_name . '/';
     $this->url = "{$this->path}{$safe_name}";
+    
     return true;
   }
   

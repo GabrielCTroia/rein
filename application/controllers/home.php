@@ -1,14 +1,26 @@
 <?php if( ! defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
+/* Explain Views & Controllers organization :
+  
+  Every Controller loads a common index.php which loads a specific
+  page ( home.php , splash.php , callback.php , connect.php ...) 
+  which also loads specifc components ( sign-up.php , login.php , feed.php , settings.php ... )
+  among with the page specific includes ( header.php , footer.php ) 
+  
+*/
 
 class Home extends CI_Controller {
 
+  /* 
+  * define the page url  
+  */
+  private static $page_url = "/home";  
 
 	function __construct() {
 	
 		parent::__construct();
 		
-		$this->logged_in();
+		$this->_logged_in();
 		
 		$this->load->model( 'User' , '' , TRUE );
 		
@@ -19,33 +31,74 @@ class Home extends CI_Controller {
 	}
 	
 	
-	private function logged_in() {
-  			
-		if( !$this->session->userdata( 'logged_in' ) ) {
-		  header( 'location: /login' );
-		  exit();
-		}
+    	private function _logged_in() {
+      			
+    		if( !$this->session->userdata( 'logged_in' ) ) {
+    		  header( 'location: /login' );
+    		  exit();
+    		}
+    	}
+	
+	
+	
+	
+	
+  /*
+   * the index() acts like a router
+   * the user never stays on it so it doesn't have a view
+  */
+  public function index() {	
+      
+		  //default redirect to feed
+		  redirect( self::$page_url . "/feed" );
+		  
 	}
 	
-	public function config() {
-  	
-  	$this->Components->init( 'config' );
+	
+
+	/* ****************************************************	
+  	 Everything below this point is actually a COMPONENT 
+	
+    **************************************************** */
+	
+	
+	
+	
+	
+ /* 
+  * SETTINGS component 
+  */
+  public function settings() {
+    
+    //  define the component
+  	$this->Components->init( 'settings' );
   	
   	$this->load->view( 'index' );
-	}
+	}  
 	
 	
 	
 	
+  public function feed() {
+	   
+    //  define the component
+    $this->Components->init( 'feed' );	
+    
+    $this->load->view( 'index' );
+  
+  }
 	
-	
-	
-	
-	
-	
-	
-	
-	public function feed() {
+ /* 
+	* FEED component 
+	*/
+	public function _feed() {
+	   
+	  /* initiate the component */ 
+    $this->Components->init( 'feed' );	
+    
+    $this->load->view( 'index' );
+    
+    return;
   	
   	$data[ 'logged_in' ] = 'logged_in';
   	
@@ -194,12 +247,12 @@ class Home extends CI_Controller {
 			
 		}// <-- end if isset( service
 		
-		$this->load->view( 'common/header', $data );
-		$this->load->view( 'feed', $data );
-		$this->load->view( 'common/footer', $data );
+	   	$this->load->view( 'index' );	
 	}
 	
 	
+	
+	//this should be a method in a helper or something
 	public function logout() {
 	
 		$this->session->unset_userdata( 'logged_in' );

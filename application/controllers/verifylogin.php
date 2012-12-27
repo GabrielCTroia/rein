@@ -14,26 +14,31 @@ class VerifyLogin extends CI_Controller {
 	public function index()
 	{
 		
+
 		//load the credential validation library 
 		$this->load->library( 'form_validation' );
 		
-		$this->form_validation->set_rules( 'email', 'Email', 'trim|required|xss_clean' );
+		$this->form_validation->set_rules( 'username', 'Username', 'trim|required|xss_clean' );
 		$this->form_validation->set_rules( 'password', 'Password', 'trim|required|xss_clean|callback_check_database' );
 			
 		
 /* 		return; */
 		if( $this->form_validation->run() == false )
 		{
-			redirect( base_url() . "?login=false" );
+  		  echo "nu";
+/* 			redirect( base_url() . "?login=false" ); */
 		}
 		else
 		{
-			redirect( base_url() );
+		    echo "da";
+/* 			redirect( base_url() ); */
 		}
 	}
 	
 	public function check_database($password)
 	{
+		
+		return false;
 		//Field validation succeeded.  Validate against database
 		$email = $this->input->post('email');
 

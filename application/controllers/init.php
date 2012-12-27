@@ -5,8 +5,12 @@
   Every Controller loads a common index.php which loads a specific
   page ( home.php , splash.php , callback.php , connect.php ...) 
   which also loads specifc components ( sign-up.php , login.php , feed.php , settings.php ... )
-  among with the page specific includes ( hedaer.php , footer.php ) 
+  among with the page specific includes ( header.php , footer.php ) 
   
+  
+  {Ghost} Component = A component which doesn't have a view assgined to it
+                      It mostly only redirects you to another URL where you actually load a view
+                      The difference between a Ghost Component and a method is that you actually use it as a URL 
 */
 
 
@@ -56,7 +60,7 @@ class Init extends CI_Controller {
    * the user never stays on it so it doesn't have a view
   */
 	public function index() {	
-			
+		
 		if( !$this->session->userdata( 'logged_in' ) ) {
       
       /*
@@ -65,29 +69,45 @@ class Init extends CI_Controller {
       */
       
       //  load splah page
-      redirect( self::$page_url . '/splash_page' );
+      redirect( self::$page_url . '/splash' );
             								
 		} else
 		  redirect( 'home' );
-		
+		  
 	}
 	
-	public function splash_page() {
-	  
+
+	
+	/* ****************************************************	
+  	 Everything below this point is actually a COMPONENT 
+	
+    **************************************************** */
+	
+	
+	
+	
+ /* 
+  * SPLASH component
+  */
+  public function splash() {
+
+    //  define the component	  
   	$this->Components->init( 'splash' );
   	
   	$this->load->view( 'index.php' );
   	
 	}
 	
-	/* Everything below this point is actually a COMPONENT */
 	
 	
-  /*
-   * SIGNUP component
+	
+	
+	
+ /*
+  * SIGNUP component
   */
 	public function signup() {	
-
+  	
 		/* 
 		 * check one more time if the user exists in the session and fallback to index() if NOT
 		 */	
@@ -142,13 +162,6 @@ class Init extends CI_Controller {
 	      
 	  if( $this->form_validation->run() ) {
 		  
-  	  /*
-		  ****TO WHO EVER READS THIS****
-		  At this point the script doesn't get here. Not sure why but I'm kind of tired so I'll go home:D
-		  
-		  - Dude, there's only 1 other person who will read this
-		  */
-		  
 		  $this->load->model( 'User' , '' , TRUE );
 		  
 		  //  register a new user to the database and return his unique user_id
@@ -171,53 +184,146 @@ class Init extends CI_Controller {
 		  //  to get them connected with social media networks. I get where you're coming from but it's a 
 		  //  short term solution.
 		  
-		  redirect( 'config' );
+		  /* Redirects to home  */
+		  redirect( '/home/settings' );
+      
+      
 		  
 		}	
 
-		$this->load->view( 'index.php', self::$data );
+		$this->load->view( 'index.php' );
 	
 	}
 	
 	
 	
-	/*
-   * SIGNUP component
+	
+ /*
+  * LOGIN component
   */
-	public function verifylogin() {	
-  
-    /* load the User model */
-  	$this->load->model('User','',false);
-  	
-  	/* load the credential validation library */
-		$this->load->library( 'form_validation' );
-		
-		$this->form_validation->set_rules( 'email', 'Email', 'trim|required|xss_clean' );
-		$this->form_validation->set_rules( 'password', 'Password', 'trim|required|xss_clean|callback__check_password' );
-		
-    
+	public function login() {	
+	
     /* 
-    * if it's valid populate the session with the user info and redirect to self again (this time should be re-redirected to home )
-    */ 
-    		
-		if( $this->form_validation->run() == true ){
-				
-		  $user_info = User::validate_login( $password , true );
-            					
-			$this->session->set_userdata( 'logged_in' , $user_info );
-	
-		} 
-  	
-  	redirect( self::$page_url );
-  	
+		 * check one more time if the user exists in the session and fallback to index() if NOT
+		 * OR if the enetered credentials are good and log him in if YES
+		 */	
+		if( $this->session->userdata( 'logged_in' ) || self:: _verifylogin() ) { 
+		  
+	   /*
+		  *if the user is in the session OR he entered valid credentials 
+	    *then index() is gonna' redirect it wherever it needs ( home.php )
+	    */
+  		redirect( self::$page_url );
+		
+		}
+    
+    /* ELSE  */
+    
+    //  define the component
+    $this->Components->init( 'login' );	
+          
+    //load the FORM helper
+    $this->load->helper('form');		
+		
+    $this->load->view('index.php');		      
+
 	}
 	
-	//called by self::verifylogin();
-	private function _check_password( $password ) {
+	
+
+	  /* 
+	   * called by self::login() 
+	   *
+	   * TO DO - add the ability to login with the EMAIL too
+	   */
+  	private function _verifylogin() {	
+ 
+      /* load the User model */
+    	$this->load->model('User','',false);
+    	
+    	/* load the credential validation library */
+  		$this->load->library( 'form_validation' );
+  		
+  		/* set the rules */
+      $this->form_validation->set_rules(
+      
+        array(
+  	       array(
+  	              'field' => 'user_name',
+  	              'label' => 'User Name',
+  	              'rules' => 'trim|required|xss_clean'
+  	        ),
+  	        
+  	        array(
+  	              'field' => 'password',
+  	              'label' => 'Password',
+  	              'rules' => 'trim|required|xss_clean|callback__check_db'
+  	        )
+  	     )     
+  	        
+  	   );       
+
+  	   
+  		if( $this->form_validation->run() ){
+        
+        /* cache the inputs */  
+        $user_name = $this->input->post('user_name');
+        $password  = $this->input->post('password');  
+        
+        /* retriev ethe USER_INFO */          
+  		  $user_info = User::validate_login( array( "user_name" => $user_name , "password" => $password ) , true );
+        
+        /* and store in the SESSION */                      					
+  			$this->session->set_userdata( 'logged_in' , $user_info );
+  			
+  			return true;
   	
-    return User::validate_login( $password );	
-  	
+  		} 
+		  return false;    	
+  	}
+	
+    	/* 
+    	 * called by self::verifylogin(); 
+    	*/
+    	public function _check_db( $password ) {      	
+        
+        /* cache the inputs */
+        $user_name = $this->input->post('user_name');
+        
+        return User::validate_login( array( "user_name" => $user_name , "password" => $password ) );	
+      	
+    	}
+	
+	
+	
+ /*
+  * SIGNOUT - Ghost Component
+  */
+	public function signout() {	
+	
+    /* 
+		 * check if the user doens't exist in the session and fallback to index() if YES
+		 */	
+		if( !$this->session->userdata( 'logged_in' ) ) { 
+		  
+		  //if the user is in the session then index() is gonna' redirect it wherever it needs ( home.php )
+  		redirect( self::$page_url );
+		
+		}
+    
+    /* ElSE */	
+		
+		$this->session->unset_userdata('logged_in');
+		
+		//for some reason the session id is not instantiated
+    /* if( session_id() ) session_destroy(); */
+		
+		$this->session->sess_destroy();
+
+		redirect( self::$page_url );
+	
 	}
+	
 	
 }	
 

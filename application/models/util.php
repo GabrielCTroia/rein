@@ -2,8 +2,10 @@
 	
 Class Util extends CI_Model
 {	
+	
 	//return the reverse of the array
-	function reverse( $input )	
+	/*** we don't actually need this one */
+	public static function reverse( $input )	
 	{
 		if ( is_array( $input ) )	
 		{
@@ -17,4 +19,11 @@ Class Util extends CI_Model
 }
 
 
-//pure php doesn't need the closing tag 
+
+
+
+
+
+
+/* End of file init.php */
+/* Location: ./application/models/util.php */

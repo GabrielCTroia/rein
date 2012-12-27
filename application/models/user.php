@@ -3,6 +3,10 @@
 	
 Class User extends CI_Model {
 	
+	
+	
+	
+	
 	public function register_user( $post ) {
   	$email = $post[ 'email' ];
 	  $user_name = $post[ 'user_name' ];
@@ -32,12 +36,16 @@ Class User extends CI_Model {
 		return $user_id->first_row()->user_id;
 	}
 	
-	function login( $email , $password ){
 	
+	
+	
+	private function login( $user_name , $password ){
+	 
+	 
 		$this->db->select('user_id, email, password');	
 		$this->db->from( 'users' );
-		$this->db->where( "email = $email" );
-		$this->db->where( "password = $password" );
+		$this->db->where( "user_name = '$user_name'" );
+		$this->db->where( "password = '$password'" );
 		$this->db->limit( 1 );
 		
 		$query = $this->db->get();
@@ -64,7 +72,7 @@ Class User extends CI_Model {
   public function validate_login( $input = array() , $return = false ) {
 		
 		//query the db
-		$result = self::login( $input['email'] , $input['password'] );
+		$result = self::login( $input['user_name'] , $input['password'] );
 		
 		if( $result ){
 			
