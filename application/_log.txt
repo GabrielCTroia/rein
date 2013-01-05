@@ -1,0 +1,13 @@
+DISCLAIMER
+Append here everything we do in one working session.
+I think it's a better approach than writing the readme in GIT. (we can them keep both anyway)
+
+---------------------------------------------------------------------------------------
+
+Log started - January 5, 13 - 2:25 PM                                           GABRIEL
+
+
+
+
+Log ended - January 5,13 -                     
+

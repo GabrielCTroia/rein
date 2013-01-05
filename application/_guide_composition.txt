@@ -1,0 +1,18 @@
+DISCLAIMER
+
+This guide should explain the composition decisions we make down the road
+and give a better perspective of the whole structure of the app.
+
+--------------------------------------------------------------------------------
+
+Controllers:
+  
+  Every Controller loads a common index.php which loads a specific
+  page ( home.php , splash.php , callback.php , connect.php ...) 
+  which also loads specifc components ( sign-up.php , login.php , feed.php , settings.php ... )
+  among with the page specific includes ( header.php , footer.php ) 
+  
+  
+  {Ghost} Component = A component which doesn't have a view assgined to it
+                      It mostly only redirects you to another URL where you actually load a view
+                      The difference between a Ghost Component and a method is that you actually use it as a URL
