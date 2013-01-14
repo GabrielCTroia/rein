@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'instance35768.db.xeround.com:4232';
-$db['default']['username'] = 'rein_user';
-$db['default']['password'] = 'liberty';
-$db['default']['database'] = 'rein';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'fluffysp_reingit';
+$db['default']['password'] = 'liberty1234';
+$db['default']['database'] = 'fluffysp_reingit';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

@@ -1,8 +1,3 @@
-	<!-- <p class="left"> Welcome back <?php echo $this->session->userdata['logged_in']['email']; ?></p> -->
-
-
-<div class="center">
-
 	<div id="wall">	
 	  <a href="/?store_posts=true">store the posts</a>
 	  <div class="spacer"></div>
@@ -34,5 +29,3 @@
 		<?php endif; ?>
 				
 	</div>
-
-</div>

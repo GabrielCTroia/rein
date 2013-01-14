@@ -8,11 +8,8 @@
 		<script src="/<?php echo APPPATH; ?>javascript/loader.js"></script>
   </head>
   <body>
-		
-		<div class="wrapper">
 		    
 			<?php $this->load->view( $this->Pager->url() ); ?>
 
-		</div>
 	</body>
 </html>

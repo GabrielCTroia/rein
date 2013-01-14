@@ -1,4 +1,4 @@
-<div class="center" component="splash">
+<div component="splash">
   <p>
     Hi, I'm the splash component!
   </p>
