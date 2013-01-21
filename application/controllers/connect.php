@@ -34,9 +34,12 @@ class Connect extends CI_Controller {
  /*
   * LIVE - {Ghost} Component
   * get the live posts based on the service name  
+  * it only works for the authenticated user (not CRON)
+  * it doesn't use the GET method to get the 
   */
-	public function service( $service_name = NULL , $filters ){
-  
+	public function live( $service_name = NULL , $filters ){
+    
+    
 
 	}
 	

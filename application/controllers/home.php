@@ -102,6 +102,17 @@ class Home extends CI_Controller {
     $this->load->view( 'index' );
   
   }
+  
+  
+  public function oauth_class_wiki() {
+	   
+    // initiate the component
+    $this->Components->init( 'oauth_class_wiki' );	
+    
+    $this->load->view( 'index' );
+  
+  }
+  
 	
  /* 
 	* FEED component 
