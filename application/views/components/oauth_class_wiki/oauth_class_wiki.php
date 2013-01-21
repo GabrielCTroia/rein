@@ -3,7 +3,7 @@
 <head>
 <title>Class: OAuth client</title>
 </head>
-<body>
+<body class="wiki-page">
 <center><h1>Class: OAuth client</h1></center>
 <hr />
 <ul>
