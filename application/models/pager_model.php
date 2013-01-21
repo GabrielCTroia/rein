@@ -1,10 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
 	
-Class Components extends CI_Model {
+Class Pager_model extends CI_Model {
   
   private $name;
-  private $path = 'components/';
+  private $path = 'pages/';
   private $url;
   
   function __construct() {
@@ -15,13 +15,17 @@ Class Components extends CI_Model {
     
     //  init can only be called once
     //  it defines the base properties for the component
+    //  **not working now**
     
+    /*
+if( !empty( $name ) )
+      return false;
+*/
     
     $this->name = $name;
     $safe_name = preg_replace( '/\s/' , '_' , $name );
     $this->path .= $safe_name . '/';
     $this->url = "{$this->path}{$safe_name}";
-    
     return true;
   }
   
@@ -46,5 +50,5 @@ Class Components extends CI_Model {
 
 
 
-/* End of file components.php */
-/* Location: ./application/models/components.php */
+/* End of file pager.php */
+/* Location: ./application/models/pager.php */

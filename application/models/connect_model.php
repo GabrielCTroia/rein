@@ -1,127 +1,9 @@
-<?php
-/*
- * oauth_client.php
- *
- * @(#) $Id: oauth_client.php,v 1.37 2012/11/13 09:15:36 mlemos Exp $
- *
- */
-
-/*
-{metadocument}<?xml version="1.0" encoding="ISO-8859-1" ?>
-<class>
-
-	<package>net.manuellemos.oauth</package>
-
-	<version>@(#) $Id: oauth_client.php,v 1.37 2012/11/13 09:15:36 mlemos Exp $</version>
-	<copyright>Copyright � (C) Manuel Lemos 2012</copyright>
-	<title>OAuth client</title>
-	<author>Manuel Lemos</author>
-	<authoraddress>mlemos-at-acm.org</authoraddress>
-
-	<documentation>
-		<idiom>en</idiom>
-		<purpose>This class serves two main purposes:<paragraphbreak />
-			1) Implement the OAuth protocol to retrieve a token from a server to
-			authorize the access to an API on behalf of the current
-			user.<paragraphbreak />
-			2) Perform calls to a Web services API using a token previously
-			obtained using this class or a token provided some other way by the
-			Web services provider.</purpose>
-		<usage>Regardless of your purposes, you always need to start calling
-			the class <functionlink>Initialize</functionlink> function after
-			initializing setup variables. After you are done with the class,
-			always call the <functionlink>Finalize</functionlink> function at
-			the end.<paragraphbreak />
-			This class supports either OAuth protocol versions 1.0, 1.0a and
-			2.0. It abstracts the differences between these protocol versions,
-			so the class usage is the same independently of the OAuth
-			version of the server.<paragraphbreak />
-			The class also provides built-in support to several popular OAuth
-			servers, so you do not have to manually configure all the details to
-			access those servers. Just set the
-			<variablelink>server</variablelink> variable to configure the class
-			to access one of the built-in supported servers.<paragraphbreak />
-			If you need to access one type of server that is not yet directly
-			supported by the class, you need to configure it explicitly setting
-			the variables: <variablelink>oauth_version</variablelink>,
-			<variablelink>url_parameters</variablelink>,
-			<variablelink>authorization_header</variablelink>,
-			<variablelink>request_token_url</variablelink>,
-			<variablelink>dialog_url</variablelink>,
-			<variablelink>append_state_to_redirect_uri</variablelink> and
-			<variablelink>access_token_url</variablelink>.<paragraphbreak />
-			Before proceeding to the actual OAuth authorization process, you
-			need to have registered your application with the OAuth server. The
-			registration provides you values to set the variables
-			<variablelink>client_id</variablelink> and 
-			<variablelink>client_secret</variablelink>.<paragraphbreak />
-			You also need to set the variables
-			<variablelink>redirect_uri</variablelink> and
-			<variablelink>scope</variablelink> before calling the
-			<functionlink>Process</functionlink> function to make the class
-			perform the necessary interactions with the OAuth
-			server.<paragraphbreak />
-			The OAuth protocol involves multiple steps that include redirection
-			to the OAuth server. There it asks permission to the current user to
-			grant your application access to APIs on his/her behalf. When there
-			is a redirection, the class will set the
-			<variablelink>exit</variablelink> variable to
-			<booleanvalue>1</booleanvalue>. Then your script should exit
-			immediately without outputting anything.<paragraphbreak />
-			When the OAuth access token is successfully obtained, the following
-			variables are set by the class with the obtained values:
-			<variablelink>access_token</variablelink>,
-			<variablelink>access_token_secret</variablelink>,
-			<variablelink>access_token_expiry</variablelink>,
-			<variablelink>access_token_type</variablelink>. You may want to
-			store these values to use them later when calling the server
-			APIs.<paragraphbreak />
-			If there was a problem during OAuth authorization process, check the
-			variable <variablelink>authorization_error</variablelink> to
-			determine the reason.<paragraphbreak />
-			Once you get the access token, you can call the server APIs using
-			the <functionlink>CallAPI</functionlink> function. Check the
-			<variablelink>access_token_error</variablelink> variable to
-			determine if there was an error when trying to to call the
-			API.<paragraphbreak />
-			If for some reason the user has revoked the access to your
-			application, you need to ask the user to authorize your application
-			again. First you may need to call the function
-			<functionlink>ResetAccessToken</functionlink> to reset the value of
-			the access token that may be cached in session variables.</usage>
-	</documentation>
-
-{/metadocument}
-*/
-
-class oauth_client_class
-{
-/*
-{metadocument}
-	<variable>
-		<name>error</name>
-		<type>STRING</type>
-		<value></value>
-		<documentation>
-			<purpose>Store the message that is returned when an error
-				occurs.</purpose>
-			<usage>Check this variable to understand what happened when a call to
-				any of the class functions has failed.<paragraphbreak />
-				This class uses cumulative error handling. This means that if one
-				class functions that may fail is called and this variable was
-				already set to an error message due to a failure in a previous call
-				to the same or other function, the function will also fail and does
-				not do anything.<paragraphbreak />
-				This allows programs using this class to safely call several
-				functions that may fail and only check the failure condition after
-				the last function call.<paragraphbreak />
-				Just set this variable to an empty string to clear the error
-				condition.</usage>
-		</documentation>
-	</variable>
-{/metadocument}
-*/
-	var $error = '';
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+  
+class Connect_model{
+  
+  
+  	var $error = '';
 
 /*
 {metadocument}
@@ -854,8 +736,7 @@ class oauth_client_class
 		return(pack($pack, $function((str_repeat("\x5c", 64) ^ $key).pack($pack, $function((str_repeat("\x36", 64) ^ $key).$data)))));
 	}
 
-	Function SendAPIRequest($url, $method, $parameters, $oauth, $options, &$response)
-	{
+	Function SendAPIRequest( $url, $method, $parameters, $oauth, $options, &$response ) {
 		$this->response_status = 0;
 		$http = new http_class;
 		$http->debug = ($this->debug && $this->debug_http);
@@ -876,14 +757,14 @@ class oauth_client_class
 				'oauth_timestamp'=>time(),
 				'oauth_version'=>'1.0',
 			);
-			if($this->url_parameters
-			&& count($parameters))
-			{
+			if( $this->url_parameters && count($parameters) ) {
+
 				$first = (strpos($url, '?') === false);
 				foreach($parameters as $parameter => $value)
 					$url .= ($first ? '?' : '&').UrlEncode($parameter).'='.UrlEncode($value);
 				$parameters = array();
 			}
+			
 			$values = array_merge($values, $oauth, $parameters);
 			$uri = strtok($url, '?');
 			$sign = $method.'&'.$this->Encode($uri).'&';
@@ -1118,7 +999,7 @@ class oauth_client_class
 		switch(intval($this->oauth_version)) {
 			
 			case 1:
-			 
+			   echo "da";
 			 	$oauth = array(
 					'oauth_token'=>$this->access_token
 				);
@@ -1304,6 +1185,7 @@ class oauth_client_class
 		switch(intval($this->oauth_version))
 		{
 			case 1:
+			   
 				$one_a = ($this->oauth_version === '1.0a');
 				if($this->debug)
 					$this->OutputDebug('Checking the OAuth token authorization state');
@@ -1762,4 +1644,12 @@ class oauth_client_class
 
 */
 
+
+
+/* End of file connect_model.php */
+/* Location: ./application/models/connect_model.php */
+
 ?>
+
+
+

@@ -25,12 +25,12 @@ class Home extends CI_Controller {
 		
 		$this->_logged_in();
 		
-		$this->load->model( 'User' , '' , TRUE );
+		$this->load->model( 'User_model' , '' , TRUE );
 		
-		$this->load->model( 'Pager' , '' , FALSE );
-    $this->load->model( 'Components' , '' , FALSE );
+		$this->load->model( 'Pager_model' , '' , FALSE );
+    $this->load->model( 'Components_model' , '' , FALSE );
     
-    $this->Pager->init( 'home' );
+    $this->Pager_model->init( 'home' );
 	}
 	
 	
@@ -74,7 +74,7 @@ class Home extends CI_Controller {
   public function settings() {
     
     //  define the component
-  	$this->Components->init( 'settings' );
+  	$this->Components_model->init( 'settings' );
   	
   	$this->load->view( 'index' );
 	}  
@@ -82,7 +82,7 @@ class Home extends CI_Controller {
 	public function oauth_wiki() {
 
     //  define the component
-  	$this->Components->init( 'oauth_class_wiki' );
+  	$this->Components_model->init( 'oauth_class_wiki' );
   	
   	$this->load->view( 'index' );  	
   	
@@ -92,7 +92,7 @@ class Home extends CI_Controller {
   public function feed() {
 	   
     // initiate the component
-    $this->Components->init( 'feed' );	
+    $this->Components_model->init( 'feed' );	
     
     $this->load->view( 'index' );
   
@@ -102,7 +102,7 @@ class Home extends CI_Controller {
   public function oauth_class_wiki() {
 	   
     // initiate the component
-    $this->Components->init( 'oauth_class_wiki' );	
+    $this->Components_model->init( 'oauth_class_wiki' );	
     
     $this->load->view( 'index' );
   
