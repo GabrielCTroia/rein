@@ -1,4 +1,5 @@
 	<div id="wall">	
+	
 	  <a href="/?store_posts=true">store the posts</a>
 	  <div class="spacer"></div>
 	

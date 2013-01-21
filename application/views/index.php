@@ -1,4 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+<?php 
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -8,7 +14,7 @@
 		<script src="/<?php echo APPPATH; ?>javascript/loader.js"></script>
   </head>
   <body>
-		    
+		
 			<?php $this->load->view( $this->Pager->url() ); ?>
 
 	</body>

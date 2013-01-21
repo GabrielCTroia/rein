@@ -1,13 +1,16 @@
 <?php if( ! defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
-/* Explain Views & Controllers organization :
+ /* 
+  The Home.php Controller interacts with the user needs
   
-  Every Controller loads a common index.php which loads a specific
-  page ( home.php , splash.php , callback.php , connect.php ...) 
-  which also loads specifc components ( sign-up.php , login.php , feed.php , settings.php ... )
-  among with the page specific includes ( header.php , footer.php ) 
+  IT controls the following components:
   
-*/
+  - feed
+  - settings
+  
+  
+  *** to see more about the controllers see _guide_composition.txt {Controllers} ***
+  */
 
 class Home extends CI_Controller {
 
@@ -76,12 +79,19 @@ class Home extends CI_Controller {
   	$this->load->view( 'index' );
 	}  
 	
-	
+	public function oauth_wiki() {
+
+    //  define the component
+  	$this->Components->init( 'oauth_class_wiki' );
+  	
+  	$this->load->view( 'index' );  	
+  	
+	}
 	
 	
   public function feed() {
 	   
-    //  define the component
+    // initiate the component
     $this->Components->init( 'feed' );	
     
     $this->load->view( 'index' );
@@ -91,14 +101,9 @@ class Home extends CI_Controller {
  /* 
 	* FEED component 
 	*/
-	public function _feed() {
+	public function old_feed() {
 	   
-	  /* initiate the component */ 
-    $this->Components->init( 'feed' );	
-    
-    $this->load->view( 'index' );
-    
-    return;
+  	return;
   	
   	$data[ 'logged_in' ] = 'logged_in';
   	

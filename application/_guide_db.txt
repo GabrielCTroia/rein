@@ -1,7 +1,7 @@
 DATABASE
 
-user: rein_user
-pass: liberty
+user: fluffysp_reingit
+pass: liberty1234
 
 
 

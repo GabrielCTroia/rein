@@ -15,4 +15,4 @@ Controllers:
   
   {Ghost} Component = A component which doesn't have a view assgined to it
                       It mostly only redirects you to another URL where you actually load a view
-                      The difference between a Ghost Component and a method is that you actually use it as a URL
+                      The difference between a Ghost Component and a method inside the Controller is that you actually use it as a URL
