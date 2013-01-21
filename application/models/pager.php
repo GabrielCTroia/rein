@@ -50,5 +50,5 @@ if( !empty( $name ) )
 
 
 
-/* End of file components.php */
-/* Location: ./application/models/components.php */
+/* End of file pager.php */
+/* Location: ./application/models/pager.php */

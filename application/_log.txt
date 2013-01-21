@@ -1,0 +1,23 @@
+DISCLAIMER
+Append here everything we do in one working session.
+I think it's a better approach than writing the readme in GIT. (we can them keep both anyway)
+
+---------------------------------------------------------------------------------------
+
+
+Log started - January 14, 13 - 5:42 PM                                           GABRIEL
+  
+  - changed .center to .grid
+  
+  - took the <div class="center">{content}</div> out of each component and put it page. Try to stay as DRY here as we can.  
+
+Log ended - January 5,13 -                     
+
+----
+
+Log started - January 5, 13 - 2:25 PM                                            GABRIEL
+
+  I've done a lot here:))
+
+Log ended - January 5,13 -                     
+

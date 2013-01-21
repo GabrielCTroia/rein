@@ -1,5 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+   
+ <header class="header">   
+  
+  <div class="grid">
 
-<div class="bundle">
-  <a href="/logout" style="font-weight:900">Logout</a>
-</div>
+	<div class="logo">
+	  <h1>Recycle Inspiration</h1>
+	</div>
+	
+	<div class="bundle">
+	  <a href="/logout" style="font-weight:900">Logout</a>
+	</div>
+	
+  </div> <!-- eof .grid -->
+  
+ </header> 	

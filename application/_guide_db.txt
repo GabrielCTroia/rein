@@ -1,0 +1,71 @@
+DATABASE
+
+user: fluffysp_reingit
+pass: liberty1234
+
+
+
+DB TABLES
+
+1.USERS
+
+user_id:PK - (bigint) , autoincrement
+email:I - 
+password - MD5
+first_name - 
+last_name -
+created_date - NOW() - timestamp
+user_status - active 
+			  inactive
+			  deactivated
+			  deleted
+			  
+user_type - local (registered with rein)
+			foreign (loginned with 3rd party liek fb, twitter)
+			hybrid (both)
+
+	TO ADD:
+	
+session_id - last_session_id		
+
+
+2.POSTS
+
+post_id:PK
+post_foregin_id - 
+user_id:FK
+service_id - the service id
+collected_date - NOW() - timestamp
+created_date - timestamp 
+status - favorited
+		 defavorited
+		 deleted
+value - the value of the post (text / link to video/)
+source - href of the source
+param - {json with the specific service params}
+
+	TO ADD:
+
+title(caption) - 
+favorited_date - the time when was favorited
+
+
+
+3.SERVICES
+
+service_id:PK
+service_name:I 
+service_status: active
+				inactive
+authentication: 0 (false)
+ 				1 (true)
+				
+				
+4.ACCESS
+
+id:PK 
+user_id:FK
+service_id:FK
+access_tokens: {json with the access tokens of the specifc service}
+access_status: active
+			   error or something

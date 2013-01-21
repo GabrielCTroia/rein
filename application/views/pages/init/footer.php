@@ -1,3 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-<p>footer</p>
+<div class="grid">
+  
+  <p>footer</p>
+  
+</div>

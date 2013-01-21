@@ -42,7 +42,7 @@ Class User extends CI_Model {
 	private function login( $user_name , $password ){
 	 
 	 
-		$this->db->select('user_id, email, password');	
+		$this->db->select( 'user_id, email, password' );	
 		$this->db->from( 'users' );
 		$this->db->where( "user_name = '$user_name'" );
 		$this->db->where( "password = '$password'" );
@@ -107,4 +107,5 @@ Class User extends CI_Model {
 }
 
 
-//pure php doesn't need the closing tag 
+/* End of file user.php */
+/* Location: ./application/models/user.php */

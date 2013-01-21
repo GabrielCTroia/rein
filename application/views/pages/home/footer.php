@@ -1,3 +1,11 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if ( ! defined('BASEPATH') ) exit('No direct script access allowed'); ?>
 
-<p>footer</p>
+<footer class="footer">
+  
+  <div class="grid">
+
+    <p>footer</p>    
+
+  </div><!-- eof .grid -->
+
+</footer>

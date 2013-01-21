@@ -6,8 +6,8 @@
  *
  */
 
-	require('http.php');
-	require('oauth_client.php');
+	//require( APPPATH . 'libraries/oauth-api/http.php' );
+	require( APPPATH . 'libraries/oauth-api/oauth_client.php' );
 
 	$client = new oauth_client_class;
 	$client->debug = 1;
@@ -15,15 +15,15 @@
 	$client->redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].
 		dirname(strtok($_SERVER['REQUEST_URI'],'?')).'/login_with_twitter.php';
 
-	$client->client_id = ''; $application_line = __LINE__;
-	$client->client_secret = '';
+	$client->client_id = 'Bvz5rxbTq2VNFGrAxouww'; $application_line = __LINE__;
+	$client->client_secret = 'Ys6lVG0aWiZUaGmlBrFNhY5RMvRKibZ7nbffCtmd4g';
 
 	if(strlen($client->client_id) == 0
-	  || strlen($client->client_secret) == 0)
-  		die('Please go to Twitter Apps page https://dev.twitter.com/apps/new , '.
-  			'create an application, and in the line '.$application_line.
-  			' set the client_id to Consumer key and client_secret with Consumer secret. '.
-  			'The Callback URL must be '.$client->redirect_uri);
+	|| strlen($client->client_secret) == 0)
+		die('Please go to Twitter Apps page https://dev.twitter.com/apps/new , '.
+			'create an application, and in the line '.$application_line.
+			' set the client_id to Consumer key and client_secret with Consumer secret. '.
+			'The Callback URL must be '.$client->redirect_uri);
 
 	if(($success = $client->Initialize()))
 	{

@@ -1,4 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+<?php 
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -9,10 +15,7 @@
   </head>
   <body>
 		
-		<div class="wrapper">
-		    
 			<?php $this->load->view( $this->Pager->url() ); ?>
 
-		</div>
 	</body>
 </html>
