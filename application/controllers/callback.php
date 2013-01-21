@@ -43,6 +43,10 @@ class Callback extends CI_Controller {
   	if( $service_name ) echo $service_name;
 
 	}
+	
+	public function authorize_user_service() {
+  	
+	}
 
 
 	

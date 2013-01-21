@@ -19,11 +19,11 @@
 	$client->client_secret = '';
 
 	if(strlen($client->client_id) == 0
-	|| strlen($client->client_secret) == 0)
-		die('Please go to Twitter Apps page https://dev.twitter.com/apps/new , '.
-			'create an application, and in the line '.$application_line.
-			' set the client_id to Consumer key and client_secret with Consumer secret. '.
-			'The Callback URL must be '.$client->redirect_uri);
+	  || strlen($client->client_secret) == 0)
+  		die('Please go to Twitter Apps page https://dev.twitter.com/apps/new , '.
+  			'create an application, and in the line '.$application_line.
+  			' set the client_id to Consumer key and client_secret with Consumer secret. '.
+  			'The Callback URL must be '.$client->redirect_uri);
 
 	if(($success = $client->Initialize()))
 	{

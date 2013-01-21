@@ -18,6 +18,7 @@ class Home extends CI_Controller {
   * define the page url  
   */
   private static $page_url = "/home";  
+<<<<<<< HEAD
 
 	function __construct() {
 	
@@ -32,6 +33,22 @@ class Home extends CI_Controller {
     
     $this->Pager_model->init( 'home' );
 	}
+=======
+  
+  function __construct() {
+    
+    parent::__construct();
+     
+    $this->_logged_in();
+     
+    $this->load->model( 'User' , '' , TRUE );
+     
+    $this->load->model( 'Pager' , '' , FALSE );
+    $this->load->model( 'Components' , '' , FALSE );
+    
+    $this->Pager->init( 'home' );
+  }
+>>>>>>> 84fc1a04bf873e15e242dcef3a27084506861116
 	
 	
     	private function _logged_in() {
@@ -77,7 +94,12 @@ class Home extends CI_Controller {
   	$this->Components_model->init( 'settings' );
   	
   	$this->load->view( 'index' );
-	}  
+	}
+	
+	public function settings_access() {
+  	
+  	
+	}
 	
 	public function oauth_wiki() {
 
@@ -278,3 +300,6 @@ class Home extends CI_Controller {
 	}
 	
 }
+
+/* End of file home.php */
+/* Location: ./application/controllers/home.php */
