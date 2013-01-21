@@ -4,11 +4,19 @@
   The Home.php Controller interacts with the user needs
   
   IT controls the following components:
+<<<<<<< HEAD
   
   - feed
   - settings
   
   
+=======
+  
+  - feed
+  - settings
+  
+  
+>>>>>>> d5bbdbe7514b95242a8a0cfb6f9d95e447183f7c
   *** to see more about the controllers see _guide_composition.txt {Controllers} ***
   */
 
@@ -18,6 +26,20 @@ class Home extends CI_Controller {
   * define the page url  
   */
   private static $page_url = "/home";  
+
+	function __construct() {
+	
+		parent::__construct();
+		
+		$this->_logged_in();
+		
+		$this->load->model( 'User_model' , '' , TRUE );
+		
+		$this->load->model( 'Pager_model' , '' , FALSE );
+    $this->load->model( 'Components_model' , '' , FALSE );
+    
+    $this->Pager_model->init( 'home' );
+	}
   
   function __construct() {
     
@@ -74,7 +96,7 @@ class Home extends CI_Controller {
   public function settings() {
     
     //  define the component
-  	$this->Components->init( 'settings' );
+  	$this->Components_model->init( 'settings' );
   	
   	$this->load->view( 'index' );
 	}
@@ -87,7 +109,7 @@ class Home extends CI_Controller {
 	public function oauth_wiki() {
 
     //  define the component
-  	$this->Components->init( 'oauth_class_wiki' );
+  	$this->Components_model->init( 'oauth_class_wiki' );
   	
   	$this->load->view( 'index' );  	
   	
@@ -97,7 +119,7 @@ class Home extends CI_Controller {
   public function feed() {
 	   
     // initiate the component
-    $this->Components->init( 'feed' );	
+    $this->Components_model->init( 'feed' );	
     
     $this->load->view( 'index' );
   
@@ -107,7 +129,7 @@ class Home extends CI_Controller {
   public function oauth_class_wiki() {
 	   
     // initiate the component
-    $this->Components->init( 'oauth_class_wiki' );	
+    $this->Components_model->init( 'oauth_class_wiki' );	
     
     $this->load->view( 'index' );
   

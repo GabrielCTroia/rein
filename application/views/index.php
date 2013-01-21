@@ -15,7 +15,7 @@
   </head>
   <body>
 		
-			<?php $this->load->view( $this->Pager->url() ); ?>
+			<?php $this->load->view( $this->Pager_model->url() ); ?>
 
 	</body>
 </html>

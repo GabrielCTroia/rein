@@ -28,8 +28,6 @@ class Init extends CI_Controller {
   */
   private static $data = array();
   
-  
-  
 
   function __construct() {
 	 
@@ -41,12 +39,12 @@ class Init extends CI_Controller {
 		//  We are storing the Page and Components object as classes inside models
 		//  because we want to be able to access them from anywhere within the controller
 		//  instead of redefining a new variable for it everysingle time
-    $this->load->model( 'Pager' , '' , FALSE );
-    $this->load->model( 'Components' , '' , FALSE );
+    $this->load->model( 'Pager_model' , '' , FALSE );
+    $this->load->model( 'Components_model' , '' , FALSE );
     
     //  At the time of writing this, both models are identical, so they accept a single
     //  $name variable which automatically generates $name/$path/$url inside the init function
-    $this->Pager->init( 'init' );
+    $this->Pager_model->init( 'init' );
       
 	}
   
@@ -162,7 +160,7 @@ class Init extends CI_Controller {
 	      
 	  if( $this->form_validation->run() ) {
 		  
-		  $this->load->model( 'User' , '' , TRUE );
+		  $this->load->model( 'User_model' , '' , TRUE );
 		  
 		  //  register a new user to the database and return his unique user_id
 		  $user_id = $this->User->register_user( $this->input->post() );
@@ -239,7 +237,7 @@ class Init extends CI_Controller {
   	private function _verifylogin() {	
  
       /* load the User model */
-    	$this->load->model('User','',false);
+    	$this->load->model('User_model','',false);
     	
     	/* load the credential validation library */
   		$this->load->library( 'form_validation' );
