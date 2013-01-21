@@ -4,19 +4,11 @@
   The Home.php Controller interacts with the user needs
   
   IT controls the following components:
-<<<<<<< HEAD
   
   - feed
   - settings
   
   
-=======
-  
-  - feed
-  - settings
-  
-  
->>>>>>> d5bbdbe7514b95242a8a0cfb6f9d95e447183f7c
   *** to see more about the controllers see _guide_composition.txt {Controllers} ***
   */
 
@@ -40,20 +32,6 @@ class Home extends CI_Controller {
     
     $this->Pager_model->init( 'home' );
 	}
-  
-  function __construct() {
-    
-    parent::__construct();
-     
-    $this->_logged_in();
-     
-    $this->load->model( 'User' , '' , TRUE );
-     
-    $this->load->model( 'Pager' , '' , FALSE );
-    $this->load->model( 'Components' , '' , FALSE );
-    
-    $this->Pager->init( 'home' );
-  }
 	
 	
     	private function _logged_in() {
@@ -76,7 +54,6 @@ class Home extends CI_Controller {
       
 		  //default redirect to feed
 		  redirect( self::$page_url . "/feed" );
-		  
 	}
 	
 	

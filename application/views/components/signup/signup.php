@@ -2,7 +2,7 @@
     
   echo validation_errors();
   
-  echo form_open( '/signup' ); // <- this should be a little bit more dynamic
+  echo form_open( '/sign-up' ); // <- this should be a little bit more dynamic
   
   echo form_label( 'User Name:' , 'su-userName' );
   echo form_input( array(

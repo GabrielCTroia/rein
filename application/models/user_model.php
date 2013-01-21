@@ -48,13 +48,9 @@ Class User_model extends CI_Model {
 		$query = $this->db->get();
 		
 		if( $query->num_rows() == 1 )
-		{
-			return $query->result();
-		}
+		    return $query->result();
 		else
-		{
-			return false;	
-		}
+		    return false;	
 		
 	}
 	
@@ -104,9 +100,5 @@ Class User_model extends CI_Model {
 }
 
 
-/* End of file user.php */
-<<<<<<< HEAD:application/models/user.php
-/* Location: ./application/models/user.php */
-=======
-/* Location: ./application/models/user.php */
->>>>>>> d5bbdbe7514b95242a8a0cfb6f9d95e447183f7c:application/models/user_model.php
+/* End of file user_model.php */
+/* Location: ./application/models/user_model.php */

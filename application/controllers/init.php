@@ -90,7 +90,7 @@ class Init extends CI_Controller {
   public function splash() {
 
     //  define the component	  
-  	$this->Components->init( 'splash' );
+  	$this->Components_model->init( 'splash' );
   	
   	$this->load->view( 'index.php' );
   	
@@ -119,7 +119,7 @@ class Init extends CI_Controller {
     /* ElSE */
 
     //  define the component
-    $this->Components->init( 'signup' );
+    $this->Components_model->init( 'signup' );
     
     
     /* 
@@ -163,7 +163,7 @@ class Init extends CI_Controller {
 		  $this->load->model( 'User_model' , '' , TRUE );
 		  
 		  //  register a new user to the database and return his unique user_id
-		  $user_id = $this->User->register_user( $this->input->post() );
+		  $user_id = $this->User_model->register_user( $this->input->post() );
 		  
 		  
 		  $this->load->library('session');
@@ -218,7 +218,7 @@ class Init extends CI_Controller {
     /* ELSE  */
     
     //  define the component
-    $this->Components->init( 'login' );	
+    $this->Components_model->init( 'login' );	
           
     //load the FORM helper
     $this->load->helper('form');		
@@ -237,7 +237,7 @@ class Init extends CI_Controller {
   	private function _verifylogin() {	
  
       /* load the User model */
-    	$this->load->model('User_model','',false);
+    	$this->load->model( 'User_model' , '' , false );
     	
     	/* load the credential validation library */
   		$this->load->library( 'form_validation' );
@@ -269,7 +269,7 @@ class Init extends CI_Controller {
         $password  = $this->input->post('password');  
         
         /* retriev ethe USER_INFO */          
-  		  $user_info = User::validate_login( array( "user_name" => $user_name , "password" => $password ) , true );
+  		  $user_info = User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) , true );
         
         /* and store in the SESSION */                      					
   			$this->session->set_userdata( 'logged_in' , $user_info );
@@ -288,7 +288,7 @@ class Init extends CI_Controller {
         /* cache the inputs */
         $user_name = $this->input->post('user_name');
         
-        return User::validate_login( array( "user_name" => $user_name , "password" => $password ) );	
+        return User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) );	
       	
     	}
 	
