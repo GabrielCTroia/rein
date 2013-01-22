@@ -47,7 +47,9 @@ Class Services extends CI_Model
 		
 	}
 	
-	//get the service name by id
+	/* 
+	 * get the service name by id 
+	 */
 	function get_service_name( $id )
 	{
 		$this->db->select( 'service_name' );
@@ -69,8 +71,7 @@ Class Services extends CI_Model
 		{
 			return false;	
 		}
-		
-		
+
 	}
 	
 	

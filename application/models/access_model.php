@@ -30,5 +30,5 @@ Class Access extends CI_Model {
   
 }
 
-/* End of file access.php */
+/* End of file access_model.php */
 /* Location: ./application/models/access.php */

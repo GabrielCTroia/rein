@@ -7,14 +7,14 @@
 	  <a href="/?store_posts=true">store the posts</a>
 	  <div class="spacer"></div>
 	
-		<?php if( !isset( $posts ) || !$posts) :?>
-			
-			<p>There are no posts to show!</p>
-			
-		<?php elseif ( isset( $posts ) && $posts && isset ( $posts->error ) && $posts->error == true ) : ?>
+		<?php if ( isset ( $error_msg ) && $error_msg ) : ?>
 		
-			<p><?php echo $posts->error_msg; ?></p>
+				<p><?php echo $error_msg; ?></p>
 		
+		<?php else if( !isset( $posts ) || !$posts ) :?>
+			
+			<p>There are no posts to shows!</p>
+				
 		<?php else : ?>
 		
 			<?php foreach ($posts as $index=>$post) : ?>

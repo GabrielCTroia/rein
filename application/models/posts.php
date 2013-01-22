@@ -1,10 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
+Class Posts extends CI_Model {	
 
-	
-Class Posts extends CI_Model
-{	
 	private $user_id = false;
 	private $service_name = false;
 	private $service_id = false;

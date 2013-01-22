@@ -103,14 +103,14 @@ Class Connect extends CI_Model
 				$base_url = "https://api.instagram.com/oauth/authorize/";
 				$url = $base_url . "?client_id=" . $this->param->consumer_key . "&redirect_uri=" . $this->param->callback_url . "&response_type=code"; 
                 
-                if( isset( $this->param->scope ) ) {
-                	
-                	//in case there is a scope add it to the URL
-                	//for now I use the implicit basic which is perfect 
-                	//for retrieveing the feed, so I don't need any other scop
-                	$url .= implode( "+" , $this->param->scope );    
-	            	
-                }
+          if( isset( $this->param->scope ) ) {
+          	
+          	//in case there is a scope add it to the URL
+          	//for now I use the implicit basic which is perfect 
+          	//for retrieveing the feed, so I don't need any other scop
+          	$url .= implode( "+" , $this->param->scope );    
+        	
+            }
                 
                 
 			
