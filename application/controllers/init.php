@@ -13,8 +13,6 @@
                       The difference between a Ghost Component and a method is that you actually use it as a URL 
 */
 
-
-
 class Init extends CI_Controller {
 
  /* 
@@ -297,7 +295,7 @@ class Init extends CI_Controller {
  /*
   * SIGNOUT - Ghost Component
   */
-	public function signout() {	
+	public function logout() {	
 	
     /* 
 		 * check if the user doens't exist in the session and fallback to index() if YES

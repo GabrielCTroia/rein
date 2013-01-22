@@ -40,9 +40,7 @@ class Fetch extends CI_Controller {
   */
 	public function live( $service_name = NULL ){
     
-
-    
-    $data['posts'] = null;
+    $data['posts'] = NULL;
     
   	$this->Components_model->init( 'feed' );
     
@@ -68,66 +66,17 @@ class Fetch extends CI_Controller {
     	//fetch the datas and cache them in a var
 /*     	if ( !$data['error_msg'] = $this->fetch_service->fetch()->error ) { */
       	
-      	if( !$data['posts'] ) {
+      	if( $data['posts'] ) {
       	
         	$data['posts'] = $this->fetch_service->fetch();
           
-          var_dump( $data['posts'] );      	
+/*           var_dump( $data['posts'] );    */   	
           
         }
         
 /*     	} */
       	
   	}
-  	
-  	
-  	
-  	
-  	
-      /*
-$client = new Connect_model;
-    
-      $client->debug = true;
-  	
-      $client->debug_http = true;
-    
-      $client->server = 'Twitter';
-
-      	$client->redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].
-		dirname(strtok($_SERVER['REQUEST_URI'],'?')).'/test_oauth_client.php';
-    
-    	$client->client_id = '';
-    	
-      $client->client_secret = '';
-      
-      $client->scope = '';      
-      
-      $client->access_token = '84832050-vqPtMcEJCMuslYbISI8275LrMQFv4tSz2PwoobwnRasdasnnbhhmfjfguyfk,vj';
-
-      if(($success = $client->Initialize())) {
-        
-				 if(strlen($client->access_token)) {
-  			
-  				 $success = $client->CallAPI(  );
-  		   
-  		   }
-        
-      }
-    
-      $success = $client->Finalize($success);
-      
-      if($client->exit) echo "exit";
-      	
-      if($success)	{
-        
-        $client->Output();
-        
-      } else {
-        
-        echo HtmlSpecialChars($client->error);
-        
-      }
-*/
       
     
     $this->load->view( 'index' , $data );

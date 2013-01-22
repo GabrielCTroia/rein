@@ -12,7 +12,9 @@
   *** to see more about the controllers see _guide_composition.txt {Controllers} ***
   */
 
-class Home extends CI_Controller {
+require_once( APPPATH . 'core/controllers/User_controller.php' );
+
+class Home extends User_Controller {
 
   /* 
   * define the page url  
@@ -23,8 +25,6 @@ class Home extends CI_Controller {
 	
 		parent::__construct();
 		
-		$this->_logged_in();
-		
 		$this->load->model( 'User_model' , '' , TRUE );
 		
 		$this->load->model( 'Pager_model' , '' , FALSE );
@@ -32,20 +32,8 @@ class Home extends CI_Controller {
     
     $this->Pager_model->init( 'home' );
 	}
-	
-	
-    	private function _logged_in() {
-      			
-    		if( !$this->session->userdata( 'logged_in' ) ) {
-    		  header( 'location: /login' );
-    		  exit();
-    		}
-    	}
-	
-	
-	
-	
-	
+
+		
   /*
    * the index() acts like a router
    * the user never stays on it so it doesn't have a view

@@ -9,7 +9,7 @@
 	</div>
 	
 	<div class="bundle">
-	  <a href="/logout" style="font-weight:900">Logout</a>
+	  <a href="/log-out" style="font-weight:900">Logout</a>
 	</div>
 	
   </div> <!-- eof .grid -->

@@ -4,9 +4,33 @@ I think it's a better approach than writing the readme in GIT. (we can them keep
 
 ---------------------------------------------------------------------------------------
 
+Log started - January 22, 13 - 12:42 PM                                           GABRIEL
+  
+  - not sure how is the best: "to let the services call the url /callback/service/{service_name}" OR to call authenticate/callback/{service_name}. 
+    Probably better with the later one because I already have the auth_{service_name} model created and I kust need to add teh callback function.
+  
+  - to do: add a {reqest_access_token} method in authenticate
+  
+  - to do: change /service/ from the URL below to something like authenticate/{request_temp_token}/{service_name}
+  
+  - manage to set the link /authenticate/service/{service_name} to redirect to the service name and be redirectede to the callback url with the code (only instagram for now tested)
+
+  - added the Auth_abstract model with its subclasses Auth_{service_name} 
+
+  - added the core/Anonym_controller - to load whenever a anonymous is browsing the site. to be implemented later
+
+  - added the core/Cron_controller - to load from it whenever CRON is working and doesn't need log in
+  
+  - added the core/User_controller - to load from it whenever we want to check if it's logged in
+
+Log ended - January 21,13 -                     
+
+----
+
+
+
 Log started - January 21, 13 - 7:51 PM                                           GABRIEL
-  
-  
+
   
   - made the fetch/live fetching data but still not working properly (cannot use the old access_token for instagram so I need to get it again) gonna' work on access_mode now
   

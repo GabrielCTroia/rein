@@ -86,7 +86,7 @@ Class Connect extends CI_Model
 				$request_token = $connection->getRequestToken();
 				
 				$temp_oauth = array(
-					'oauth_token' 			=> $request_token['oauth_token'] ,444xxxx
+					'oauth_token' 			=> $request_token['oauth_token'] ,
 					'oauth_token_secret'	=> $request_token['oauth_token_secret'] 
 				);
 				
