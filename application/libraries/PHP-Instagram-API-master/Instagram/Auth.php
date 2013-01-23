@@ -94,7 +94,10 @@ class Auth {
             'redirect_uri'      => $this->config['redirect_uri'],
             'code'              => $code
         );
+          
+          
         $response = $this->proxy->getAccessToken( $post_data );
+        
         
         if ( isset( $response->getRawData()->access_token ) ) {
             return $response->getRawData()->access_token;

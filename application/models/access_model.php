@@ -10,7 +10,7 @@ Class Access_model extends CI_Model {
   
   //returns all the services that are active and working right now
 	function get_active_accesses() {
-		$this->db->select( 'service_id , service_name' );
+		$this->db->select( 's_id , service_name' );
 		$this->db->from( 'access' );
 		$this->db->where( 'service_status' , 'active' );
 		$this->db->order_by( 'service_id' );

@@ -45,15 +45,9 @@ abstract class Auth_abstract{
   
   
   /* 
-   * sends the headers to the server specific URL to request the access token   
+   * generate the accesstoken based on the requested $temp_token
    */
-  abstract protected function request_access_token();
-  
-  
-  /* 
-   * sends the headers to the server specific URL to request the access token   
-   */
-  abstract protected function callback();  
+  abstract protected function generate_access_token( $temp_token );
   
 }
 

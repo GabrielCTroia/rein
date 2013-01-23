@@ -19,7 +19,7 @@ Class User_model extends CI_Model {
 	  
 	  
 	  // get the user_id from the newly created row
-	  $this->db->select( 'user_id' );
+	  $this->db->select( 'u_id' );
 	  $this->db->where(
 	      array(
 	        'user_name' => $user_name,
@@ -39,7 +39,7 @@ Class User_model extends CI_Model {
 	private function login( $user_name , $password ){
 	 
 	 
-		$this->db->select( 'user_id, email, password' );	
+		$this->db->select( 'u_id, email, password' );	
 		$this->db->from( 'users' );
 		$this->db->where( "user_name = '$user_name'" );
 		$this->db->where( "password = '$password'" );
@@ -76,7 +76,7 @@ Class User_model extends CI_Model {
         foreach( $result as $row ){
 			
     				$user_info = array(
-  						          'user_id' => $row->user_id,
+  						          'u_id' => $row->user_id,
   						          'email'   => $row->email				
   						          );  				
   						          

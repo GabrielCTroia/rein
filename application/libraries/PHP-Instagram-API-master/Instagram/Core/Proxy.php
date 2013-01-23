@@ -74,7 +74,6 @@ class Proxy {
             'https://api.instagram.com/oauth/access_token',
             $data
         );
-        
         return $response;
     }
 
@@ -534,7 +533,8 @@ class Proxy {
      * @access private
      */
     private function apiCall( $method, $url, array $params = null, $throw_exception = true ){
-	    
+        
+
         $raw_response = $this->client->$method(
             $url,
             array(
@@ -547,11 +547,15 @@ class Proxy {
         
         
         if ( !$response->isValid() ) {
+
             if ( $throw_exception ) {
+
                 if ( $response->getErrorType() == 'OAuthAccessTokenException' ) {	
+
                     throw new \Instagram\Core\ApiAuthException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
                 else {
+
                     throw new \Instagram\Core\ApiException( $response->getErrorMessage(), $response->getErrorCode(), $response->getErrorType() );
                 }
             }

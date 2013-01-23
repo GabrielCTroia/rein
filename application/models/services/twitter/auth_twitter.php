@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //load the Auth_abstract
-require_once( APPPATH . 'models/Auth_abstract.php' );
+require_once( APPPATH . 'models/auth_abstract.php' );
   
 class Auth_twitter extends Auth_abstract{
   

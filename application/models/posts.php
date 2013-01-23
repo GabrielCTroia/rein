@@ -23,19 +23,19 @@ Class Posts extends CI_Model {
 	function get_posts( $limit = 20 , $extra_fields = false )
 	{	
 		
-		$select_str = 'post_id, post_foreign_id, service_id, posts.created_date, value, source, param ' . ' , ' .$extra_fields;
+		$select_str = 'p_id, post_foreign_id, service_id, posts.created_date, value, source, param ' . ' , ' .$extra_fields;
 
 		$this->db->select( $select_str );
 		$this->db->from( 'posts' );
-		$this->db->join( 'users' , 'users.user_id=posts.user_id');
-		$this->db->where( 'posts.user_id', $this->user_id );
+		$this->db->join( 'users' , 'users.u_id=posts.u_id');
+		$this->db->where( 'posts.u_id', $this->user_id );
 			
 		if( $this->service_id ) 
 		{
 			
 			// if there is a service_id specified than return only that
 			// if it's not specified return everything
-			$this->db->where( 'posts.service_id', $this->service_id );
+			$this->db->where( 'posts.s_id', $this->service_id );
 			
 		}	
 		

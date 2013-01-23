@@ -2,7 +2,7 @@
 
 require_once( APPPATH . 'core/controllers/User_controller.php' );
 
-class Authenticate extends User_Controller {
+class Auth extends User_Controller {
 
   /* 
   * define the page url  
@@ -10,7 +10,7 @@ class Authenticate extends User_Controller {
   private static $page_url = "/authenticate";  
   
 	
-	function __construct() {
+	function __construct( $service_name = null ) {
 	
 		parent::__construct();
 		
@@ -71,7 +71,9 @@ class Authenticate extends User_Controller {
 
 		public function service( $service_name = NULL ){
   		// better than having all of these 3 methods below 
-  		// we should do th elogic here. check if it doesn't have an access token than do all of this requests
+  		// we should do the logic here. check if it doesn't have an access token than do all of these requests
+  		
+  		
   		
 		}
 		
@@ -88,8 +90,7 @@ class Authenticate extends User_Controller {
         echo "There is no service chosen. What to authenticate?";
     	
     	} else { 
-      	
-      	
+      
         $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' , false );
         
         $this->auth_service->request_temp_token();
@@ -105,6 +106,19 @@ class Authenticate extends User_Controller {
 		public function callback( $service_name = NULL ){
   		
   		/* load the callback model */
+  		$this->load->model( 'Services_model' , '' , false );
+  		
+  		if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
+    	
+        echo "This service is not active in our database";
+    	
+    	} else { 
+        
+        $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' , false );
+        
+        $this->auth_service->generate_access_token( $_GET );
+
+    	}
   		
 		}  
         
