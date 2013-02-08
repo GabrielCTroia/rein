@@ -10,7 +10,6 @@ class Auth_instagram extends Auth_abstract{
    */
   protected $consumer_key = '89167de1acc3478ca6c602f0cb3a6893';   
   
-  
   /* 
    * the consumer key specific for each service
    */
@@ -35,7 +34,7 @@ class Auth_instagram extends Auth_abstract{
 
   function __construct(){
     
-    //load the necessay libraries for the service
+    //load the necessary libraries for the service
     include_once( __DIR__ . '/load_library.php'); 
     
   }
@@ -55,6 +54,7 @@ class Auth_instagram extends Auth_abstract{
 
   public function generate_access_token( $temp_token ){
     
+
     //took from libraries/instagram/auth.php getAccessToken()				
     $app_config = array(
 	    'client_id'         => $this->consumer_key,
@@ -64,9 +64,9 @@ class Auth_instagram extends Auth_abstract{
 	  );
 	        
 	  $auth = new Instagram\Auth( $app_config );
-    
+
     $auth->getAccessToken( $temp_token['code'] );
-        
+
 	  $access_token = '{ 
 	    
 	    "access_token"	: "' . $auth->getAccessToken( $temp_token['code'] ) . '"

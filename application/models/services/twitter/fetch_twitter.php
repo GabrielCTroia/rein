@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //load the Fetch_model
-require_once( APPPATH . 'models/Fetch_model.php' );
+require_once( APPPATH . 'models/fetch_model.php' );
   
 class Fetch_twitter extends Fetch_model{
   
@@ -27,7 +27,8 @@ class Fetch_twitter extends Fetch_model{
    * fetch the live posts 
    */
   function fetch( $count = 20 ){
-
+    
+    //the oauth CODES are gonna' be taken from the DB once activated
     $service = new TwitterOAuth( "" , "" , "84832050-vqPtMcEJCMuslYbISI8275LrMQFv4tSz2PwoobwnR", "7hPAhjcRiQoa5TupNjMZaWKRB9naArqlGUcwmSJGxRQ" );
 
       //when I will do the Oauth classes and each particular one
@@ -36,14 +37,16 @@ class Fetch_twitter extends Fetch_model{
       // If those are not working it should let me reconnect
       
       $param_arr = array(
-				"count"		=> $count			       	
-          );
+				"count"	 => $count			       	
+                );
     
     //check if there is an error in the request 
     //valid only for twitter
     if( $error = $service->get('favorites' , $param_arr )->error ){
       
       $this->error = $error;
+      
+      var_dump($service->get('favorites' , $param_arr ));
       
       return false;
     }

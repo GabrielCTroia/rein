@@ -542,6 +542,8 @@ class Proxy {
                 'client_id'     => isset( $params['client_id'] ) ? $params['client_id'] : $this->client_id
             ) + (array) $params
         );
+
+
         
         $response = new \Instagram\Net\ApiResponse( $raw_response );
         

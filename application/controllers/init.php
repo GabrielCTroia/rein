@@ -67,9 +67,12 @@ class Init extends CI_Controller {
       //  load splah page
       redirect( self::$page_url . '/splash' );
             								
-		} else
-		  redirect( 'home' );
-		  
+		} else {
+  		
+  		redirect( 'home' );
+  		
+		}
+
 	}
 	
 

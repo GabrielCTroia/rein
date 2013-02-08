@@ -113,6 +113,7 @@ class Auth extends User_Controller {
         echo "This service is not active in our database";
     	
     	} else { 
+
         
         $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' , false );
         

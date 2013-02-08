@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //load the Fetch_model
-require_once( APPPATH . 'models/Fetch_model.php' );
+require_once( APPPATH . 'models/fetch_model.php' );
   
 class Fetch_instagram extends Fetch_model{
   
@@ -38,6 +38,7 @@ class Fetch_instagram extends Fetch_model{
     
     $instagram = new Instagram\Instagram;		
     
+    var_dump($instagram);
     
 		$instagram->setAccessToken( '50301110.89167de.b9d6dab7f3874ee4966bb05fcb75e4b0' );
 		
@@ -45,8 +46,7 @@ class Fetch_instagram extends Fetch_model{
 				"count"		=> $count			       	
     );
 
-
-    
+      
     $user = $instagram->getCurrentUser();
             		        
     return $user->getLikedMedia( $param_arr );		

@@ -14,7 +14,7 @@ class Fetch extends CI_Controller {
  /* 
   * define the page url  
   */
-  private static $page_url = "/connect"; 
+  private static $page_url = "/fetch"; 
 
   function __construct() {
 	
@@ -30,7 +30,11 @@ class Fetch extends CI_Controller {
 		
 	}
 
-	public function index(){}	
+	public function index(){
+  	
+  	redirect ( 'home' );
+  	
+	}	
  
  /*
   * LIVE - {Ghost} Component
@@ -62,7 +66,7 @@ class Fetch extends CI_Controller {
     	$this->fetch_service->init();
     	
     	//if there is an error than show it 
-    	if ( !$this->fetch_service->fetch() || $this->fetch_service->error ) {
+    	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
     	   
       	$data['error_msg'] = $this->fetch_service->error;
 
