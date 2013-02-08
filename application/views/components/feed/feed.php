@@ -12,7 +12,7 @@
 			<p>There are no posts to shows!</p>
 		
 		<?php else : ?>
-		
+		  
 			<?php foreach ($posts as $index=>$post) : ?>
 				
 				<?php 

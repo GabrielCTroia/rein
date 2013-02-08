@@ -368,3 +368,5 @@ function __autoload( $class = 'util' ){
 	
  }
 */
+
+ini_set('display_errors',1);

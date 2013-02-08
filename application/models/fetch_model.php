@@ -13,8 +13,10 @@ class Fetch_model extends CI_Model{
    */
   private $service_name = null;  
  
-  
-  
+  /* 
+   * $catches the error msg 
+   */  
+  private $error = null;
  
   
 }

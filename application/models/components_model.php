@@ -16,7 +16,6 @@ Class Components_model extends CI_Model {
     //  init can only be called once
     //  it defines the base properties for the component
     
-    
     $this->name = $name;
     $safe_name = preg_replace( '/\s/' , '_' , $name );
     $this->path .= $safe_name . '/';

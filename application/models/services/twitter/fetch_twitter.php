@@ -26,7 +26,7 @@ class Fetch_twitter extends Fetch_model{
   /* 
    * fetch the live posts 
    */
-  function fetch(){
+  function fetch( $count = 20 ){
 
     $service = new TwitterOAuth( "" , "" , "84832050-vqPtMcEJCMuslYbISI8275LrMQFv4tSz2PwoobwnR", "7hPAhjcRiQoa5TupNjMZaWKRB9naArqlGUcwmSJGxRQ" );
 
@@ -36,11 +36,20 @@ class Fetch_twitter extends Fetch_model{
       // If those are not working it should let me reconnect
       
       $param_arr = array(
-				"count"		=> 20			       	
+				"count"		=> $count			       	
           );
-		        
-		return $this->format( $service->get('favorites' , $param_arr ) );
     
+    //check if there is an error in the request 
+    //valid only for twitter
+    if( $error = $service->get('favorites' , $param_arr )->error ){
+      
+      $this->error = $error;
+      
+      return false;
+    }
+          
+		return $this->format( $service->get('favorites' , $param_arr ) );
+		   
   }
   
   
@@ -48,7 +57,6 @@ class Fetch_twitter extends Fetch_model{
    * format the posts before showing or storing into the db 
    */
   function format( $posts ){
-    
     foreach( $posts as $index=>$post )
 				{	
 					$data[$index]  = array(
