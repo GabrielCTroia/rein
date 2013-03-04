@@ -1,17 +1,15 @@
 	<?php $post->param = json_decode( $post->param ); ?>
-	<article class="layout-twitter spacer spacer-double c1_1 clearfix">
+	<article class="layout-instagram clearfix">
 		<div class="left">
 			<img width="60" src="<?php echo APPPATH . "images/icons/instagram-icon.png" ?>">
 		</div>
 		
-		<div class="wrapper column c2_3">
+		<div class="wrapper">
 			
 			<h4>Post #: <?php echo $index + 1?></h4>
 			<span>Created Date <?php echo $post->created_date; ?></span>
 			<br/>	
-            <div class="c1_5">
-			    <img class="full-width" src="<?php echo $post->param->profile_image; ?>"/>
-			</div>
+			    <img class="" src="<?php echo $post->param->profile_image; ?>"/>
             
 			<span class="spacer spacer-text"><?php echo $post->param->user_name; ?></span>
 			<img class="spacer spacer-text full-width" src="<?php echo $post->value; ?>" />

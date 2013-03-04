@@ -62,8 +62,14 @@ class Home extends User_Controller {
     
     //  define the component
   	$this->Components_model->init( 'settings' );
+
+  	$this->load->model( 'Services_model' , '' , TRUE );
+
+  	$data[ 'active_services' ] = $this->Services_model->get_active_services();
   	
-  	$this->load->view( 'index' );
+  	//  do a check wether an service/status_code is present in the URL. if so leave a message
+  	
+  	$this->load->view( 'index' , $data );
 	}
 	
 	public function settings_access() {
@@ -81,13 +87,20 @@ class Home extends User_Controller {
 	}
 	
 	
-  public function feed() {
-	   
+  public function feed() { 
+  
     // initiate the component
     $this->Components_model->init( 'feed' );	
     
-    $this->load->view( 'index' );
-  
+    
+    $this->load->model( 'Posts_model' , '' , false );
+    
+    $this->Posts_model->init( $this->session->userdata['logged_in']['u_id'] );
+    
+    $data['posts'] = $this->Posts_model->get_posts();
+    
+    $this->load->view( 'index' , $data );
+    
   }
   
   

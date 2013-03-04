@@ -9,7 +9,9 @@
 	</div>
 	
 	<div class="bundle">
-	  <a href="/log-out" style="font-weight:900">Logout</a>
+	  <a href="/log-out">Logout</a>
+     | 
+    <a href="/home/settings">Settings</a>
 	</div>
 	
   </div> <!-- eof .grid -->

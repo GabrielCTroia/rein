@@ -30,7 +30,7 @@ Class User_model extends CI_Model {
 	  
 	  $user_id = $this->db->get( 'users' );
 	      
-		return $user_id->first_row()->user_id;
+		return $user_id->first_row()->u_id;
 	}
 	
 	
@@ -42,7 +42,7 @@ Class User_model extends CI_Model {
 		$this->db->select( 'u_id, email, password' );	
 		$this->db->from( 'users' );
 		$this->db->where( "user_name = '$user_name'" );
-		$this->db->where( "password = '$password'" );
+		$this->db->where( "password = '" . md5($password) . "'" );
 		$this->db->limit( 1 );
 		
 		$query = $this->db->get();
@@ -76,7 +76,7 @@ Class User_model extends CI_Model {
         foreach( $result as $row ){
 			
     				$user_info = array(
-  						          'u_id' => $row->user_id,
+  						          'u_id' => $row->u_id,
   						          'email'   => $row->email				
   						          );  				
   						          

@@ -1,3 +1,5 @@
+-- Updated 03.03.2013 by Gabriel
+
 DATABASE
 
 user: fluffysp_reingit
@@ -9,7 +11,7 @@ DB TABLES
 
 1.USERS
 
-user_id:PK - (bigint) , autoincrement
+u_id:PK - (bigint) , autoincrement
 email:I - 
 password - MD5
 first_name - 
@@ -31,10 +33,10 @@ session_id - last_session_id
 
 2.POSTS
 
-post_id:PK
+p_id:PK
 post_foregin_id - 
-user_id:FK
-service_id - the service id
+u_id:FK
+s_id:FK - the service id
 collected_date - NOW() - timestamp
 created_date - timestamp 
 status - favorited
@@ -49,11 +51,15 @@ param - {json with the specific service params}
 title(caption) - 
 favorited_date - the time when was favorited
 
+  2.1 POSTS_TWITTER
+  
+  2.2 POSTS_INSTAGRAM
+
 
 
 3.SERVICES
 
-service_id:PK
+s_id:PK
 service_name:I 
 service_status: active
 				inactive
@@ -63,9 +69,9 @@ authentication: 0 (false)
 				
 4.ACCESS
 
-id:PK 
-user_id:FK
-service_id:FK
+a_id:PK - is a combination of u_id + s_id (in this way we make sure there are no duplicates and can use On Duplicate Update)
+u_id:FK
+s_id:FK
 access_tokens: {json with the access tokens of the specifc service}
 access_status: active
 			   error or something

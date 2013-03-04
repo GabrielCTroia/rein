@@ -1,17 +1,76 @@
 DISCLAIMER
 Append here everything we do in one working session.
-I think it's a better approach than writing the readme in GIT. (we can them keep both anyway)
+I think it's a better approach than writing the readme in GIT. (we can keep them both anyway)
 
 ---------------------------------------------------------------------------------------
+
+TO KEEP IN MIND:
+- After every failed/successful request, send status_codes to the original page. For example, on twitter authorization, it redirects
+      redirect( '/home/settings?service=twitter&status_code=200' );
+- Skim over the auth_twitter class and how it talks to the auth/controller to keep things similar
+
+TO DO:
+- build a status_code + status_message repository so if an error comes across whil adding new services we can better debug them
+- /controller/auth - line 92 - double check if users already authenticated before inserting another entry
+- add a settings link in the logged in header menu
+- B
+
+- store the posts in the DB - got to find a way to work with thte dynamic tables posts_{Service} 
+  
+- Add few more Services
+
+- Design 
+
+- Keep it simple for now, focus more on speed than optimization 
+
+- Launch alpha version
+
+
+Log started - MARCH 03 , 13 - 11AM                                           GABRIEL
+
+  - Instagram Live fetching (only works with user's media though not with likedMedia but that's fixable)
+  
+  - Fixed the bug where Auth inserts a new row instead of UPDATING the old one - ON DUPLICATE KEY UPDATE did the trick
+  
+  - Signup is working again
+
+  - Get the posts in the feed from the DB is working - again only for Instagram but should do it for now
+  
+  - created a Format_class.php and Format_interface.php for formating the posts before return. It's called ini the controller for now, but I think it would be better if we just have a method in the fetch_{service}.php - less code, cleaner. 
+
+
+Log ended - MARCH 03 , 13 - 11PM                                         
+
+
+Log started - February 10, 13 - 11AM                                          MARIUS
+
+  - on failed request token requests, redirect back to settings page and pass 2 arguments in the URL, the service and status_code
+    
+    We might as well start making up status codes for certain results, with the first one being
+    
+    222 = Error retrieving OAuth token/verifier
+    223 = Error retrieving OAuth token/secret
+    522 = generate_access_token missing functionality (must define in auth_{service}.php)
+    523 = Missing OAuth verification
+  
+  - Built Twitter OAuth functionality. You can now click the link through /home/settings and have your access tokens saved
+  
+  - Made the verify_login check passwords agains md5 as they were being saved as md5 but not checked against it.
+  
+  - fixed a bug where user id wasn't being stored in the session
+  
+
+Log ended - Feburary 10, 5:47 PM
+
 
 Log started - January 22, 13 - 12:42 PM                                           GABRIEL
   
   - not sure how is the best: "to let the services call the url /callback/service/{service_name}" OR to call authenticate/callback/{service_name}. 
-    Probably better with the later one because I already have the auth_{service_name} model created and I kust need to add teh callback function.
+    Probably better with the later one because I already have the auth_{service_name} model created and I just need to add teh callback function.
   
-  - to do: add a {reqest_access_token} method in authenticate
+  - DONE / to do: add a {reqest_access_token} method in authenticate
   
-  - to do: change /service/ from the URL below to something like authenticate/{request_temp_token}/{service_name}
+  - DONE / to do: change /service/ from the URL below to something like authenticate/{request_temp_token}/{service_name}
   
   - manage to set the link /authenticate/service/{service_name} to redirect to the service name and be redirectede to the callback url with the code (only instagram for now tested)
 
@@ -47,7 +106,7 @@ Log started - January 14, 13 - 5:42 PM                                          
   
   - took the <div class="center">{content}</div> out of each component and put it page. Try to stay as DRY here as we can.  
 
-Log ended - January 5,13 -                     
+Log ended - January 14,13 -                     
 
 ----
 

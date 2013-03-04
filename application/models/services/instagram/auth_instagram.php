@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+j<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //load the Fetch_model
 require_once( APPPATH . 'models/auth_abstract.php' );
@@ -18,7 +18,7 @@ class Auth_instagram extends Auth_abstract{
   /* 
    * the callback url 
    */
-  protected $callback_url = 'http://rein.smalldeskideas.com/auth/callback/instagram';
+  protected $callback_url = 'http://127.0.0.1:8888/auth/callback/instagram';
 
   /* 
    * the base API URL  
@@ -38,6 +38,17 @@ class Auth_instagram extends Auth_abstract{
     include_once( __DIR__ . '/load_library.php'); 
     
   }
+  
+/*
+  public function load_library(){
+    
+     include_once( APPPATH . '/libraries/PHP-Instagram-API-master/Examples/_SplClassLoader.php' );
+    
+    
+         $loader = new SplClassLoader( 'Instagram', APPPATH . '/libraries/PHP-Instagram-API-master/' );
+     $loader->register();
+  } 
+*/
 
   public function request_temp_token(){
     
@@ -53,27 +64,31 @@ class Auth_instagram extends Auth_abstract{
 
 
   public function generate_access_token( $temp_token ){
-    
 
-    //took from libraries/instagram/auth.php getAccessToken()				
     $app_config = array(
 	    'client_id'         => $this->consumer_key,
 	    'client_secret'     => $this->consumer_secret,
 	    'redirect_uri'      => $this->callback_url,
 	    'scope'             => $this->scope
-	  );
-	        
-	  $auth = new Instagram\Auth( $app_config );
-
-    $auth->getAccessToken( $temp_token['code'] );
-
-	  $access_token = '{ 
-	    
-	    "access_token"	: "' . $auth->getAccessToken( $temp_token['code'] ) . '"
-	  
-	                  }';		        
+	  );    
     
-    var_dump($access_token);
+    $auth = new Instagram\Auth( $app_config );
+    
+    $data = null;
+    
+    if ( $code = $temp_token['code'] ) {
+      
+      try {
+          $data['access_token'] = $auth->getAccessToken( $code );
+      }
+      catch ( \Instagram\Core\ApiException $e ) {
+          $data['error'] = ucwords( $e->getMessage() );
+      }
+      
+    }
+    
+    return $data;
+    
   }
   
   

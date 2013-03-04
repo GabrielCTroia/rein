@@ -29,7 +29,7 @@ class Fetch_twitter extends Fetch_model{
   function fetch( $count = 20 ){
     
     //the oauth CODES are gonna' be taken from the DB once activated
-    $service = new TwitterOAuth( "" , "" , "84832050-vqPtMcEJCMuslYbISI8275LrMQFv4tSz2PwoobwnR", "7hPAhjcRiQoa5TupNjMZaWKRB9naArqlGUcwmSJGxRQ" );
+    $service = new TwitterOAuth( "" , "" , "hJd74V3X2hTB7Ixzc0H8mdpRUdNc9b5nvDu14o", "lWo2mPGirFPy2AlwhIteChnuCfhgu04MmVnzoWWEm0" );
 
       //when I will do the Oauth classes and each particular one
       //I should return an error if the access_token is not given or is not thr right one
@@ -46,7 +46,7 @@ class Fetch_twitter extends Fetch_model{
       
       $this->error = $error;
       
-      var_dump($service->get('favorites' , $param_arr ));
+      var_dump( $this->error );
       
       return false;
     }

@@ -5,16 +5,7 @@ require_once( APPPATH . 'models/fetch_model.php' );
   
 class Fetch_instagram extends Fetch_model{
   
-  /* 
-   * init function 
-   * NEEDS to be loaded each time we use this model otherwise the proper library is not loaded
-   */
-  function init(){
     
-    $this->load_library();
-    
-  }
-  
   function load_library(){
 
     //this are gonna become part of this class and the access class but for the sake of productivbity I'm gonna' just live them here     
@@ -36,22 +27,29 @@ class Fetch_instagram extends Fetch_model{
     $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ) );
 		$loader->register();
     
-    $instagram = new Instagram\Instagram;		
+    $instagram = new Instagram\Instagram;
     
-    var_dump($instagram);
-    
-		$instagram->setAccessToken( '50301110.89167de.b9d6dab7f3874ee4966bb05fcb75e4b0' );
+		$instagram->setAccessToken( $this->access_tokens );
 		
 		$param_arr = array(
 				"count"		=> $count			       	
     );
 
       
-    $user = $instagram->getCurrentUser();
-            		        
-    return $user->getLikedMedia( $param_arr );		
+    $current_user = $instagram->getCurrentUser();
+    
+    
+/*     var_dump($current_user->getLikedMedia( array( 'max_like_id' => '427150720_11007611' ) )); */
+    
+    
+/*     var_dump( $current_user->getMedia( $param_arr ) ); */
+    
+/*     var_dump($user->getLikedMedia()); */
+                		        
+    return $current_user->getMedia( $param_arr );		
     
   }
+  
   
   
   

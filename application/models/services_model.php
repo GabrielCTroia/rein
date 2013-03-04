@@ -10,6 +10,12 @@
 Class Services_model extends CI_Model {
   
  /* 
+  * cache the base table 
+  */  
+  private $base_table = 'services';
+  
+  
+ /* 
   * get the service by the specified field
   * 
   * $field_name   = 'name' , 'id' or any other field name which exists in the database
@@ -26,7 +32,7 @@ Class Services_model extends CI_Model {
 
     //rename the 'id' to 'service_id'      
     if( $field_name == 'id' ) 
-      $field_name = 'service_id';  
+      $field_name = 's_id';  
     	 
 	  //if is an array implode the values
 	  if ( is_array( $select ) ) 
@@ -38,22 +44,33 @@ Class Services_model extends CI_Model {
 	   $select = $field_name;   
 
 		$this->db->select( $select );
-		$this->db->from( 'services' );
+		$this->db->from( $this->base_table );
 		$this->db->where( $field_name , $field_value );
 		
 		$query = $this->db->get();	
 		
-		if( $query->num_rows() > 0 )		
-		{	
-			$result = $query->result();
-			
-			return $result[0];
-		}
+		return $this->return_query_results( $query );
+	}
+	
+	public function get_active_services() {
+  	
+  	$this->db->select( 'service_name' );
+  	$this->db->from( 'services' );
+  	$this->db->where( 'service_status' , 'active' );
+  	
+  	$query = $this->db->get();
+  	
+  	return $this->return_query_results( $query );
+	}
+	
+	//  to save a bit of repetition
+	private function return_query_results( $query ) {
+  	
+  	if( $query->num_rows() )
+  	    return $query->result();
 		else
-		{
-			return false;	
-		}
-
+		    return false;	
+		
 	}
   
   

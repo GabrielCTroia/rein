@@ -21,7 +21,11 @@
 		      
 		      <!-- Profile Picture -->
 		      
-		      <a class="right" href="/home/logout">Log Out</a>
+		      <div class="bundle">
+  		      <a class="right" href="/home/logout">Log Out</a>
+  		       | 
+  		      <a href="/home/settings">Settings</a>
+		      </div>
         	<div class="right">			
         		<p>Connect with:</p>
         		

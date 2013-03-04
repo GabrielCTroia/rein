@@ -49,13 +49,17 @@ class Fetch extends CI_Controller {
   	$this->Components_model->init( 'feed' );
     
     //load the services model
-  	$this->load->model( 'Services_model' , '' , false );      	
+  	$this->load->model( 'Services_model' , '' , false );   
+  	
+  	$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
+    $service_id = $service_id[0]->s_id;   	
       	
-    
+
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
   	if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
     	
     	//no posts to show
+    	$data['error_msg'] = "No posts to show for " . $service_name;
     	
   	} else {
   	 
@@ -63,19 +67,36 @@ class Fetch extends CI_Controller {
     	$this->load->model( "services/$service_name/Fetch_$service_name" , 'fetch_service' , false );
     	
     	//init the fetch_service model
-    	$this->fetch_service->init();
     	
-    	//if there is an error than show it 
-    	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
-    	   
-      	$data['error_msg'] = $this->fetch_service->error;
-
+    	/* load the access model */
+      $this->load->model( 'Access_model' );
+    	
+    	if( $access_tokens = $this->Access_model->get_access_token( $this->session->userdata['logged_in']['u_id'] , $service_id ) ) {
+      	
+        $this->fetch_service->init( $access_tokens );	
+        
+        //if there is an error than show it 
+      	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
+      	   
+        	$data['error_msg'] = $this->fetch_service->error;
+  
+      	} else {
+        	
+        	/*FORMAT & INSERT the FETCHED datas*/
+        	
+          /* load the format class */
+          $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false );
+          
+          $data['posts'] = $this->format_service->format_posts( $this->fetch_service->fetch() );
+        	
+      	}
+      	
     	} else {
       	
-        //fetch the datas and cache them in a var
-        $data['posts'] = $this->fetch_service->fetch();
+        $data['error_msg'] = "No access token in our Database for " . $service_name;	
       	
     	}
+    	
       	
   	}
       
@@ -84,6 +105,25 @@ class Fetch extends CI_Controller {
 
 	}
 	
+	
+	
+	
+	
+	public function stealth( $service_name = NULL ){
+  	
+  	
+  	
+  	
+	}
+	 
+	 /* 
+	  * FORMAT & INSERT all the fetched datas into the db 
+	  */
+	 private function _insert( $data , $service_name ){
+  	 
+/*   	 $this->load->model(  ) */
+  	 
+	 }
 	
 	/* 
 	 * DEBUG - Component 
