@@ -26,19 +26,22 @@ Class Posts_model extends CI_Model {
   /* 
    * catches the error status 
    */  
-  protected $error = false;
+  public $error = false;
   
   /* 
    * catches the error msg 
    */  
-  protected $error_msg = null;  
+  public $error_msg = null;  
   
   
   function init( $user_id , $service_id = null ){
-
+    
     if( !isset( $user_id ) ) {
+      
       $this->error = true;
-      $this->error_msg = "There is no user";
+      $this->error_msg = "There is no user! You cannot be here!";
+      
+      return false;
     }
     
     $this->user_id = $user_id;
@@ -73,7 +76,7 @@ $this->db->select( $select_str );
 */
 
     $sql = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' p' 
-         . ' JOIN users ON users.u_id = p.u_id'
+         . ' JOIN users ON users.u_id = 1'
          . ' JOIN services ON services.s_id = ( SELECT s_id FROM ' . $this->base_table . ' pp WHERE pp.p_id = p.p_id  )'
 /*          . ' JOIN posts_( SELECT service_name FROM pp WHERE ppp.s_id = pp.s_id ) p_f ON p_f.p_id = p.p_id '  */
          . ' WHERE p.u_id = ' . $this->user_id
@@ -100,9 +103,16 @@ $this->db->select( $select_str );
 			$query->free_result();
 			
 			return $result;
-		} else
-		    return false;
-		
+		} else {
+  		
+  		$this->error = true;
+      
+      $this->error_msg = "There are no posts to show!";		  
+  		
+  		return false;
+  		
+		}
+		    
 	}
 
 	//get the latest post in a specified query
@@ -126,11 +136,16 @@ $this->db->select( $select_str );
 		
 		$query = $this->db->get( '' , 1 );
 		
-		if( $query->num_rows() > 0 )
-		{
+		if( $query->num_rows() > 0 ) {
+
 			return $query->result();
-		}
-		else {
+
+		} else {
+		  
+      $this->error = true;
+      
+      $this->error_msg = "There are mo posts to show!";		  
+		  
 			return false;
 		}
 		

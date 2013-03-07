@@ -92,13 +92,22 @@ class Home extends User_Controller {
     // initiate the component
     $this->Components_model->init( 'feed' );	
     
-    
     $this->load->model( 'Posts_model' , '' , false );
     
-    $this->Posts_model->init( $this->session->userdata['logged_in']['u_id'] );
+    //make sure the init passes with no errors
+    if ( $this->Posts_model->init( $this->session->userdata['logged_in']['u_id'] ) !== false ) {
+      
+      $data['posts'] = $this->Posts_model->get_posts();
+       
+    }
     
-    $data['posts'] = $this->Posts_model->get_posts();
-    
+    //write the error msg
+    if( $data['error'] = $this->Posts_model->error ) {
+      
+      $data['error_msg'] = $this->Posts_model->error_msg;
+        
+    }
+
     $this->load->view( 'index' , $data );
     
   }
