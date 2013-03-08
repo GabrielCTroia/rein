@@ -54,7 +54,6 @@ class Fetch extends CI_Controller {
   	$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
     $service_id = $service_id[0]->s_id;   	
       	
-
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
   	if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
     	
@@ -66,30 +65,35 @@ class Fetch extends CI_Controller {
       //load the fetch model specific to the service
     	$this->load->model( "services/$service_name/Fetch_$service_name" , 'fetch_service' , false );
     	
-    	//init the fetch_service model
-    	
     	/* load the access model */
       $this->load->model( 'Access_model' );
     	
     	if( $access_tokens = $this->Access_model->get_access_token( $this->session->userdata['logged_in']['u_id'] , $service_id ) ) {
       	
-        $this->fetch_service->init( $access_tokens );	
+        //init the fetch_service model
+        if( $this->fetch_service->init( $access_tokens ) !== false ) {	
         
-        //if there is an error than show it 
-      	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
-      	   
-        	$data['error_msg'] = $this->fetch_service->error;
-  
-      	} else {
+          //if there is an error than show it 
+        	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
+        	   
+          	$data['error_msg'] = $this->fetch_service->error;
+    
+        	} else {
+          	
+          	/*FORMAT & INSERT the FETCHED datas*/
+          	
+            /* load the format class */
+            $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false );
+            
+            $data['posts'] = $this->format_service->format_posts( $this->fetch_service->fetch() );
+          	
+        	}
         	
-        	/*FORMAT & INSERT the FETCHED datas*/
-        	
-          /* load the format class */
-          $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false );
+        } else {
           
-          $data['posts'] = $this->format_service->format_posts( $this->fetch_service->fetch() );
-        	
-      	}
+          $data['error_msg'] = $this->fetch_service->error;
+          
+        }
       	
     	} else {
       	
@@ -99,7 +103,6 @@ class Fetch extends CI_Controller {
     	
       	
   	}
-      
     
     $this->load->view( 'index' , $data );
 

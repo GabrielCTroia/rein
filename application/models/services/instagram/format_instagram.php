@@ -36,22 +36,24 @@ class Format_instagram extends Format_class{
 					
   		$formatted[$index] = array(
   			
-  			'post_foreign_id' => $this->format_foreign_id( $post->id ) ,
-  			'user_id' => $this->user_id,
-
-  			'created_date' => date( $date_format, $post->created_time ),
-  			'status' => 'active',
-  			'value' => $post->images->standard_resolution->url,
-  			'source' => '',
-  			'param' => '{
-  				"user_id" 		: "' . $post->user->id . '",
-  				"user_name" 	: "' . $post->user->username . '",
-  				"profile_image" : "' . $post->user->profile_picture . '",
-  				"user_bio" 		: "if the bio is russian the object breaks",
-  				"post_type" 	: "favorited",
-  				"filter"   		: "' . $post->filter . '",
-  				"tags"   			: "' . '$post->tags' .'",
-          "caption" 		: "if the caption is russian the object breaks"
+  			  'post_foreign_id'  => $this->format_foreign_id( $post->id )
+  			, 'user_id'          => $this->user_id
+  			, 'service_name'     => $this->service_name
+  			
+  			 
+  			, 'created_date' => date( $date_format, $post->created_time )
+  			, 'status' => 'active'
+  			, 'value' => $post->images->standard_resolution->url
+  		  , 'source' => ''
+  			, 'param' => '{
+  				  "user_id" 		: "' . $post->user->id . '"
+  				, "user_name" 	: "' . $post->user->username . '"
+  				, "profile_image" : "' . $post->user->profile_picture . '"
+  				, "user_bio" 		: "if the bio is russian the object breaks"
+  				, "post_type" 	: "favorited"
+  				, "filter"   		: "' . $post->filter . '"
+  				, "tags"   			: "' . '$post->tags' .'"
+          , "caption" 		: "if the caption is russian the object breaks"
   			}'
   			
   		);

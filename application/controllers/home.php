@@ -107,7 +107,7 @@ class Home extends User_Controller {
       $data['error_msg'] = $this->Posts_model->error_msg;
         
     }
-
+      
     $this->load->view( 'index' , $data );
     
   }

@@ -23,15 +23,30 @@ class Fetch_model extends CI_Model implements Fetch_interface{
   private $acceess_tokens = array();
  
   /* 
-   * $catches the error msg 
+   * $catches the error
    */  
   private $error = null;
+  
+  /* 
+   * $catches the error_msg
+   */  
+  private $error_msg = null;
   
   /* 
    * init function 
    * NEEDS to be loaded each time we use this model otherwise the proper library is not loaded
    */  
   function init( $access_tokens ){
+    
+    if( empty( $access_tokens ) ) {
+      
+      $this->error = true;
+      
+      $this->error_msg = "No access token!";
+      
+      return false;
+      
+    }
     
     $this->access_tokens = $access_tokens[0]->access_tokens;
     

@@ -36,7 +36,7 @@ Class Posts_model extends CI_Model {
   
   function init( $user_id , $service_id = null ){
     
-    if( !isset( $user_id ) ) {
+    if( empty( $user_id ) ) {
       
       $this->error = true;
       $this->error_msg = "There is no user! You cannot be here!";
