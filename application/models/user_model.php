@@ -39,7 +39,7 @@ Class User_model extends CI_Model {
 	private function login( $user_name , $password ){
 	 
 	 
-		$this->db->select( 'u_id, email, password' );	
+		$this->db->select( '*' );	
 		$this->db->from( 'users' );
 		$this->db->where( "user_name = '$user_name'" );
 		$this->db->where( "password = '" . md5($password) . "'" );
@@ -75,10 +75,14 @@ Class User_model extends CI_Model {
           
         foreach( $result as $row ){
 			
+/*
     				$user_info = array(
   						          'u_id' => $row->u_id,
   						          'email'   => $row->email				
   						          );  				
+*/          
+            $user_info = (array) $row;
+            unset( $user_info['password'] );
   						          
   					return $user_info;	          
   			}  			

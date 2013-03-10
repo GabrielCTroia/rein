@@ -25,6 +25,37 @@ TO DO:
 
 - Launch alpha version
 
+- CRTEATE AN ERROR CLASS available everytwhere 
+
+- LOOK a little on the sign-up adding to session procedure
+
+
+Log started - Mar 09 2013, 10:30AM                                          GABRIEL
+  
+  - started to fetch - errors in the library
+  
+  - created the Auth
+  
+  - started to bring Vimeo into picture
+  
+  - instagram working (with OwnMedia for now)
+  
+  - succesfuly insert on Duplicate Update
+
+  - organized the session->userdata better. Now the infos are in user data rather than in logged_in as before. logged in is only true;
+
+  - started the insert procedures
+ 
+  - organized the code a little betetr in the fetch controller 
+    
+    - all the errors should be catched first - like this if( !fetch() ) { echo error_msg } else { do something } 
+    
+    - started to write what;'s included in each files at thre beggining of the file
+  
+  - signup + login component - type = password
+
+Log ended - Mar 09 2013, - 3:18AM
+
 
 Log started - MARCH 03 , 13 - 11AM                                           GABRIEL
 

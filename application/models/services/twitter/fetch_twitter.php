@@ -5,15 +5,17 @@ require_once( APPPATH . 'models/fetch_model.php' );
   
 class Fetch_twitter extends Fetch_model{
   
+  //should come from the DB but will do for now
+  protected $service_id = 1;
+  
+  //should come from the DB but will do for now
+  protected $service_name = "Twitter";
+  
+  
   /* 
    * init function 
    * NEEDS to be loaded each time we use this model otherwise the proper library is not laoded
    */
-  function init(){
-    
-    $this->load_library();
-    
-  }
   
   function load_library(){
 
@@ -28,8 +30,9 @@ class Fetch_twitter extends Fetch_model{
    */
   function fetch( $count = 20 ){
     
+    $this->access_tokens = json_decode( $this->access_tokens );
     //the oauth CODES are gonna' be taken from the DB once activated
-    $service = new TwitterOAuth( "" , "" , "hJd74V3X2hTB7Ixzc0H8mdpRUdNc9b5nvDu14o", "lWo2mPGirFPy2AlwhIteChnuCfhgu04MmVnzoWWEm0" );
+    $service = new TwitterOAuth( '' , '' , $this->access_tokens->oauth_token, $this->access_tokens->oauth_token_secret );
 
       //when I will do the Oauth classes and each particular one
       //I should return an error if the access_token is not given or is not thr right one
@@ -42,11 +45,11 @@ class Fetch_twitter extends Fetch_model{
     
     //check if there is an error in the request 
     //valid only for twitter
-    if( $error = $service->get('favorites' , $param_arr )->error ){
+    if( $error_msg = $service->get('favorites' , $param_arr )->error ){
       
-      $this->error = $error;
+      $this->error = true;
       
-      var_dump( $this->error );
+      $this->error_msg = $error_msg;
       
       return false;
     }

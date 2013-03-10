@@ -13,7 +13,9 @@
                       The difference between a Ghost Component and a method is that you actually use it as a URL 
 */
 
-class Init extends CI_Controller {
+require_once( APPPATH . 'core/controllers/Anonym_controller.php' );
+
+class Init extends Anonym_controller {
 
  /* 
   * define the page url  
@@ -270,13 +272,19 @@ class Init extends CI_Controller {
         $password  = $this->input->post('password');  
         
         /* retriev ethe USER_INFO */          
-  		  $user_info = User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) , true );
-        
-        /* and store in the SESSION */                      					
-  			$this->session->set_userdata( 'logged_in' , $user_info );
-  			
-  			return true;
-  	
+  		  if( !$user_info = User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) , true ) ) {
+    		  
+    		  //show error
+    		  
+  		  } else {
+    		  
+      		/* and store in the SESSION */                      					
+    			$this->session->set_userdata( array_merge( array( 'logged_in' => true ) , $user_info ) );
+    			
+    			return true;
+    		  
+  		  }
+        	
   		} 
 		  return false;    	
   	}
@@ -311,9 +319,7 @@ class Init extends CI_Controller {
 		}
     
     /* ElSE */	
-		
-		$this->session->unset_userdata('logged_in');
-		
+
 		//for some reason the session id is not instantiated
     /* if( session_id() ) session_destroy(); */
 		

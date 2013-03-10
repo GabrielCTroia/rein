@@ -7,15 +7,14 @@
   
   
 interface Fetch_interface {
-  
 
-  function init( $access_tokens );    
+  function init( $user_id , $access_tokens );    
       
   function load_library();    
       
   function fetch();
   
-  function format();
+  function format( $posts );
   
 }
 

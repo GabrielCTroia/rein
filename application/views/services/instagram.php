@@ -1,4 +1,8 @@
-	<?php $post->param = json_decode( $post->param ); ?>
+<?php //helper
+
+$post->param = json_decode( $post->param ); 
+
+?>
 	<article class="layout-instagram clearfix">
 		<div class="left">
 			<img width="60" src="<?php echo APPPATH . "images/icons/instagram-icon.png" ?>">
@@ -9,7 +13,8 @@
 			<h4>Post #: <?php echo $index + 1?></h4>
 			<span>Created Date <?php echo $post->created_date; ?></span>
 			<br/>	
-			    <img class="" src="<?php echo $post->param->profile_image; ?>"/>
+			
+			<img class="" src="<?php echo $post->param->profile_image; ?>"/>
             
 			<span class="spacer spacer-text"><?php echo $post->param->user_name; ?></span>
 			<img class="spacer spacer-text full-width" src="<?php echo $post->value; ?>" />

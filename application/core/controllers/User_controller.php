@@ -11,7 +11,6 @@ class User_Controller extends CI_Controller {
 		parent::__construct();
 		
 		$this->_logged_in();
-		
 
   }
     
@@ -26,6 +25,5 @@ class User_Controller extends CI_Controller {
   		}
   		
   	}
-  
   
 }

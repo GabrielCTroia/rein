@@ -4,8 +4,12 @@
   
   <div class="grid">
 
-	<div class="logo">
+	<a href="/" class="logo">
 	  <h1>Recycle Inspiration</h1>
+	</a>
+	
+	<div>
+  	<p>Welcome <?php echo $this->session->userdata['user_name'];?></p>
 	</div>
 	
 	<div class="bundle">

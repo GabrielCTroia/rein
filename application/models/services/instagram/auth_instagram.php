@@ -1,9 +1,9 @@
-j<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //load the Fetch_model
-require_once( APPPATH . 'models/auth_abstract.php' );
+require_once( APPPATH . 'models/auth_class.php' );
 
-class Auth_instagram extends Auth_abstract{
+class Auth_instagram extends Auth_class{
     
   /* 
    * the consumer key specific for each service
@@ -33,22 +33,11 @@ class Auth_instagram extends Auth_abstract{
 
 
   function __construct(){
-    
+
     //load the necessary libraries for the service
     include_once( __DIR__ . '/load_library.php'); 
     
   }
-  
-/*
-  public function load_library(){
-    
-     include_once( APPPATH . '/libraries/PHP-Instagram-API-master/Examples/_SplClassLoader.php' );
-    
-    
-         $loader = new SplClassLoader( 'Instagram', APPPATH . '/libraries/PHP-Instagram-API-master/' );
-     $loader->register();
-  } 
-*/
 
   public function request_temp_token(){
     

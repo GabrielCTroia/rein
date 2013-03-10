@@ -59,7 +59,7 @@ class Home extends User_Controller {
   * SETTINGS component 
   */
   public function settings() {
-    
+
     //  define the component
   	$this->Components_model->init( 'settings' );
 
@@ -87,17 +87,25 @@ class Home extends User_Controller {
 	}
 	
 	
-  public function feed() { 
-  
+  public function feed( $service_name = null , $limit = 20 ) { 
+
     // initiate the component
     $this->Components_model->init( 'feed' );	
     
     $this->load->model( 'Posts_model' , '' , false );
     
     //make sure the init passes with no errors
-    if ( $this->Posts_model->init( $this->session->userdata['logged_in']['u_id'] ) !== false ) {
+    if ( $this->Posts_model->init( $this->session->userdata['u_id'] ) !== false ) {
       
-      $data['posts'] = $this->Posts_model->get_posts();
+      $specifics = null;
+      
+      if( !empty( $service_name ) ) {
+        
+        $specifics = array( 's.service_name' => $service_name );
+          
+      }
+      
+      $data['posts'] = $this->Posts_model->get_posts( $specifics , $limit );
        
     }
     
@@ -278,17 +286,6 @@ class Home extends User_Controller {
 		}// <-- end if isset( service
 		
 	   	$this->load->view( 'index' );	
-	}
-	
-	
-	
-	//this should be a method in a helper or something
-	public function logout() {
-	
-		$this->session->unset_userdata( 'logged_in' );
-		
-		header( 'location: /' );
-		exit();		
 	}
 	
 }

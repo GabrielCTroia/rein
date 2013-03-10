@@ -18,14 +18,16 @@
   
   echo form_label( 'Password:' , 'su-password' );
   echo form_input( array(
-        'name' => 'password',
-        'id' => 'su-password'
+        'name'  => 'password'
+      , 'id'    => 'su-password'
+      , 'type'  => 'password'
       ) );
   
   echo form_label( 'Confirm Password:' , 'su-password-confirm' );
   echo form_input( array(
-        'name' => 'password_confirm',
-        'id' => 'su-password-confirm'
+        'name' => 'password_confirm'
+      , 'id' => 'su-password-confirm'
+      , 'type'  => 'password'
       ) );
   
   echo form_submit( '' , 'Sign Up!' );

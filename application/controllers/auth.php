@@ -37,21 +37,21 @@ class Auth extends User_Controller {
 	public function request_temp_token( $service_name = NULL ) {
 		
     $this->load->model( 'Services_model' );      	
-    
+  
 /*  
   //WE DON'T NEED THIS SHIT - THE ARGUMENT IS ALREADY POPULATED WITH THE SEGMENT(3)
     if( is_null( $service_name ) && $this->uri->segment( 3 ) !== FALSE )
         $service_name = $this->uri->segment( 3 );
 */
-    
+  
     if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
 
       redirect( self::$page_url );
   	
-  	} else { 
+  	} else {       
     
-      $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' );
-      
+      $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' , false );
+
       $this->auth_service->request_temp_token();
 
   	}
@@ -102,19 +102,32 @@ class Auth extends User_Controller {
       // echo '<pre>' . print_r( $return , 1 ) . '</pre>';
 
       /* load the access model */
-      $this->load->model( 'Access_model' );
+      $this->load->model( 'Access_model' , '' , true );
                         
       /* store the access token */
       /* the user id should come out from the session */
-      if( $this->Access_model->set_access_token( $this->session->userdata['logged_in']['u_id'] , $service_id , $return['access_token'] ) )
-          redirect( '/home/settings?service=' . $service_name . '&status_code=200' );
-      else
-          echo 'This service is not active in our database';
-    }
+      if( $this->Access_model->init( $this->session->userdata['u_id'] , $service_id ) === false ){
+        
+        echo $this->Access_model->error_msg;
+        
+      } else {
+        
+        if( $this->Access_model->set_access_token( $return['access_token'] ) === false ){
+          
+          echo $this->Access_model->error_msg;
+          
+        } else {
+
+          redirect( '/fetch/service/' . $service_name );          
+/*           redirect( '/home/settings?service=' . $service_name . '&status_code=200' ); */
+          
+        }
+          
+      }
     
-    else {
+    } else {
       
-      echo "We don not authorize manually input urls!";
+      echo "We do not authorize manually input urls!";
       
     }
 		

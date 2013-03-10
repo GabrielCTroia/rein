@@ -5,8 +5,8 @@
 	
 	- takes care of the SERVICES TABLE
 
-*/	
-	
+*/
+
 Class Services_model extends CI_Model {
   
  /* 
@@ -52,6 +52,8 @@ Class Services_model extends CI_Model {
 		return $this->return_query_results( $query );
 	}
 	
+	
+	
 	public function get_active_services() {
   	
   	$this->db->select( 'service_name' );
@@ -62,6 +64,8 @@ Class Services_model extends CI_Model {
   	
   	return $this->return_query_results( $query );
 	}
+	
+	
 	
 	//  to save a bit of repetition
 	private function return_query_results( $query ) {

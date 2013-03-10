@@ -6,7 +6,7 @@ Class Posts_model extends CI_Model {
  /* 
   * cache the base table 
   */
-  private $base_table = 'posts';
+  protected $base_table = 'posts';
 
   /* 
    * the user id of the user that is fetched 
@@ -61,25 +61,34 @@ Class Posts_model extends CI_Model {
   
   
 	
-	function get_posts( $limit = 20 , $extra_fields = false ) {	
+	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false ) {	
 		
 /* 		$select_str = 'p_id, post_foreign_id, service_id, posts.created_date, value, source, param ' . ' , ' .$extra_fields; */
+
 		
-		$select_str = "*";
+		$select_str = "*"; //this should be more restriced but work for the testing phase
 
-		/*
-$this->db->select( $select_str );
-		$this->db->from( 'posts' );
-		$this->db->join( 'users' , 'users.u_id = posts.u_id' );
-		$this->db->join( 'posts_' . $this->service_name , 'posts_' . $this->service_name '.s_id = posts.u_id' );
-		$this->db->where( 'posts.u_id', $this->user_id );
+/*
+		$this->db->select( $select_str );
+		$this->db->from( 'posts AS p' );
+		$this->db->join( 'users AS u' , 'u.u_id = p.u_id' );
+		$this->db->join( 'services AS s' , "s.s_id = ( select s_id FROM $this->base_table AS pp WHERE pp.p_id = p.p_id" );
 */
+/* 		$this->db->where( 'p.u_id', $this->user_id ); */
 
-    $sql = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' p' 
-         . ' JOIN users ON users.u_id = 1'
-         . ' JOIN services ON services.s_id = ( SELECT s_id FROM ' . $this->base_table . ' pp WHERE pp.p_id = p.p_id  )'
-/*          . ' JOIN posts_( SELECT service_name FROM pp WHERE ppp.s_id = pp.s_id ) p_f ON p_f.p_id = p.p_id '  */
-         . ' WHERE p.u_id = ' . $this->user_id
+    $sql  = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' AS p' 
+         . ' JOIN users AS u ON u.u_id = ' . $this->user_id
+         . ' JOIN services AS s ON s.s_id = ( SELECT s_id FROM ' . $this->base_table . ' pp WHERE pp.p_id = p.p_id  )'
+         //. ' JOIN posts_( SELECT service_name FROM pp WHERE ppp.s_id = pp.s_id ) p_f ON p_f.p_id = p.p_id ' 
+         
+         . ' WHERE ';
+         if( !empty( $specifics ) ) {
+           foreach( $specifics as $ref=>$val ) {              
+             $sql .= $ref . ' = ' . '\'' . $val . '\' AND ';              
+           }
+         } 
+
+    $sql .= 'p.u_id = ' . $this->user_id
          . ' ORDER BY p.created_date DESC'
          . ' LIMIT ' . $limit 
          ; 
@@ -94,25 +103,36 @@ $this->db->select( $select_str );
 		
 /* 		$this->db->order_by( 'posts.created_date desc' ); */
 		
-		$query = $this->db->query( $sql );
 		
-		if( $query->num_rows() ) {
-			//free the result
-			$result = $query->result();
-			
-			$query->free_result();
-			
-			return $result;
-		} else {
+		if ( !$query = $this->db->query($sql) ) {
   		
   		$this->error = true;
-      
-      $this->error_msg = "There are no posts to show!";		  
   		
-  		return false;
+  		$this->error_msg = "Couldn't insert the posts in the database!";		  
+  		
+		} else {
+  		
+  		if( $query->num_rows() ) {
+  				
+  			//free the result
+  			$result = $query->result();
+  			
+  			$query->free_result();
+  			
+  			return (object)$result;
+  			
+  		} else {
+    		
+    		$this->error = true;
+        
+        $this->error_msg = "There are no posts to show!";		  
+    		
+    		return false;
+    		
+  		}	
   		
 		}
-		    
+				    
 	}
 
 	//get the latest post in a specified query
@@ -152,7 +172,7 @@ $this->db->select( $select_str );
 	}
 	
 	
-	function insert_posts( $posts ) {
+	function insert( $posts ) {
 
 		if( !$this->user_id || !$posts ) {
   		$this->error = true;

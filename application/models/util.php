@@ -26,6 +26,26 @@ Class Util extends CI_Model {
   }
   
   
+  /* 
+	 * creates unique LOCAL-ID based on the FOREIGN-ID 
+	*/
+	public function format_foreign_id( $fid , $sid , $uid ){
+		
+		//the posts are service dependent
+		$prefix = $sid . '-' ;
+		
+		return $prefix . $fid;
+		
+	}
+	
+	/* 
+	 * unformat the FOREIGN-ID
+	 */
+	public function unformat_foreign_id( $fid ){
+	
+		return substr( $fid , strpos( $fid , "-" ) + 1 , strlen( $fid ) );
+		
+	}
 
 }
 

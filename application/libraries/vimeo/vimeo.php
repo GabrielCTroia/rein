@@ -16,7 +16,7 @@ class phpVimeo
     private $_token_secret = false;
     private $_upload_md5s = array();
 
-    public function __construct($consumer_key, $consumer_secret, $token = null, $token_secret = null)
+    public function __construct($consumer_key = null, $consumer_secret = null , $token = null, $token_secret = null)
     {
         $this->_consumer_key = $consumer_key;
         $this->_consumer_secret = $consumer_secret;
@@ -146,7 +146,6 @@ class phpVimeo
      */
     private function _request($method, $call_params = array(), $request_method = 'GET', $url = self::API_REST_URL, $cache = true, $use_auth_header = true)
     {
-    	echo "DAdadad";
         // Prepare oauth arguments
         $oauth_params = array(
             'oauth_consumer_key' => $this->_consumer_key,
@@ -166,6 +165,7 @@ class phpVimeo
         if (!empty($method)) {
             $api_params['method'] = $method;
         }
+        
 
         // Merge args
         foreach ($call_params as $k => $v) {
@@ -180,6 +180,7 @@ class phpVimeo
         // Generate the signature
         $oauth_params['oauth_signature'] = $this->_generateSignature(array_merge($oauth_params, $api_params), $request_method, $url);
 
+        
         // Merge all args
         $all_params = array_merge($oauth_params, $api_params);
 
@@ -223,6 +224,7 @@ class phpVimeo
         curl_setopt_array($curl, $curl_opts);
         $response = curl_exec($curl);
         $curl_info = curl_getinfo($curl);
+        
         curl_close($curl);
 
         // Cache the response
@@ -273,7 +275,9 @@ class phpVimeo
     public function call($method, $params = array(), $request_method = 'GET', $url = self::API_REST_URL, $cache = true)
     {
 	    $method = (substr($method, 0, 6) != 'vimeo.') ? "vimeo.{$method}" : $method;
-        return $this->_request($method, $params, $request_method, $url, $cache);
+      
+      return $this->_request($method, $params, $request_method, $url, $cache);
+      
     }
 
     /**
@@ -338,6 +342,8 @@ class phpVimeo
             false,
             false
         );
+        
+        
 
         parse_str($request_token, $parsed);
         return $parsed;

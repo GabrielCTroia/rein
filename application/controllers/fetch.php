@@ -9,7 +9,9 @@
   *** to see more about the controllers see _guide_composition.txt {Controllers} ***
   */
 
-class Fetch extends CI_Controller {
+require_once( APPPATH . 'core/controllers/User_controller.php' );
+
+class Fetch extends User_Controller {
 
  /* 
   * define the page url  
@@ -26,10 +28,14 @@ class Fetch extends CI_Controller {
 		$this->load->model( 'Pager_model' , '' , FALSE );
 		$this->load->model( 'Components_model' , '' , FALSE );
 
-		$this->Pager_model->init( 'fetch' );		
+		$this->Pager_model->init( 'fetch' );
 		
 	}
-
+	
+  /*
+   * the index() acts like a router
+   * the user never stays on it so it doesn't have a view
+  */
 	public function index(){
   	
   	redirect ( 'home' );
@@ -37,30 +43,24 @@ class Fetch extends CI_Controller {
 	}	
  
  /*
-  * LIVE - {Ghost} Component
   * get the live posts based on the service name  
   * it only works for the authenticated user (not CRON)
   * it doesn't use the GET method to get the 
   */
-	public function live( $service_name = NULL ){
-    
-    $data['posts'] = NULL;
-    
-  	$this->Components_model->init( 'feed' );
+	public function service( $service_name = NULL , $limit = null , $show = false ){
     
     //load the services model
-  	$this->load->model( 'Services_model' , '' , false );   
-  	
-  	$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
-    $service_id = $service_id[0]->s_id;   	
-      	
+    $this->load->model( 'Services_model' , '' , false );       
+              	
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
   	if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
     	
-    	//no posts to show
     	$data['error_msg'] = "No posts to show for " . $service_name;
     	
-  	} else {
+  	} else {   
+    	
+    	$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
+      $service_id = $service_id[0]->s_id;
   	 
       //load the fetch model specific to the service
     	$this->load->model( "services/$service_name/Fetch_$service_name" , 'fetch_service' , false );
@@ -68,63 +68,109 @@ class Fetch extends CI_Controller {
     	/* load the access model */
       $this->load->model( 'Access_model' );
     	
-    	if( $access_tokens = $this->Access_model->get_access_token( $this->session->userdata['logged_in']['u_id'] , $service_id ) ) {
+    	if( !$access_tokens = $this->Access_model->get_access_token( $this->session->userdata['u_id'] , $service_id ) ) {
+    	
+        $data['error_msg'] = "No access token in our Database for " . $service_name;
+    	
+    	} else {
       	
         //init the fetch_service model
-        if( $this->fetch_service->init( $access_tokens ) !== false ) {	
+        if( $this->fetch_service->init( $this->session->userdata['u_id'] , $access_tokens ) === false ) {	
+        
+          $data['error_msg'] = $this->fetch_service->error_msg;
+        
+        } else {
         
           //if there is an error than show it 
-        	if ( !$this->fetch_service->fetch() || isset( $this->fetch_service->error ) ) {
+        	if ( !$fetched_data = $this->fetch_service->fetch( $limit ) ) {
         	   
-          	$data['error_msg'] = $this->fetch_service->error;
+          	$data['error_msg'] = $this->fetch_service->error_msg;
     
         	} else {
           	
           	/*FORMAT & INSERT the FETCHED datas*/
           	
             /* load the format class */
-            $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false );
+/*             $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false ); */
             
-            $data['posts'] = $this->format_service->format_posts( $this->fetch_service->fetch() );
-          	
+            //if to show 
+            if( $show === 'show' ){
+            
+              $this->Components_model->init( 'feed' );
+              
+              $data['posts'] = $fetched_data;
+              
+              foreach( $data['posts'] as &$post ){
+                
+                $post['service_name'] = $service_name;
+                  
+              }
+              
+              $this->load->view( 'index' , $data );
+              
+              return;
+              
+            } else {
+              
+              //insert
+              $this->load->model( "services/$service_name/Posts_$service_name" , 'posts_service' , false );
+              
+              if( $this->posts_service->init( $this->session->userdata['u_id'] , $service_id ) === false ){
+                
+                $data['error_msg'] = $this->posts_service->error_msg;
+                
+              } else {
+                
+                
+/*                 var_dump( print_r( $fetched_data ) );               */
+                if( !$this->posts_service->insert( $fetched_data) ){
+                  
+                  $data['error_msg'] = $this->posts_service->error_msg;
+                  
+                }
+                
+              }
+              
+            }
+            	
         	}
         	
-        } else {
-          
-          $data['error_msg'] = $this->fetch_service->error;
-          
         }
       	
-    	} else {
-      	
-        $data['error_msg'] = "No access token in our Database for " . $service_name;	
-      	
     	}
-    	
       	
   	}
-    
-    $this->load->view( 'index' , $data );
+      
+    if( isset( $data['error_msg'] ) ) {
+  	
+    	echo $data['error_msg'];
+    	
+  	} else {
+    	
+    	echo 'success';
+
+  	}      
 
 	}
 	
 	
 	
 	
-	
+ /*
+  * STEALTH - Ghost Component
+  */
 	public function stealth( $service_name = NULL ){
   	
-  	
-  	
+    $this->_insert( $data );
   	
 	}
 	 
 	 /* 
-	  * FORMAT & INSERT all the fetched datas into the db 
+	  * INSERT all the fetched datas into the db 
 	  */
 	 private function _insert( $data , $service_name ){
   	 
-/*   	 $this->load->model(  ) */
+/*   	 $data['posts'] = $this->format_service->format_posts( $data ); */
   	 
 	 }
 	

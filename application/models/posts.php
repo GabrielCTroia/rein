@@ -4,8 +4,10 @@
 Class Posts extends CI_Model {	
 
 	private $user_id = false;
-	private $service_name = false;
+	
 	private $service_id = false;
+	
+	private $service_name = false;
 	
 	function set_user( $user_id )
 	{	
@@ -20,7 +22,7 @@ Class Posts extends CI_Model {
 		
 	}
 	
-	function get_posts( $limit = 20 , $extra_fields = false )
+	function get_posts( $limit = 20 , $specific = null , $extra_fields = false )
 	{	
 		
 		$select_str = 'p_id, post_foreign_id, service_id, posts.created_date, value, source, param ' . ' , ' .$extra_fields;

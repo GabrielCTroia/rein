@@ -14,14 +14,15 @@
 		
 		echo form_label( 'User Name:' , 'su-userName' );
     echo form_input( array(
-          'name' => 'user_name',
-          'id' => 'su-userName',
+          'name'  => 'user_name',
+          'id'    => 'su-userName',
         ) );
 		
 		echo form_label( 'Password:' , 'su-password' );
     echo form_input( array(
-          'name' => 'password',
-          'id' => 'su-password'
+            'name'  => 'password'
+          , 'id'    => 'su-password'
+          , 'type'  => 'password'
         ) );
     
     echo form_submit( '' , 'Log in!' );

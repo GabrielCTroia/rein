@@ -23,6 +23,7 @@ class Auth_class extends CI_Model implements Auth_interface {
   protected $OAuth_version = '1.0';
 
 
+/*
   function __construct(){
     
     parent::__construct();
@@ -30,6 +31,7 @@ class Auth_class extends CI_Model implements Auth_interface {
     $this->load->model( 'util' );
     
   }
+*/
   
   public function request_temp_token() {
     
