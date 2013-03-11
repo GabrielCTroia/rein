@@ -13,6 +13,11 @@ require_once( APPPATH . 'models/fetch_model.php' );
 class Fetch_behance extends Fetch_model{
   
   protected $service_name = "behance";
+  
+  /* $PARTICULAR VARS */
+  
+  private $fgn_user_name = null; 
+  
 
   public function __construct(){
     
@@ -23,24 +28,15 @@ class Fetch_behance extends Fetch_model{
     
   }
   
-  
   /* 
    * fetches the posts 
    * @count - number of posts to fetch
    */
   function fetch( $count = 20 ){
 
-    //when I will do the Oauth classes and each particular one
-    //I should return an error if the access_token is not given or is not thr right one
-    // Right now if one of this condition is not fulfiled the server return an error and is not right
-    // If those are not working it should let me reconnect
+    $this->api->setAccessToken( $this->access_tokens );    
     
-    // User data
-
-/*     var_dump( $this->api->getUser( $this->access_tokens ) ); */
-    
-      var_dump ( $this->api->searchProjects( array( 'q' => 'new york' ) ) );    
-/*     var_dump( $this->api );        */
+    return $this->format( $this->api->getUserAppreciations( 'gabrielcatalin' ) );    
     
   }
   
@@ -59,6 +55,35 @@ class Fetch_behance extends Fetch_model{
     
     //this needs to be out in a separate .config file or something
 		$date_format = 'Y-m-d H:i:s';
+		
+
+		
+		foreach( $posts as $index=>$post ){
+		
+		  $formatted[$index] = array(
+
+		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id , $this->user_id )
+  			, 'u_id'             => $this->user_id
+  			, 's_id'             => $this->service_id
+  			
+  			, 'created_date'     => date( $date_format, $post->project->created_on )
+  			, 'status'           => 'active'
+  			, 'value'            => $post->project->covers->{'115'}
+  		  , 'source'           => $post->project->url
+  			
+  			, 'param'            => '{
+          				  "user_id" 		   : "' . $post->project->owners[0]->id . '"
+          				, "user_name"      : "' . $post->project->owners[0]->display_name . '"
+
+          				, "user_url"       : "' . $post->project->owners[0]->url . '"
+          				, "country"        : "' . $post->project->owners[0]->country . '"
+          				, "user_bio" 		   : "if the bio is russian the object breaks"
+          				, "post_type" 	   : "appreciated"
+          				, "tags"   			   : "' . $post->project->fields[0] .'"
+              }'
+		  );
+		
+		}
 
 		return $formatted;
     

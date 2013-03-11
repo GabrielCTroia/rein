@@ -22,6 +22,16 @@ Class Access_model extends CI_Model {
    * the ID of the service that is being used 
    */
   protected $service_id = null;
+  
+  /* 
+   * the foreign user name needs to be stored for osme services 
+   */
+  protected $fgn_user_name = null;
+  
+  /* 
+   * the foreign User ID needs to be stored fos some services
+   */
+  protected $fgn_user_id = null;    
  
   /* 
    * $catches the error
@@ -96,8 +106,8 @@ Class Access_model extends CI_Model {
     $a_id = $this->user_id . '-' . $this->service_id;
 
   	$sql = 'INSERT INTO ' . $this->base_table
-  	     . ' ( a_id , u_id , s_id , access_tokens , access_status )'
-  	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' )'
+  	     . ' ( a_id , u_id , s_id , access_tokens , access_status , fgn_user_name , fgn_user_id )'
+  	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' ' . ',\'' . $this->fgn_user_name . ',\'' . $this->fgn_user_id . '\' )'
   	     . ' ON DUPLICATE KEY UPDATE a_id = a_id';  	   
 
     if( !$this->db->query( $sql ) ){

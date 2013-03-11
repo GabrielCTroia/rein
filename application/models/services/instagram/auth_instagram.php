@@ -26,6 +26,18 @@ class Auth_instagram extends Auth_class{
 
   public function request_temp_token(){
     
+    if( empty( $this->base_url ) ){
+      
+      $this->error = true;
+      
+      $this->error_msg = "No base_url defined";
+      
+      echo $this->error_msg;
+      
+      return false;
+      
+    }
+    
     $url = $this->base_url . "?client_id=" . $this->consumer_key . "&redirect_uri=" . $this->callback_url . "&response_type=code"; 
               
     /* in case there is a scope add it to the URL */
