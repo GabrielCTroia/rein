@@ -10,8 +10,6 @@ interface Fetch_interface {
 
   function init( $user_id , $access_tokens );    
       
-  function load_library();    
-      
   function fetch();
   
   function format( $posts );

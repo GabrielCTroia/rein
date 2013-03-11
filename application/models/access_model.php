@@ -99,8 +99,6 @@ Class Access_model extends CI_Model {
   	     . ' ( a_id , u_id , s_id , access_tokens , access_status )'
   	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' )'
   	     . ' ON DUPLICATE KEY UPDATE a_id = a_id';  	   
-  	     
-  	 echo $sql;    
 
     if( !$this->db->query( $sql ) ){
       
@@ -119,6 +117,11 @@ Class Access_model extends CI_Model {
 	}
 	
   
+  
+ /*
+  * this is the only function here that can be called without calling the init function first 
+  * not sure if is the best way but it's shorter at least
+  */
   function get_access_token( $u_id , $s_id ) {
 
     $this->db->select( 'access_tokens' );

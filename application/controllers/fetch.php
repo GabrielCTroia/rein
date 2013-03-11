@@ -53,14 +53,13 @@ class Fetch extends User_Controller {
     $this->load->model( 'Services_model' , '' , false );       
               	
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
-  	if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
+  	if( !$service_name || !$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' ) ) {
     	
     	$data['error_msg'] = "No posts to show for " . $service_name;
-    	
+          	
   	} else {   
-    	
-    	$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
-      $service_id = $service_id[0]->s_id;
+
+      $service_id = $service_id->s_id;
   	 
       //load the fetch model specific to the service
     	$this->load->model( "services/$service_name/Fetch_$service_name" , 'fetch_service' , false );

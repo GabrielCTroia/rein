@@ -4,57 +4,17 @@
   Needs description
   
   $included files
+  - models/api_class.php
   - models/fetch_interface.php
   
 */
 
+require_once( APPPATH . 'models/api_class.php' );
   
 require_once( APPPATH . 'models/fetch_interface.php' );  
   
-class Fetch_model extends CI_Model implements Fetch_interface{
-  
-  /* 
-   * the user id of the user that is fetched 
-   */  
-  protected $user_id = null;
-  
-  /* 
-   * the ID of the service that is being used 
-   */
-  protected $service_id = null;
-  
-  /* 
-   * the name of the service that is being used 
-   */
-  protected $service_name = null;  
+class Fetch_model extends Api_class implements Fetch_interface{
     
-  /* 
-   * cache the access token 
-   * - it's unique per user and service so we don't actually need $user_id & $service_name
-   */ 
-  protected $acceess_tokens = array();
- 
-  /* 
-   * $catches the error
-   */  
-  public $error = null;
-  
-  /* 
-   * $catches the error_msg
-   */  
-  public $error_msg = null;
-  
-  
-  /* 
-   * this laods the library and does any other stuff with no params
-   * for the ones with params we use init
-   */
-  function __construct(){
-	 
-		include_once( __DIR__ . '/services/' . $this->service_name . '/load_library.php');
-
-  }
-  
   /* 
    * init function 
    * NEEDS to be loaded each time we use this model otherwise the proper library is not loaded
@@ -75,12 +35,7 @@ class Fetch_model extends CI_Model implements Fetch_interface{
     
     $this->access_tokens = $access_tokens[0]->access_tokens;
     
-    $this->load_library();
-    
   }
-  
-  
-  function load_library(){}
   
  /* 
   * fetches the posts 

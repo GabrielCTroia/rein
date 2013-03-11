@@ -10,6 +10,8 @@ class Auth_twitter extends Auth_class {
   
   protected $callback_url = 'http://127.0.0.1:8888/auth/callback/twitter';
 
+  protected $OAuth_version = '1.0';
+  
   /* 
    * the base API URL  
    */

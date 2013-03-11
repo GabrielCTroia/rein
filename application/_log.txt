@@ -30,14 +30,34 @@ TO DO:
 - LOOK a little on the sign-up adding to session procedure
 
 
-Log started - Mar 09 2013, 10:30AM                                          GABRIEL
+-----------------------------------------------------------------------------------------
+
+
+Log started - Mar 10 2013, 10:30AM                                          GABRIEL
+
+  - created an Api_class which is extended by all the models and service models which are using the Api t
+ 
+  - the file /models/services/service_name/load_library.php is official needed and loaded in the parent s constructor
+
+  - cloned the the Vimeo library from git (that's probably how we should have them from now on - cloned and abstractized so can be updated easily)
+  
+  - trying to fetch Behance
+  
+  - started with Behance - Auth is working
   
   - started to fetch - errors in the library
   
   - created the Auth
   
-  - started to bring Vimeo into picture
+  - started to bring Vimeo into picture  
   
+
+Log ended - Mar 10 2013, - 05:00 PM 
+
+-----------
+
+Log started - Mar 09 2013, 10:30AM                                          GABRIEL
+    
   - instagram working (with OwnMedia for now)
   
   - succesfuly insert on Duplicate Update
@@ -56,6 +76,7 @@ Log started - Mar 09 2013, 10:30AM                                          GABR
 
 Log ended - Mar 09 2013, - 3:18AM
 
+-----------
 
 Log started - MARCH 03 , 13 - 11AM                                           GABRIEL
 
@@ -72,6 +93,7 @@ Log started - MARCH 03 , 13 - 11AM                                           GAB
 
 Log ended - MARCH 03 , 13 - 11PM                                         
 
+-----------
 
 Log started - February 10, 13 - 11AM                                          MARIUS
 
@@ -89,10 +111,10 @@ Log started - February 10, 13 - 11AM                                          MA
   - Made the verify_login check passwords agains md5 as they were being saved as md5 but not checked against it.
   
   - fixed a bug where user id wasn't being stored in the session
-  
 
 Log ended - Feburary 10, 5:47 PM
 
+-----------
 
 Log started - January 22, 13 - 12:42 PM                                           GABRIEL
   
@@ -115,9 +137,7 @@ Log started - January 22, 13 - 12:42 PM                                         
 
 Log ended - January 21,13 -                     
 
-----
-
-
+-----------
 
 Log started - January 21, 13 - 7:51 PM                                           GABRIEL
 
@@ -128,8 +148,7 @@ Log started - January 21, 13 - 7:51 PM                                          
 
 Log ended - January 21,13 -                     
 
-----
-
+-----------
 
 Log started - January 14, 13 - 5:42 PM                                           GABRIEL
   
@@ -139,7 +158,7 @@ Log started - January 14, 13 - 5:42 PM                                          
 
 Log ended - January 14,13 -                     
 
-----
+-----------
 
 Log started - January 5, 13 - 2:25 PM                                            GABRIEL
 

@@ -5,6 +5,8 @@ require_once( APPPATH . 'models/auth_class.php' );
 
 class Auth_vimeo extends Auth_class{
     
+    
+  protected $service_name = "vimeo";
   /* 
    * the consumer key specific for each service
    */
@@ -39,11 +41,11 @@ class Auth_vimeo extends Auth_class{
 
 
   function __construct(){
-
-    //load the necessary libraries for the service
-    include_once( __DIR__ . '/load_library.php'); 
+  
+    parent::__construct();
     
     $this->vimeo = new phpVimeo( $this->consumer_key , $this->consumer_secret );
+    
   }
 
 

@@ -55,7 +55,7 @@ Class Posts_model extends CI_Model {
     	
     	$service_name = $this->Services_model->get_service_by( 'id' , $service_id , 'service_name' );
     	
-      $this->service_name = $service_name[0]->service_name;
+      $this->service_name = $service_name->service_name;
 
   }
   

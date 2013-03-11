@@ -16,7 +16,7 @@ class Fetch_instagram extends Fetch_model{
   protected $service_id = 2;
   
   //should come from the DB but will do for now
-  protected $service_name = "Instagram";
+  protected $service_name = "instagram";
   
 
   /* 

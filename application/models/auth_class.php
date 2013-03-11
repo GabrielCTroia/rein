@@ -1,12 +1,25 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+  Needs description
+  
+  $included files
+  - models/api_class.php
+  - models/auth_interface.php
+  
+*/
+
+
+require_once( APPPATH . 'models/api_class.php' );
 
 require_once( APPPATH . 'models/auth_interface.php' );
 
 
 //  This class serves as the base for Auth classes containing all the neccessary
 //  methods that may be needed down the line
-class Auth_class extends CI_Model implements Auth_interface {
+class Auth_class extends Api_class implements Auth_interface {
+  
+  
   
   //protected static $consumer_key;   
   
@@ -19,8 +32,6 @@ class Auth_class extends CI_Model implements Auth_interface {
   //protected static $request_token;
       
   //protected static $scope = null;
-  
-  protected $OAuth_version = '1.0';
 
 
 /*

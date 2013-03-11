@@ -46,10 +46,28 @@ Class Services_model extends CI_Model {
 		$this->db->select( $select );
 		$this->db->from( $this->base_table );
 		$this->db->where( $field_name , $field_value );
+		$this->db->limit( 1 );
 		
-		$query = $this->db->get();	
+		$query = $this->db->get();
 		
-		return $this->return_query_results( $query );
+  	if( !$query->num_rows() ) {
+    	
+    	$this->error = true;
+    	
+    	$this->error_msg = "No active services in the Database";
+    	
+    	return false;
+    	
+  	} else {
+    	
+    	$result = $query->result();
+    	
+    	$query->free_result();
+    	
+    	return $result[0];
+    	
+  	}
+  	
 	}
 	
 	
@@ -62,7 +80,24 @@ Class Services_model extends CI_Model {
   	
   	$query = $this->db->get();
   	
-  	return $this->return_query_results( $query );
+  	if( !$query->num_rows() ) {
+    	
+    	$this->error = true;
+    	
+    	$this->error_msg = "No active services in the Database";
+    	
+    	return false;
+    	
+  	} else {
+    	
+    	$result = $query->result();
+    	
+    	$query->free_result();
+    	
+    	return $result;
+    	
+  	}
+
 	}
 	
 	

@@ -29,7 +29,7 @@ class Fetch_vimeo extends Fetch_model{
   protected $consumer_secret = '78a6aa39c0b46970d11946528062bc3acf303ca9';     
   
   /* 
-   * the service object 
+   * the service object - required by the library
    */
   private $vimeo = null;
   
@@ -41,6 +41,8 @@ class Fetch_vimeo extends Fetch_model{
     $this->vimeo = new phpVimeo( $this->consumer_key , $this->consumer_secret );
 
   }
+  
+  
   /* 
    * fetches the posts 
    * @count - number of posts to fetch
@@ -54,7 +56,7 @@ class Fetch_vimeo extends Fetch_model{
     // Do an authenticated call
     try {
     	 
-        $videos = $this->vimeo->call('vimeo.activity.happenedToUser', array( 'oauth_token' => $this->access_tokens ) );
+        $videos = $this->vimeo->call('vimeo.videos.getUploaded', array('user_id' => 'gabrielcatalin'));
     }
     catch (VimeoAPIException $e) {
     

@@ -45,11 +45,12 @@ class Auth extends User_Controller {
 */
   
     if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
-
-      redirect( self::$page_url );
+      
+      echo "there is no service name or this serbvice is not in our database";
+/*       redirect( self::$page_url ); */
   	
   	} else {       
-    
+      
       $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' , false );
 
       $this->auth_service->request_temp_token();
@@ -61,30 +62,23 @@ class Auth extends User_Controller {
    * sends the headers to the server specific URL to request the temp token   
    */
 	public function callback( $service_name = NULL ){
-	  
- 
-    
-/*
-  //WE DON'T NEED THIS SHIT - THE ARGUMENT IS ALREADY POPULATED WITH THE SEGMENT(3)
-	  if( is_null( $service_name ) && $this->uri->segment( 3 ) !== FALSE )
-        $service_name = $this->uri->segment( 3 );
-*/
 		
-		if( empty( $service_name ) )  		
-  		redirect( self::$page_url );
+		if( empty( $service_name ) ) {
+  		echo "There is no service chosen. What to authenticate?";
+/*   		redirect( self::$page_url ); */
+		}  		
+  		
 		
-		/* load the callback model */
 		$this->load->model( 'Services_model' , '' , TRUE );
     
     $service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' );//->s_id;
-    $service_id = $service_id[0]->s_id;
-    
+    $service_id = $service_id->s_id;
     
     
     $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' );
     
     //check if there is an acces token returned
-    if ( isset( $_GET ) && $_GET && $return = $this->auth_service->generate_access_token( $_GET ) ) {
+    if ( !empty( $_GET ) && $access_token = $this->auth_service->generate_access_token( $_GET ) ) {
       
       
 
@@ -112,13 +106,13 @@ class Auth extends User_Controller {
         
       } else {
         
-        if( $this->Access_model->set_access_token( $return['access_token'] ) === false ){
+        if( $this->Access_model->set_access_token( $access_token ) === false ){
           
           echo $this->Access_model->error_msg;
           
         } else {
-
-          redirect( '/fetch/service/' . $service_name );          
+          
+          redirect( '/fetch/service/' . $service_name . '/20/show' );          
 /*           redirect( '/home/settings?service=' . $service_name . '&status_code=200' ); */
           
         }

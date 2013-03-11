@@ -6,7 +6,7 @@
  * 
  */
  
- include_once( APPPATH . '/libraries/vimeo/vimeo-php-lib/vimeo.php' );
+ include_once( APPPATH . '/libraries/behance/network_api_php/lib/Be/Api.php' );
 
 
 
@@ -28,4 +28,4 @@
 
 
 /* End of file load_library.php */
-/* Location: ./application/models/services/vimeo/load_library.php */
+/* Location: ./application/models/services/behance/load_library.php */

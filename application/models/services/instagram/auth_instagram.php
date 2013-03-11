@@ -4,38 +4,23 @@
 require_once( APPPATH . 'models/auth_class.php' );
 
 class Auth_instagram extends Auth_class{
+  
+  //should come from the DB but will do for now
+  protected $service_name = "instagram"; 
+  
+
+  public function __construct(){
     
-  /* 
-   * the consumer key specific for each service
-   */
-  protected $consumer_key = '89167de1acc3478ca6c602f0cb3a6893';   
-  
-  /* 
-   * the consumer key specific for each service
-   */
-  protected $consumer_secret = 'dbe1cb5c5f0a4535b566e73bf06a0455';      
-  
-  /* 
-   * the callback url 
-   */
-  protected $callback_url = 'http://127.0.0.1:8888/auth/callback/instagram';
+    parent::__construct();
+    
+    $app_config = array(
+      'client_id'         => $this->consumer_key,
+      'client_secret'     => $this->consumer_secret,
+      'redirect_uri'      => $this->callback_url,
+      'scope'             => $this->scope
+    );
 
-  /* 
-   * the base API URL  
-   */
-  protected $base_url = 'https://api.instagram.com/oauth/authorize/';
-      
-      
-  /* 
-   * the base API URL  
-   */
-  protected $scope = null;
-
-
-  function __construct(){
-
-    //load the necessary libraries for the service
-    include_once( __DIR__ . '/load_library.php'); 
+    $this->api = new Instagram\Auth( $app_config );;
     
   }
 
@@ -53,30 +38,14 @@ class Auth_instagram extends Auth_class{
 
 
   public function generate_access_token( $temp_token ){
-
-    $app_config = array(
-	    'client_id'         => $this->consumer_key,
-	    'client_secret'     => $this->consumer_secret,
-	    'redirect_uri'      => $this->callback_url,
-	    'scope'             => $this->scope
-	  );    
-    
-    $auth = new Instagram\Auth( $app_config );
-    
-    $data = null;
-    
-    if ( $code = $temp_token['code'] ) {
       
-      try {
-          $data['access_token'] = $auth->getAccessToken( $code );
-      }
-      catch ( \Instagram\Core\ApiException $e ) {
-          $data['error'] = ucwords( $e->getMessage() );
-      }
+    if ( $token = $this->api->getAccessToken( $temp_token['code'] ) ) {
       
-    }
+      return $token;
+      
+    } 
     
-    return $data;
+    return false;
     
   }
   
