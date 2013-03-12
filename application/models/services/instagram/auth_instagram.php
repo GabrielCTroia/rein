@@ -23,6 +23,20 @@ class Auth_instagram extends Auth_class{
     $this->api = new Instagram\Auth( $app_config );;
     
   }
+  
+  /* see models/auth_class.php */
+  public function api_return( $temp_token ){
+    
+    if( $token = $this->generate_access_token( $temp_token['code'] ) ) {
+      
+      return array( 'token' => $token , 'user_id' => 'not set yet' );
+      
+    }
+    
+    return false;
+      
+  }
+  
 
   public function request_temp_token(){
     
@@ -51,7 +65,7 @@ class Auth_instagram extends Auth_class{
 
   public function generate_access_token( $temp_token ){
       
-    if ( $token = $this->api->getAccessToken( $temp_token['code'] ) ) {
+    if ( $token = $this->api->getAccessToken( $temp_token ) ) {
       
       return $token;
       

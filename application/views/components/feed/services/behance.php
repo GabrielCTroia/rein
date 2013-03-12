@@ -5,7 +5,6 @@ $post->param = json_decode( $post->param );
 ?>
 	<article class="layout-instagram clearfix">
 		
-		<a href="<?php echo $post->source; ?>">
   		<div class="left">
   <!-- 			<img width="60" src="<?php echo APPPATH . "images/icons/instagram-icon.png" ?>"> -->
   		</div>
@@ -29,6 +28,6 @@ $post->param = json_decode( $post->param );
   <!-- 					<p>post (foreign) id = <?php echo $post->post_foreign_id; ?></p> -->
   			<?php endif; ?>
   		</div>
-		</a>
-	</article> 
-	<br/><br/>
+  		
+  	<a href="<?php echo $post->source; ?>" target="_blank">View project</a>
+	</article>

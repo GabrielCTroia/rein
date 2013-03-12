@@ -18,9 +18,11 @@
 					//so there needs to be a conversion mad					
 					if ( is_array( $post ) ) $post = (object) $post;
           
-					include( APPPATH . 'views/services/' . $post->service_name . '.php' ); 
+					include( __DIR__ . '/services/' . $post->service_name . '.php' ); 
 				
 				?>
+				
+				<br/>
 	
 			<?php endforeach; ?>
 		

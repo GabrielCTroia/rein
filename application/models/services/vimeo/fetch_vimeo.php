@@ -12,33 +12,15 @@ require_once( APPPATH . 'models/fetch_model.php' );
   
 class Fetch_vimeo extends Fetch_model{
   
-  //should come from the DB but will do for now
-  protected $service_id = 3;
-  
-  //should come from the DB but will do for now
-  protected $service_name = "Vimeo";
-  
-  /* 
-   * the consumer key specific for each service
-   */
-  protected $consumer_key = '862103b8d1e32733d80d1a7fbfcded18413dca64';   
-  
-  /* 
-   * the consumer key specific for each service
-   */
-  protected $consumer_secret = '78a6aa39c0b46970d11946528062bc3acf303ca9';     
-  
-  /* 
-   * the service object - required by the library
-   */
-  private $vimeo = null;
-  
-  
+  protected $service_name = "vimeo";
+
+
+
   function __construct(){
     
     parent::__construct();
     
-    $this->vimeo = new phpVimeo( $this->consumer_key , $this->consumer_secret );
+    $this->api = new phpVimeo( $this->consumer_key , $this->consumer_secret );
 
   }
   
@@ -48,47 +30,14 @@ class Fetch_vimeo extends Fetch_model{
    * @count - number of posts to fetch
    */
   function fetch( $count = 20 ){
-
-/*     var_dump(); */
     
-/*     $videos = $this->vimeo->call( 'vimeo.albums.getWatchLater' , $this->access_tokens ); */
-
-    // Do an authenticated call
-    try {
-    	 
-        $videos = $this->vimeo->call('vimeo.videos.getUploaded', array('user_id' => 'gabrielcatalin'));
-    }
-    catch (VimeoAPIException $e) {
+/*     var_dump() */
     
-        echo "Encountered an API error -- code {$e->getCode()} - {$e->getMessage()}";
-        
-    }    
-
+/*     var_dump(  $this->api->call('vimeo.oauth.checkAccessToken' ) ); */
+    echo "<br/>";        
+    var_dump( $this->api->call('vimeo.videos.getLikes', array( 'user_id' => '10486857' ) ) );
     
-    //when I will do the Oauth classes and each particular one
-    //I should return an error if the access_token is not given or is not thr right one
-    // Right now if one of this condition is not fulfiled the server return an error and is not right
-    // If those are not working it should let me reconnect
-    
-    /*
-$loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ) );
-		$loader->register();
-    
-    $instagram = new Instagram\Instagram;
-    
-		$instagram->setAccessToken( $this->access_tokens );
-		
-		$param_arr = array(
-				'count'		=> $count			       	
-    );
-
-      
-    $current_user = $instagram->getCurrentUser();
-                		        
-    return  $this->format( $current_user->getMedia( $param_arr ) );		
-*/
-    
-    exit;
+    exit();
     
   }
   

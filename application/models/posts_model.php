@@ -207,10 +207,6 @@ Class Posts_model extends CI_Model {
           $sql .= ( $post != end($posts) ) ? ' , ' : '';
         endforeach;   
     	$sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id';
-    	   
-  
-  /*   	if( $this->db->insert( $this->base_table , $data ) ) */
-  /*     echo $sql; */
       
       if( !$this->db->query( $sql ) ){
         $this->error = true;

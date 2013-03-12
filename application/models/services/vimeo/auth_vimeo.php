@@ -27,6 +27,22 @@ class Auth_vimeo extends Auth_class{
     $this->api = new phpVimeo( $this->consumer_key , $this->consumer_secret );
     
   }
+  
+  
+  /* see models/auth_class.php */
+  public function api_return( $temp_token ){
+    
+    if( $token = $this->generate_access_token( $temp_token ) ) {
+      
+
+      
+      return array( 'token' => $token , 'user_id' => 'not yet set' );
+      
+    }
+    
+    return false;
+      
+  }
 
 
   public function request_temp_token(){
@@ -36,7 +52,6 @@ class Auth_vimeo extends Auth_class{
         
     //save it in the session to be used in the callback - vimeo class does it crazy
     $this->session->set_userdata( $tokens );
-
     
     $url = $this->api->getAuthorizeUrl( $tokens['oauth_token'] , $this->scope );
         

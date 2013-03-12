@@ -35,7 +35,7 @@ class Fetch_behance extends Fetch_model{
   function fetch( $count = 20 ){
 
     $this->api->setAccessToken( $this->access_tokens );    
-        
+            
     return $this->format( $this->api->getUserAppreciations( $this->fgn_user_id ) );    
     
   }
@@ -57,7 +57,6 @@ class Fetch_behance extends Fetch_model{
 		$date_format = 'Y-m-d H:i:s';
 		
 
-		
 		foreach( $posts as $index=>$post ){
 		
 		  $formatted[$index] = array(
@@ -68,7 +67,7 @@ class Fetch_behance extends Fetch_model{
   			
   			, 'created_date'     => date( $date_format, $post->project->created_on )
   			, 'status'           => 'active'
-  			, 'value'            => $post->project->covers->{'115'}
+  			, 'value'            => ( !empty( $post->project->covers->{'230'} ) ) ? $post->project->covers->{'230'} : $post->project->covers->{'202'}
   		  , 'source'           => $post->project->url
   			
   			, 'param'            => '{
