@@ -29,9 +29,21 @@ TO DO:
 
 - LOOK a little on the sign-up adding to session procedure
 
+- Create the Foreign Table to handles all the foreign information about the user (bio/username/location) - all depending on the service
+
 
 -----------------------------------------------------------------------------------------
 
+
+Log started - Mar 11 2013, 10:30PM                                          GABRIEL
+
+  - added the api_return method in auth_class to handle the returns. from now on it doesn't only return the access_token but the fgn_user_id too - and most probably in the future the user info too 
+
+  - added the fgn_user_id into the access tables (maybe in the future we'll do foreign table - see todo)
+
+Log ended - Mar 11 2013, - 11:46PM 
+
+-----------
 
 Log started - Mar 10 2013, 10:30AM                                          GABRIEL
 
@@ -52,7 +64,7 @@ Log started - Mar 10 2013, 10:30AM                                          GABR
   - started to bring Vimeo into picture  
   
 
-Log ended - Mar 10 2013, - 05:00 PM 
+Log ended - Mar 10 2013, - 05:00PM 
 
 -----------
 

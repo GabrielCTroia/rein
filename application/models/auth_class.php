@@ -43,6 +43,8 @@ class Auth_class extends Api_class implements Auth_interface {
     
   }
 */
+  public function api_return( $temp_token ){}
+  
   
   public function request_temp_token() {
     

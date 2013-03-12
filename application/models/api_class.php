@@ -46,6 +46,12 @@ class Api_class extends CI_Model{
    * - it's unique per user and service so we don't actually need $user_id & $service_name
    */ 
   protected $acceess_tokens = array();
+  
+  
+  /* 
+   * cache the foreign user id - needed for some service - maybe all in the future 
+   */ 
+  protected $fgn_user_id = null;
     
   /* 
    * the user id of the user that is used
@@ -57,7 +63,6 @@ class Api_class extends CI_Model{
   */   
   protected $service_name = null;
   
- 
  /* 
   * the service id - needed when formatting or inserting the datas
   */   

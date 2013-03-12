@@ -24,14 +24,14 @@ Class Access_model extends CI_Model {
   protected $service_id = null;
   
   /* 
-   * the foreign user name needs to be stored for osme services 
-   */
-  protected $fgn_user_name = null;
-  
-  /* 
    * the foreign User ID needs to be stored fos some services
    */
   protected $fgn_user_id = null;    
+  
+  /* 
+   * the foreign user name needs to be stored for osme services 
+   */
+  protected $fgn_user_info = null;  
  
   /* 
    * $catches the error
@@ -56,15 +56,34 @@ Class Access_model extends CI_Model {
       
       return false;
        
-    } else {
-      
-      $this->user_id = $u_id;
-      
-      $this->service_id = $s_id;
-      
     }
+
+    $this->user_id = $u_id;
+    
+    $this->service_id = $s_id;
     
   }
+  
+  /* NOT USED YET AND DONT KNOW IF SHOULD BE USED */
+  function set_fgn_user( $fgn_u_id , $fgn_user_info = null ){
+    
+    if( empty( $u_id ) ){
+      
+      $this->error = true;
+      
+      $this->error_msg = "The user or service is not set!";
+      
+      return false;
+      
+    } 
+    
+    $this->fgn_user_id = $fgn_u_id;
+    
+    $this->fgn_user_info= $fgn_user_info;
+    
+  }
+  
+  
   
   //returns all the services that are active and working right now
 	function get_active_accesses() {
@@ -91,7 +110,7 @@ Class Access_model extends CI_Model {
   * stores the access token based on the service_id and user_id
   * updates it if finds duplicate duplicate 
   */
-	function set_access_token( $token ) {
+	function set_access( $token , $fgn_user_id = null ) {
     
     if( empty( $token ) ){
       
@@ -106,8 +125,8 @@ Class Access_model extends CI_Model {
     $a_id = $this->user_id . '-' . $this->service_id;
 
   	$sql = 'INSERT INTO ' . $this->base_table
-  	     . ' ( a_id , u_id , s_id , access_tokens , access_status , fgn_user_name , fgn_user_id )'
-  	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' ' . ',\'' . $this->fgn_user_name . ',\'' . $this->fgn_user_id . '\' )'
+  	     . ' ( a_id , u_id , s_id , access_tokens , access_status , fgn_user_id )'
+  	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' , \'' . $fgn_user_id . '\' )'
   	     . ' ON DUPLICATE KEY UPDATE a_id = a_id';  	   
 
     if( !$this->db->query( $sql ) ){
@@ -126,7 +145,31 @@ Class Access_model extends CI_Model {
 
 	}
 	
-  
+  //return all the datas in the access table
+  function get_access( $u_id , $s_id ){
+
+    $this->db->select( '*' );
+		$this->db->from( $this->base_table );
+		$this->db->where( array( 'u_id' => $u_id , 's_id' => $s_id ) );
+		
+		//this should be only one from the beginnig but there is a bug
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if( $query->num_rows() ) {
+			//free the result
+			$result = $query->result();
+			
+			$query->free_result();
+			
+			return $result;
+			
+		} 
+		
+		return false;
+    
+  }
   
  /*
   * this is the only function here that can be called without calling the init function first 
@@ -150,8 +193,9 @@ Class Access_model extends CI_Model {
 			$query->free_result();
 			
 			return $result;
-		} else
-		    return false;
+		}
+
+		return false;
 		    
   }	
 	

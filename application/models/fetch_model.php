@@ -19,9 +19,9 @@ class Fetch_model extends Api_class implements Fetch_interface{
    * init function 
    * NEEDS to be loaded each time we use this model otherwise the proper library is not loaded
    */  
-  function init( $user_id , $access_tokens ){
+  function init( $user_id , $access ){
     
-    if( empty( $user_id ) || empty( $access_tokens ) ) {
+    if( empty( $user_id ) || empty( $access ) ) {
       
       $this->error = true;
       
@@ -33,7 +33,9 @@ class Fetch_model extends Api_class implements Fetch_interface{
     
     $this->user_id = $user_id;
     
-    $this->access_tokens = $access_tokens[0]->access_tokens;
+    $this->access_tokens = $access[0]->access_tokens;
+    
+    $this->fgn_user_id = $access[0]->fgn_user_id;
     
   }
   

@@ -25,6 +25,22 @@ class Auth_behance extends Auth_class{
     
   }
 
+  
+  /* see models/auth_class.php */
+  public function api_return( $temp_token ){
+    
+    if( $this->generate_access_token( $temp_token['code'] ) ) {
+      
+      return array( 'token' => $this->api->getAccessToken() , 'user_id' => $this->api->getAuthenticatedUser()->id  );
+      
+    }
+    
+    return false;
+      
+  }
+  
+  
+  /* see models/auth_class.php */
   public function request_temp_token(){
     
     $this->api->authenticate( $this->callback_url , $this->scope );
@@ -32,9 +48,10 @@ class Auth_behance extends Auth_class{
   }
 
 
+  /* see models/auth_class.php */
   public function generate_access_token( $temp_token ){
     
-    if( $token = $this->api->exchangeCodeForToken( $temp_token['code'] , $this->callback_url ) ){
+    if( $token = $this->api->exchangeCodeForToken( $temp_token , $this->callback_url ) ){
       
       return $token;
       
@@ -43,6 +60,8 @@ class Auth_behance extends Auth_class{
     return false;
 
   }
+
+  
   
 }  
 

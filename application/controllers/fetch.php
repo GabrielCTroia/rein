@@ -67,14 +67,14 @@ class Fetch extends User_Controller {
     	/* load the access model */
       $this->load->model( 'Access_model' );
     	
-    	if( !$access_tokens = $this->Access_model->get_access_token( $this->session->userdata['u_id'] , $service_id ) ) {
+    	if( !$access = $this->Access_model->get_access( $this->session->userdata['u_id'] , $service_id ) ) {
     	
         $data['error_msg'] = "No access token in our Database for " . $service_name;
     	
     	} else {
       	
         //init the fetch_service model
-        if( $this->fetch_service->init( $this->session->userdata['u_id'] , $access_tokens ) === false ) {	
+        if( $this->fetch_service->init( $this->session->userdata['u_id'] , $access ) === false ) {	
         
           $data['error_msg'] = $this->fetch_service->error_msg;
         

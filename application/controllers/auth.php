@@ -38,15 +38,9 @@ class Auth extends User_Controller {
 		
     $this->load->model( 'Services_model' );      	
   
-/*  
-  //WE DON'T NEED THIS SHIT - THE ARGUMENT IS ALREADY POPULATED WITH THE SEGMENT(3)
-    if( is_null( $service_name ) && $this->uri->segment( 3 ) !== FALSE )
-        $service_name = $this->uri->segment( 3 );
-*/
-  
     if( !$service_name || !$this->Services_model->get_service_by( 'name' , $service_name , false ) ) {
       
-      echo "there is no service name or this serbvice is not in our database";
+      echo "there is no service name or this service is not in our database";
 /*       redirect( self::$page_url ); */
   	
   	} else {       
@@ -78,7 +72,7 @@ class Auth extends User_Controller {
     $this->load->model( "services/$service_name/Auth_$service_name" , 'auth_service' );
     
     //check if there is an acces token returned
-    if ( !empty( $_GET ) && $access_token = $this->auth_service->generate_access_token( $_GET ) ) {
+    if ( !empty( $_GET ) && $api_return = $this->auth_service->api_return( $_GET ) ) {
       
       
 
@@ -106,7 +100,7 @@ class Auth extends User_Controller {
         
       } else {
         
-        if( $this->Access_model->set_access_token( $access_token ) === false ){
+        if( $this->Access_model->set_access( $api_return['token'] , $api_return['user_id'] ) === false ){
           
           echo $this->Access_model->error_msg;
           
@@ -116,7 +110,7 @@ class Auth extends User_Controller {
 /*           redirect( '/home/settings?service=' . $service_name . '&status_code=200' ); */
           
         }
-          
+            
       }
     
     } else {

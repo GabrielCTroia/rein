@@ -35,8 +35,8 @@ class Fetch_behance extends Fetch_model{
   function fetch( $count = 20 ){
 
     $this->api->setAccessToken( $this->access_tokens );    
-    
-    return $this->format( $this->api->getUserAppreciations( 'gabrielcatalin' ) );    
+        
+    return $this->format( $this->api->getUserAppreciations( $this->fgn_user_id ) );    
     
   }
   
