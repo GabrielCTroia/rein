@@ -61,20 +61,10 @@ Class Posts_model extends CI_Model {
   
   
 	
-	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false ) {	
-		
-/* 		$select_str = 'p_id, post_foreign_id, service_id, posts.created_date, value, source, param ' . ' , ' .$extra_fields; */
-
+	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false , $order_by = 'created_date' , $order_dir = 'DESC' ) {	
 		
 		$select_str = "*"; //this should be more restriced but work for the testing phase
 
-/*
-		$this->db->select( $select_str );
-		$this->db->from( 'posts AS p' );
-		$this->db->join( 'users AS u' , 'u.u_id = p.u_id' );
-		$this->db->join( 'services AS s' , "s.s_id = ( select s_id FROM $this->base_table AS pp WHERE pp.p_id = p.p_id" );
-*/
-/* 		$this->db->where( 'p.u_id', $this->user_id ); */
 
     $sql  = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' AS p' 
          . ' JOIN users AS u ON u.u_id = ' . $this->user_id
@@ -89,21 +79,10 @@ Class Posts_model extends CI_Model {
          } 
 
     $sql .= 'p.u_id = ' . $this->user_id
-         . ' ORDER BY p.created_date DESC'
+         . ' ORDER BY p.' . $order_by . ' ' . $order_dir
          . ' LIMIT ' . $limit 
          ; 
-			
-/* 		if( $this->service_id ){ */
-			
-			// if there is a service_id specified than return only that
-			// if it's not specified return everything
-/* 			$this->db->where( 'posts.s_id', $this->service_id ); */
-			
-/* 		}	 */
-		
-/* 		$this->db->order_by( 'posts.created_date desc' ); */
-		
-		
+
 		if ( !$query = $this->db->query($sql) ) {
   		
   		$this->error = true;
@@ -200,7 +179,7 @@ Class Posts_model extends CI_Model {
         foreach( $posts as $post ) :
           $sql .= '(';
           foreach( $post as $ref=>$value ) :
-            $sql .= '\'' . $value . '\'';
+            $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
             $sql .= ( $value != end($post) ) ? ' , ' : '';  
           endforeach;
           $sql .= ') ';

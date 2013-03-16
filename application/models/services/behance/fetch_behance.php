@@ -34,7 +34,7 @@ class Fetch_behance extends Fetch_model{
    */
   function fetch( $count = 20 ){
 
-    $this->api->setAccessToken( $this->access_tokens );    
+    $this->api->setAccessToken( $this->access_token );    
             
     return $this->format( $this->api->getUserAppreciations( $this->fgn_user_id ) );    
     
@@ -61,7 +61,7 @@ class Fetch_behance extends Fetch_model{
 		
 		  $formatted[$index] = array(
 
-		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id , $this->user_id )
+		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
   			, 'u_id'             => $this->user_id
   			, 's_id'             => $this->service_id
   			

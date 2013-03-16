@@ -33,7 +33,9 @@ class Fetch_model extends Api_class implements Fetch_interface{
     
     $this->user_id = $user_id;
     
-    $this->access_tokens = $access[0]->access_tokens;
+    $this->access_token = $access[0]->access_token;
+    
+    $this->access_token_secret = $access[0]->access_token_secret;
     
     $this->fgn_user_id = $access[0]->fgn_user_id;
     

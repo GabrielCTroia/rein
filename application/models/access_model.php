@@ -109,10 +109,11 @@ Class Access_model extends CI_Model {
  /* 
   * stores the access token based on the service_id and user_id
   * updates it if finds duplicate duplicate 
+  * @access = api_class->format_api_return() in /models/api_class.php
   */
-	function set_access( $token , $fgn_user_id = null ) {
+	function set_access( $access ) {
     
-    if( empty( $token ) ){
+    if( empty( $access['access_token'] ) ){
       
       $this->error = true;
       
@@ -121,12 +122,12 @@ Class Access_model extends CI_Model {
       return false;
       
     }
-
+    
     $a_id = $this->user_id . '-' . $this->service_id;
 
   	$sql = 'INSERT INTO ' . $this->base_table
-  	     . ' ( a_id , u_id , s_id , access_tokens , access_status , fgn_user_id )'
-  	     . ' VALUES( \'' . $a_id . '\',' . $this->user_id . ',' . $this->service_id . ',\'' . $token . '\' , \'active\' , \'' . $fgn_user_id . '\' )'
+  	     . ' ( a_id , u_id , s_id , access_token , access_token_secret , access_status , fgn_user_id )'
+  	     . " VALUES( '$a_id' , '{$this->user_id}' , '{$this->service_id}' , '" . $access['access_token'] . "' , '" .$access['access_token_secret'] . "' , 'active' , '" . $access['fgn_user_id'] . "' )"
   	     . ' ON DUPLICATE KEY UPDATE a_id = a_id';  	   
 
     if( !$this->db->query( $sql ) ){
@@ -175,9 +176,9 @@ Class Access_model extends CI_Model {
   * this is the only function here that can be called without calling the init function first 
   * not sure if is the best way but it's shorter at least
   */
-  function get_access_token( $u_id , $s_id ) {
+  function get_access_tokens( $u_id , $s_id ) {
 
-    $this->db->select( 'access_tokens' );
+    $this->db->select( 'access_token , access_token_secret' );
 		$this->db->from( $this->base_table );
 		$this->db->where( array( 'u_id' => $u_id , 's_id' => $s_id ) );
 		

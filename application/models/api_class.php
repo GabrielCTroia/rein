@@ -45,7 +45,14 @@ class Api_class extends CI_Model{
    * cache the access token 
    * - it's unique per user and service so we don't actually need $user_id & $service_name
    */ 
-  protected $acceess_tokens = array();
+  protected $access_token = null;
+
+
+  /* 
+   * cache the access token 
+   * - it's unique per user and service so we don't actually need $user_id & $service_name
+   */ 
+  protected $access_token_secret = null;
   
   
   /* 

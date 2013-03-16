@@ -29,7 +29,7 @@ class Auth_instagram extends Auth_class{
     
     if( $token = $this->generate_access_token( $temp_token['code'] ) ) {
       
-      return array( 'token' => $token , 'user_id' => 'not set yet' );
+      return $this->format_api_return( $token );
       
     }
     

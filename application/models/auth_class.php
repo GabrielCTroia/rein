@@ -65,6 +65,12 @@ class Auth_class extends Api_class implements Auth_interface {
   }
   
   
+  protected function format_api_return( $token , $token_secret = 'not set' , $fgn_user_id = 'not set' ){
+    
+    return array( 'access_token' => $token , 'access_token_secret' => $token_secret , 'fgn_user_id' => $fgn_user_id );
+    
+  }
+  
   protected function _urlencode_rfc3986( $input ) {
   
     if ( is_array( $input ) )

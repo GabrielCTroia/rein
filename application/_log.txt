@@ -34,6 +34,21 @@ TO DO:
 
 -----------------------------------------------------------------------------------------
 
+Log started - Mar 15 2013, 11:30PM                                          GABRIEL
+  
+  - post foreign_id is NO LONGER user dependent. it's ONLY service dependent. This will help to treat posts as entities - accesible by more than one user 
+  
+  - Vimeo is fetching - all I needde to do was to call the setToken with the acces_token anda access_token_Secret - really simple - the secret was missing therefore the signature was not the right one
+  
+  - added the format_api_return() in the /models/auth_class.php to take care of the formatting of the access token, access token secret and fgn_user_id when inserting into the db (this way is a little more abstract and secure)
+  
+  - added the access_token_secret in the /models/api_class.php
+  
+  - added the access_token_secret in the {access} table   
+
+Log ended - Mar 16 2013, - 
+
+-----------
 
 Log started - Mar 11 2013, 10:30PM                                          GABRIEL
 

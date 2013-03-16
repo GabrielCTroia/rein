@@ -21,6 +21,7 @@ class Fetch_vimeo extends Fetch_model{
     parent::__construct();
     
     $this->api = new phpVimeo( $this->consumer_key , $this->consumer_secret );
+    
 
   }
   
@@ -31,13 +32,11 @@ class Fetch_vimeo extends Fetch_model{
    */
   function fetch( $count = 20 ){
     
-/*     var_dump() */
+    $this->api->setToken( $this->access_token , $this->access_token_secret );
     
-/*     var_dump(  $this->api->call('vimeo.oauth.checkAccessToken' ) ); */
-    echo "<br/>";        
-    var_dump( $this->api->call('vimeo.videos.getLikes', array( 'user_id' => '10486857' ) ) );
+    $posts = $this->api->call('vimeo.videos.getLikes')->videos->video;
     
-    exit();
+    return $this->format( $posts );
     
   }
   
@@ -65,24 +64,24 @@ class Fetch_vimeo extends Fetch_model{
 					
   		$formatted[$index] = array(
   			
-  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id , $this->user_id )
-  			, 'u_id'          => $this->user_id
-  			, 's_id'     => $this->service_id
+  			  'post_foreign_id'   => Util::format_foreign_id( $post->id , $this->service_id )
+  			, 'u_id'              => $this->user_id
+  			, 's_id'              => $this->service_id
   			
   			 
-  			, 'created_date' => date( $date_format, $post->created_time )
-  			, 'status' => 'active'
-  			, 'value' => $post->images->standard_resolution->url
-  		  , 'source' => ''
-  			, 'param' => '{
-  				  "user_id" 		: "' . $post->user->id . '"
-  				, "user_name" 	: "' . $post->user->username . '"
-  				, "profile_image" : "' . $post->user->profile_picture . '"
-  				, "user_bio" 		: "if the bio is russian the object breaks"
-  				, "post_type" 	: "favorited"
-  				, "filter"   		: "' . $post->filter . '"
-  				, "tags"   			: "' . '$post->tags' .'"
-          , "caption" 		: "if the caption is russian the object breaks"
+  			, 'created_date'      => $post->upload_date
+  			, 'favorited_date'    => $post->liked_on
+  			, 'status'            => 'active'
+  			, 'value'             => $post->id
+  		  , 'source'            => ''
+  			
+  			, 'param'             => '{
+      				  "user_id" 		   : "' . $post->owner . '"
+      				, "user_name"      : "' . $this->get_username( $post->owner ) . '"
+      				, "title"      	   : "' . addslashes( $post->title ) . '"
+      				, "upload_date" 	 : "' . $post->modified_date . '"
+      				, "privacy"   		 : "' . $post->privacy . '"
+      				, "is_hd"   			 : "' . $post->is_hd .'"
   			}'
   			
   		);
@@ -90,6 +89,41 @@ class Fetch_vimeo extends Fetch_model{
 		}
 
 		return $formatted;
+    
+  }
+  
+  /* 
+   * this makes necessary calls - like user information or similar 
+   */
+  protected function api_get_extra( $method , $params = null , $select = null ){
+    
+    if( $data = $this->api->call( $method , $params ) ) {
+      
+      if( $select ) {
+        
+        var_dump($data);
+        
+        return $data->$select; 
+          
+      }  
+      
+      return $data;
+      
+    }
+    
+    return null;
+    
+  }
+  
+  private function get_username( $user_id ){  
+          
+    if( $data = $this->api->call( 'vimeo.people.getInfo' , array( 'user_id' => $user_id ) ) ) {
+      
+      return $data->person->username;
+      
+    }
+    
+    else return null;
     
   }
   

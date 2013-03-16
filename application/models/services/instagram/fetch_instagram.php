@@ -35,7 +35,7 @@ class Fetch_instagram extends Fetch_model{
     
     $instagram = new Instagram\Instagram;
     
-		$instagram->setAccessToken( $this->access_tokens );
+		$instagram->setAccessToken( $this->access_token );
 		
 		$param_arr = array(
 				'count'		=> $count			       	
@@ -72,15 +72,16 @@ class Fetch_instagram extends Fetch_model{
 					
   		$formatted[$index] = array(
   			
-  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id , $this->user_id )
-  			, 'u_id'          => $this->user_id
-  			, 's_id'     => $this->service_id
+  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )
+  			, 'u_id'             => $this->user_id
+  			, 's_id'             => $this->service_id
   			
   			 
   			, 'created_date' => date( $date_format, $post->created_time )
   			, 'status' => 'active'
   			, 'value' => $post->images->standard_resolution->url
   		  , 'source' => ''
+  		
   			, 'param' => '{
   				  "user_id" 		: "' . $post->user->id . '"
   				, "user_name" 	: "' . $post->user->username . '"

@@ -29,20 +29,27 @@ class Auth_vimeo extends Auth_class{
   }
   
   
-  /* see models/auth_class.php */
+  /* 
+   * see models/auth_class.php 
+   * ALWAYS USE $this-format_api_return WHEN RETURN
+   */
   public function api_return( $temp_token ){
     
-    if( $token = $this->generate_access_token( $temp_token ) ) {
-      
-
-      
-      return array( 'token' => $token , 'user_id' => 'not yet set' );
+    if( $tokens = $this->generate_access_token( $temp_token ) ) {           
+            
+      return $this->format_api_return( $tokens['oauth_token'] , $tokens['oauth_token_secret'] );
       
     }
     
     return false;
       
   }
+  
+  
+  
+  
+  
+
 
 
   public function request_temp_token(){
@@ -60,13 +67,15 @@ class Auth_vimeo extends Auth_class{
   }
 
 
+
+
   public function generate_access_token( $temp_token ){
     
     $this->api->setToken( $this->session->userdata['oauth_token'] , $this->session->userdata['oauth_token_secret'] );
     
-    if( $token = $this->api->getAccessToken( $temp_token['oauth_verifier'] ) ){
+    if( $tokens = $this->api->getAccessToken( $temp_token['oauth_verifier'] ) ){
       
-      return $token['oauth_token'];
+      return $tokens;
       
     } 
           

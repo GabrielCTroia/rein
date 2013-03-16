@@ -29,7 +29,7 @@ Class Util extends CI_Model {
   /* 
 	 * creates unique LOCAL-ID based on the FOREIGN-ID 
 	*/
-	public function format_foreign_id( $fid , $sid , $uid ){
+	public function format_foreign_id( $fid , $sid ){
 		
 		//the posts are service dependent
 		$prefix = $sid . '-' ;

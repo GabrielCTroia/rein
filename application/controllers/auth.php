@@ -100,7 +100,7 @@ class Auth extends User_Controller {
         
       } else {
         
-        if( $this->Access_model->set_access( $api_return['token'] , $api_return['user_id'] ) === false ){
+        if( $this->Access_model->set_access( $api_return ) === false ){
           
           echo $this->Access_model->error_msg;
           

@@ -29,9 +29,9 @@ class Auth_behance extends Auth_class{
   /* see models/auth_class.php */
   public function api_return( $temp_token ){
     
-    if( $this->generate_access_token( $temp_token['code'] ) ) {
+    if( $token = $this->generate_access_token( $temp_token['code'] ) ) {
       
-      return array( 'token' => $this->api->getAccessToken() , 'user_id' => $this->api->getAuthenticatedUser()->id  );
+      return $this->format_api_return( $this->api->getAccessToken() , 'not set' , $this->api->getAuthenticatedUser()->id  );
       
     }
     
