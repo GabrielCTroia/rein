@@ -3,6 +3,46 @@
 	
 Class User_model extends CI_Model {
 	
+ /* 
+  * cache the base table 
+  */
+  private $base_table = 'users';
+  
+  /* 
+   * the user id of the user that is fetched 
+   */  
+  protected $user_id = null;
+
+  /* 
+   * $catches the error
+   */  
+  public $error = null;
+  
+  /* 
+   * $catches the error_msg
+   */  
+  public $error_msg = null;
+	
+	
+	
+  function init( $u_id ){
+    
+    if( empty( $u_id ) ){
+      
+      $this->error = true;
+      
+      $this->error_msg = "The user is not given!";
+      
+      return false;
+       
+    }
+
+    $this->user_id = $u_id;
+    
+	}
+	
+	
+	
 
 	public function register_user( $post ) {
   	$email = $post[ 'email' ];
@@ -98,6 +138,40 @@ Class User_model extends CI_Model {
 		return false;
 		
   }
+  
+  
+  /*returns all the necessay infos about the USER
+  
+   ** not sure if it's the best to carry all of this info everywhere but I believe it's better than doing more queries from different parts of the app 
+   * JOINS the TABLES:
+     - access  
+   */
+  public function get_user(){
+
+    $sql = " SELECT u.u_id, email, user_name, created_date, user_status, user_type, GROUP_CONCAT( s_id )"
+         . " FROM users AS u"
+         . " JOIN access AS a ON a.u_id = u.u_id " 
+         . " WHERE u.u_id = {$this->user_id} "
+         . " GROUP BY user_name "
+         ; 
+		
+		$query = $this->db->query( $sql );
+		
+		if( $query->num_rows() ) {
+			//free the result
+			$result = $query->result();
+			
+			$query->free_result();
+			
+			return $result;
+		} 
+		
+		return false;
+    
+  }
+  
+  
+  
   
   
   	

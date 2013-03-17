@@ -17,12 +17,13 @@
   <div>
     <h1>Connect with the following services:</h1>
     <?php foreach( $active_services as $service ): ?>
+      
        
       <a href="/auth/request_temp_token/<?php echo $service->service_name ?>"><?php echo $service->service_name ?></button>
        
     <?php endforeach; ?>
-    <!--
-<pre>
+<!--
+    <pre>
       <?php echo print_r( $active_services , 1 ); ?>
     </pre>
 -->

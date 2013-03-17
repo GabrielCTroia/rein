@@ -72,9 +72,9 @@ Class Services_model extends CI_Model {
 	
 	
 	
-	public function get_active_services() {
+	public function get_active_services( $select = 's_id , service_name' ) {
   	
-  	$this->db->select( 'service_name' );
+  	$this->db->select( $select );
   	$this->db->from( 'services' );
   	$this->db->where( 'service_status' , 'active' );
   	

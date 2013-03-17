@@ -1,7 +1,5 @@
 	<?php $post->param = json_decode($post->param); ?>
-				
 	
-	<article class="layout-twitter spacer spacer-double c1_1 clearfix">
 		<div class="left">
 			<img  src="<?php echo APPPATH . "images/icons/twitter_60x60px.png" ?>">
 		</div>
@@ -24,4 +22,3 @@
 					<p>post (foreign) id = <?php echo $post->post_foreign_id; ?></p>
 			<?php endif; ?>
 		</div>
-	</article>

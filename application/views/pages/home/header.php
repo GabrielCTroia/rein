@@ -1,23 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
    
- <header class="header">   
-  
-  <div class="grid">
+	 <header class="main-header">   
 
-	<a href="/" class="logo">
-	  <h1>Recycle Inspiration</h1>
-	</a>
-	
-	<div>
-  	<p>Welcome <?php echo $this->session->userdata['user_name'];?></p>
-	</div>
-	
-	<div class="bundle">
-	  <a href="/log-out">Logout</a>
-     | 
-    <a href="/home/settings">Settings</a>
-	</div>
-	
-  </div> <!-- eof .grid -->
+    <div class="container">
   
- </header> 	
+    	<a href="/" class="logo pull-left">
+    	  <h1>Recycled Inspiration</h1>
+    	</a>
+  	
+      <p>Welcome <?php echo $this->session->userdata['user_name'];?></p>
+  	
+      <div class="pull-right">
+        <?php $this->load->view( '/modules/navigation/navigation' ); ?>
+      </div>
+  	
+    </div> <!-- eof .container -->
+    
+  </header>
+

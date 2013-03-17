@@ -34,6 +34,20 @@ TO DO:
 
 -----------------------------------------------------------------------------------------
 
+
+Log started - Mar 16 2013, 5:30PM                                          GABRIEL
+
+  - added some awesoem shits. I'm tired - SPARTACUS
+  
+  - in the middle of making it look goootha :D
+  
+  - added some style to the whole story. Brought in Bootstrap
+
+
+Log ended - Mar 16 2013, - 
+
+-----------
+
 Log started - Mar 15 2013, 11:30PM                                          GABRIEL
   
   - post foreign_id is NO LONGER user dependent. it's ONLY service dependent. This will help to treat posts as entities - accesible by more than one user 
@@ -46,7 +60,7 @@ Log started - Mar 15 2013, 11:30PM                                          GABR
   
   - added the access_token_secret in the {access} table   
 
-Log ended - Mar 16 2013, - 
+Log ended - Mar 16 2013, - 3 AM
 
 -----------
 

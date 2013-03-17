@@ -65,17 +65,26 @@ class Home extends User_Controller {
 
   	$this->load->model( 'Services_model' , '' , TRUE );
 
-  	$data[ 'active_services' ] = $this->Services_model->get_active_services();
+  	$data['active_services'] = $this->Services_model->get_active_services();
   	
-  	//  do a check wether an service/status_code is present in the URL. if so leave a message
+/*
+  	foreach( $active_services as &$service ){
+    	
+    	$service = $service->s_id;
+    	
+  	}
+
+    $user_services = explode( "," , $this->userdata[0]->{'GROUP_CONCAT( s_id )'} );	
+  	
+  	$data['active_services'] = array_diff( $active_services , $user_services );
+*/
   	
   	$this->load->view( 'index' , $data );
 	}
 	
-	public function settings_access() {
-  	
-  	
-	}
+	
+	public function settings_access() {}
+	
 	
 	public function oauth_wiki() {
 

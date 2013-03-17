@@ -46,13 +46,13 @@ Class Access_model extends CI_Model {
   
   
   
-  function init( $u_id , $s_id ){
+  function init( $u_id , $s_id = null ){
     
-    if( empty( $u_id ) || empty( $s_id ) ){
+    if( empty( $u_id ) ){
       
       $this->error = true;
       
-      $this->error_msg = "The user or service is not set!";
+      $this->error_msg = "The user is not set!";
       
       return false;
        
@@ -85,25 +85,7 @@ Class Access_model extends CI_Model {
   
   
   
-  //returns all the services that are active and working right now
-	function get_active_accesses() {
-		$this->db->select( 's_id , service_name' );
-		$this->db->from( $this->base_table );
-		$this->db->where( 'service_status' , 'active' );
-		$this->db->order_by( 'service_id' );
-		
-		$query = $this->db->get( );
-		
-		if( $query->num_rows() ) {
-			//free the result
-			$result = $query->result();
-			$query->free_result();
-			
-			return $result;
-		} else
-		    return false;
 
-	}
 	
 	
  /* 
@@ -146,6 +128,33 @@ Class Access_model extends CI_Model {
 
 	}
 	
+	 //returns all the services that are active for the USER
+/*
+	function get_active_accesses() {
+		$this->db->select( 's_id' );
+		$this->db->from( $this->base_table );
+		$this->db->where( 'u_id' , $this->user_id );
+		$this->db->where( 'service_status' , 'active' );
+		$this->db->order_by( 'service_id' );
+		
+		$query = $this->db->get( );
+		
+		if( $query->num_rows() ) {
+			//free the result
+			$result = $query->result();
+			
+			$query->free_result();
+			
+			return $result;
+		} 
+		
+		return false;
+
+	}
+*/
+	
+	
+	
   //return all the datas in the access table
   function get_access( $u_id , $s_id ){
 
@@ -175,6 +184,7 @@ Class Access_model extends CI_Model {
  /*
   * this is the only function here that can be called without calling the init function first 
   * not sure if is the best way but it's shorter at least
+  * going for DEPRECATION 
   */
   function get_access_tokens( $u_id , $s_id ) {
 

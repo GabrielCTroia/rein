@@ -1,19 +1,12 @@
 @import url("http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css");
+html,body{height:100%}
 body{font-size:14px}
+.all{min-height:100%;height:auto !important;height:100%;background-image:url("../images/bkgs/bkg-grain.png")}
 input{display:block;margin-bottom:1em}
-.right{float:right}
-.left{float:left}
-.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
-.clearfix{display:inline-block;clear:both}
-* html .clearfix{height:1%}
-.group{display:block}
-.error{color:#f00;font-weight:bolder}
-.stretch{width:100%;position:relative}
-.grid{width:960px;margin:0 auto;position:relative}
-.section{margin:5%;padding:5%;background:#ccc;position:relative;}
-.section .inner{width:100%;height:100%}
-body,html,.wrapper{min-width:100%;min-height:100%}
-.header{width:100%;height:60px;background:#8fcfe8;}
-.header .logo{width:200px;height:50px;background:#fff;float:left}
-.footer{width:100%;height:30px;background:#8fcfe8}
-.wiki-page h3 li a{font-size:1.3rem;margin-top:1.5rem;display:block}
+.must-header{background-color:#312140;color:#fff}
+.must-page{margin-top:3em;margin-bottom:3em}
+.must-footer{background-color:#312140;color:#fff}
+.push{margin-bottom:-200px}
+.push,.sticky-footer{height:200px}
+.navbar-inverse .navbar-inner{background-color:#312140;background-image:none}
+.clear{clear:both}

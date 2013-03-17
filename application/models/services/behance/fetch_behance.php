@@ -35,6 +35,8 @@ class Fetch_behance extends Fetch_model{
   function fetch( $count = 20 ){
 
     $this->api->setAccessToken( $this->access_token );    
+     
+/*     var_dump($this->api->getUserAppreciations( $this->fgn_user_id ));  */
             
     return $this->format( $this->api->getUserAppreciations( $this->fgn_user_id ) );    
     
@@ -58,7 +60,7 @@ class Fetch_behance extends Fetch_model{
 		
 
 		foreach( $posts as $index=>$post ){
-		
+      		
 		  $formatted[$index] = array(
 
 		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
@@ -67,19 +69,20 @@ class Fetch_behance extends Fetch_model{
   			
   			, 'created_date'     => date( $date_format, $post->project->created_on )
   			, 'status'           => 'active'
-  			, 'value'            => ( !empty( $post->project->covers->{'230'} ) ) ? $post->project->covers->{'230'} : $post->project->covers->{'202'}
+  			, 'value'            => end( $post->project->covers )
   		  , 'source'           => $post->project->url
   			
   			, 'param'            => '{
-          				  "user_id" 		   : "' . $post->project->owners[0]->id . '"
-          				, "user_name"      : "' . $post->project->owners[0]->display_name . '"
-
-          				, "user_url"       : "' . $post->project->owners[0]->url . '"
-          				, "country"        : "' . $post->project->owners[0]->country . '"
-          				, "user_bio" 		   : "if the bio is russian the object breaks"
-          				, "post_type" 	   : "appreciated"
-          				, "tags"   			   : "' . $post->project->fields[0] .'"
-              }'
+      				  "user_id" 		   : "' . $post->project->owners[0]->id . '"
+      				, "user_name"      : "' . $post->project->owners[0]->display_name . '"
+      				
+      				, "user_url"       : "' . $post->project->owners[0]->url . '"
+      				, "country"        : "' . $post->project->owners[0]->country . '"
+      				, "post_type" 	   : "appreciated"
+      				, "tags"   			   : "' . $post->project->fields[0] .'"
+      				, "thumbnail"      : "' . end( $post->project->covers )   . '"
+        }'
+        
 		  );
 		
 		}
@@ -87,6 +90,7 @@ class Fetch_behance extends Fetch_model{
 		return $formatted;
     
   }
+  
   
   
 }  

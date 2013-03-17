@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-<div class="login-wrapper c1_4 column-fixed centered middle light-grey padding">
+<div class="login">
 
 	<?php if (isset($_REQUEST['login']) && $_REQUEST['login'] == 'false' ) : ?>
 		

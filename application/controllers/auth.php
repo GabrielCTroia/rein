@@ -106,8 +106,8 @@ class Auth extends User_Controller {
           
         } else {
           
-          redirect( '/fetch/service/' . $service_name . '/20/show' );          
-/*           redirect( '/home/settings?service=' . $service_name . '&status_code=200' ); */
+/*           redirect( '/fetch/service/' . $service_name . '/20/show' );           */
+          redirect( '/home/settings');
           
         }
             

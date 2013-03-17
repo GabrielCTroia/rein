@@ -82,6 +82,7 @@ class Fetch_vimeo extends Fetch_model{
       				, "upload_date" 	 : "' . $post->modified_date . '"
       				, "privacy"   		 : "' . $post->privacy . '"
       				, "is_hd"   			 : "' . $post->is_hd .'"
+      				, "thumbnail"      : "' . $this->get_thumbnail( $post->id ) . '" 
   			}'
   			
   		);
@@ -123,7 +124,21 @@ class Fetch_vimeo extends Fetch_model{
       
     }
     
-    else return null;
+    return null;
+    
+  }
+  
+  private function get_thumbnail( $video_id ){
+    
+    if( $data = $this->api->call( 'videos.getThumbnailUrls' , array( 'video_id' => $video_id ) ) ) {
+      
+      $data = end($data->thumbnails->thumbnail);
+    
+      return $data->_content; 
+      
+    }
+    
+    return false;
     
   }
   

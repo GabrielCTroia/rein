@@ -1,84 +1,26 @@
 @import url( "http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css" )
 
-body
-  font-size 14px // define em value
 
-input
-  display block
-  margin-bottom 1em
+//////////////// $VARIABLES ////////////////
 
-.right
-  float right
+///// $Colors /////
 
-.left
-  float left
-
-.clearfix:after
-  visibility hidden
-  display block
-  font-size 0
-  content " "
-  clear both
-  height 0
-  
-.clearfix
-  display inline-block
-  clear both
-  
-/* start commented backslash hack \*/
-* html .clearfix
-  height 1%
-
-.group
-  display block
-/* close commented backslash hack */
-
-.error
-  color #f00
-  font-weight bolder
+$white    = white 
+$lighter  = #E8D0FD
+$light    = #B9A5CA
+$medium   = #C484FD
+$medium2  = #895CB1
+$dark     = #61417D
+$darker   = #312140
+$black    = #333
 
 
+////// $SIZES /////
+
+$footer_height = 200px
 
 
-//////////       structural classes
-
-.stretch
-  width 100%
-  position relative
-
-.grid
-  width 960px
-  margin 0 auto
-  position relative
-
-.section
-  margin 5%
-  padding 5%
-  background #ccc
-  border-radius( 10px )
-  position relative
-  
-  .inner
-    width 100%
-    height 100%
-
-
-
-
-
-
-
-
-
-/*    ////////////////////////////////////////////////////////////////////////////////  */
-  
-//                                           $MIXINS
-
-/*    ////////////////////////////////////////////////////////////////////////////////  */
-
-
-
-
+//////////////// $MIXINS ////////////////
 
 vendor(prop, args)
   -webkit-{prop} args
@@ -108,38 +50,26 @@ text-shadow( color , mode = darken )
   text-shadow 1px 1px 0px mode( color , 35% )
 
 
-/*  DEFINE COLORS  */
 
-red = #a52027
-green = #6bc5b9
-black = #353636
-blue = #425b63
-lime = #dbe259
-white = #ffffff
+//////////////// $GENERAL //////////////////
 
+html, body
+  height 100%
 
+body
+  font-size 14px // define em value
 
-// End of General Classes
-
-// Start of Key Structure Definitions
-
-body,
-html,
-.wrapper
-  min-width 100%
-  min-height 100%
-
-.header
-  width 100%
-  height 60px
-  background #8FCFE8
+.all
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
   
-  .logo
-    width 200px
-    height 50px
-    background #fff
-    float left
-    
+  background-image url('../images/bkgs/bkg-grain.png')
+
+
+input
+  display block
+  margin-bottom 1em
 
 
 
@@ -147,22 +77,51 @@ html,
 
 
 
-.footer
-  width 100%
-  height 30px
-  background #8FCFE8
+//////////////// $ELEMENTS ////////////////
+
+.must-header
+  background-color $darker
+  color $white
 
 
 
-/*    ////////////////////////////////////////////////////////////////////////////////  */
+
+.must-page
+  margin-top 3em
+  margin-bottom 3em
+
   
-//                                           $WIKI
 
-/*    ////////////////////////////////////////////////////////////////////////////////  */
 
-.wiki-page
-  
-  h3 li a
-    font-size 1.3rem
-    margin-top 1.5rem
-    display block
+.must-footer 
+  background-color $darker
+  color $white
+
+.push 
+  margin-bottom - $footer_height
+
+.push,.sticky-footer
+  height $footer_height
+
+
+
+//////////////// $MODULES //////////////////
+
+.navbar-inverse .navbar-inner
+  background-color $darker
+  background-image none
+
+
+
+/// $#FEED
+
+
+
+
+
+
+//////////////// $OBJECTS //////////////////
+
+.clear
+  clear both
+
