@@ -7,7 +7,7 @@ require_once( APPPATH . 'models/posts_model.php' );
 	
 Class Posts_instagram extends Posts_Model {	
 	
-	function insert( $posts = NULL ){
+	function old_insert( $posts = NULL ){
   	
   	if( !$posts ){
     	

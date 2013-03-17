@@ -105,7 +105,7 @@ input
 
 
 
-//////////////// $MODULES //////////////////
+//////////////// $MODULES & $COMPONENTS //////////////////
 
 .navbar-inverse .navbar-inner
   background-color $darker
@@ -116,7 +116,18 @@ input
 /// $#FEED
 
 
+/// $SETTINGS
 
+#settings
+  
+  .services
+    
+    li
+      text-align center
+      -webkit-filter grayscale(.9)
+      
+    li.active,li:hover
+      -webkit-filter: grayscale(0);  
 
 
 
@@ -124,4 +135,10 @@ input
 
 .clear
   clear both
+  
+.error
+  color red 
+  
+.success
+  color $medium    
 

@@ -1,32 +1,27 @@
-<section component="settings">
+<div id="settings" component="settings">
   
-  <div>
-    <?php
-      if( $this->input->get( 'service' ) && $this->input->get( 'status_code' ) ) {
-        
-        $service = $this->input->get( 'service' );
-        
-        //  should be a function that goes through all the status_codes and returns the correlating message
-        if( $this->input->get( 'status_code' ) == 200 )
-          echo "You have been connected to $service!<br><br>";
-        
-      }
-    ?>
-  </div>
+  <?php if( !empty($success) ) : ?>  
+    <span class="success">
+      Congrats! You are now connected with <?php echo $success; ?>
+    </span>
+  <?php endif; ?>
   
   <div>
     <h1>Connect with the following services:</h1>
+    
+    <ul class="services row">
     <?php foreach( $active_services as $service ): ?>
       
-       
-      <a href="/auth/request_temp_token/<?php echo $service->service_name ?>"><?php echo $service->service_name ?></button>
+      <li class="span1 <?php echo ( !empty( $service->active ) ) ? 'active' : ''; ?>">
+        <a href="/auth/request_temp_token/<?php echo $service->service_name; ?>">
+          <img src="/<?php echo APPPATH . 'images/social-media-icon-set-yaruno/' . $service->service_name . '.png' ?>" alt="<?php echo $service->service_name; ?>">
+          <span><?php echo $service->service_name; ?></span>
+        </a>
+      </li>
        
     <?php endforeach; ?>
-<!--
-    <pre>
-      <?php echo print_r( $active_services , 1 ); ?>
-    </pre>
--->
+    </ul>
+
   </div>
     
-</section>
+</div>

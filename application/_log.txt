@@ -34,6 +34,17 @@ TO DO:
 
 -----------------------------------------------------------------------------------------
 
+Log started - Mar 17 2013, 12:00PM                                          GABRIEL
+
+  - settings return a success/{service} on successful authentication
+  
+  - Posts are now entities with many to many relations with the users
+  
+  - fixed a bug with the sign-up form. Now it populates the $this->userdata on sign up too
+
+Log ended - Mar 16 2013, - 3AM
+
+----------
 
 Log started - Mar 16 2013, 5:30PM                                          GABRIEL
 
@@ -44,7 +55,7 @@ Log started - Mar 16 2013, 5:30PM                                          GABRI
   - added some style to the whole story. Brought in Bootstrap
 
 
-Log ended - Mar 16 2013, - 
+Log ended - Mar 16 2013, - 3AM
 
 -----------
 

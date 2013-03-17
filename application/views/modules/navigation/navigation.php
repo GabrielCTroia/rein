@@ -4,8 +4,6 @@
   
   $logged_in = ( isset( $this->session->userdata['logged_in'] ) && $this->session->userdata['logged_in'] );
   
-  
-  
 ?>    
     
   <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +24,7 @@
                       <?php if( $logged_in ) : ?>
                         <ul class="nav pull-right">
                           <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->userdata['user_name']?><b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->userdata->user_name;?><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/home/settings">Settings</a></li>
                                     <li><a href="#">Another action</a></li>
@@ -38,6 +36,9 @@
                         </ul>
                       <?php else : ?>
                         <ul class="nav pull-right">
+                          <li>
+                            <a href="/sign-up">Sign Up</a>
+                          </li>
                           <li>
                             <a href="/log-in">Log in</a>
                           </li>

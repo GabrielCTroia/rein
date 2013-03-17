@@ -107,7 +107,7 @@ class Auth extends User_Controller {
         } else {
           
 /*           redirect( '/fetch/service/' . $service_name . '/20/show' );           */
-          redirect( '/home/settings');
+          redirect( '/fetch/service/' . $service_name . '/limit/20/redirect/home-settings-success-' . $service_name );
           
         }
             

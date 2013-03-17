@@ -146,14 +146,14 @@ Class User_model extends CI_Model {
    * JOINS the TABLES:
      - access  
    */
-  public function get_user(){
+  public function get_user( $basic = false ){
 
-    $sql = " SELECT u.u_id, email, user_name, created_date, user_status, user_type, GROUP_CONCAT( s_id )"
-         . " FROM users AS u"
-         . " JOIN access AS a ON a.u_id = u.u_id " 
-         . " WHERE u.u_id = {$this->user_id} "
-         . " GROUP BY user_name "
-         ; 
+    $sql  = " SELECT u.u_id, email, user_name, created_date, user_status, user_type, GROUP_CONCAT( s_id ) "
+          . " FROM users AS u "
+          . " LEFT JOIN access AS a ON a.u_id = u.u_id "
+          . " WHERE u.u_id = " . $this->user_id
+          . " GROUP BY user_name "
+          ; 
 		
 		$query = $this->db->query( $sql );
 		
@@ -163,7 +163,7 @@ Class User_model extends CI_Model {
 			
 			$query->free_result();
 			
-			return $result;
+			return $result[0];
 		} 
 		
 		return false;

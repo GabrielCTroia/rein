@@ -22,6 +22,9 @@ class Fetch extends User_Controller {
 	
 	 parent::__construct();
 		
+		
+		//set the url parmas on 2 
+		$this->url_params = $this->uri->uri_to_assoc(2);
 
     $this->load->model( 'User_model' , '' , TRUE );
 		
@@ -47,11 +50,13 @@ class Fetch extends User_Controller {
   * it only works for the authenticated user (not CRON)
   * it doesn't use the GET method to get the 
   */
-	public function service( $service_name = NULL , $limit = null , $show = false ){
+	public function service(){
     
     //load the services model
     $this->load->model( 'Services_model' , '' , false );       
               	
+    $service_name = $this->get_url_param( 'service' );
+
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
   	if( !$service_name || !$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' ) ) {
     	
@@ -81,7 +86,7 @@ class Fetch extends User_Controller {
         } else {
         
           //if there is an error than show it 
-        	if ( !$fetched_data = $this->fetch_service->fetch( $limit ) ) {
+        	if ( !$fetched_data = $this->fetch_service->fetch( $this->get_url_param( 'limit' ) ) ) {
         	   
           	$data['error_msg'] = $this->fetch_service->error_msg;
     
@@ -93,8 +98,9 @@ class Fetch extends User_Controller {
 /*             $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false ); */
             
             //if to show 
-            if( $show === 'show' ){
-            
+                        
+            if( $this->get_url_param( 'show' ) == 'true' ){            
+              
               $this->Components_model->init( 'feed' );
               
               $data['posts'] = $fetched_data;
@@ -103,7 +109,7 @@ class Fetch extends User_Controller {
                 
                 $post['service_name'] = $service_name;
                   
-              }
+              }  
               
               $this->load->view( 'index' , $data );
               
@@ -120,8 +126,6 @@ class Fetch extends User_Controller {
                 
               } else {
                 
-                
-/*                 var_dump( print_r( $fetched_data ) );               */
                 if( !$this->posts_service->insert( $fetched_data) ){
                   
                   $data['error_msg'] = $this->posts_service->error_msg;
@@ -146,7 +150,7 @@ class Fetch extends User_Controller {
     	
   	} else {
     	
-    	echo 'success';
+    	redirect( $this->get_url_param( 'redirect', '/' ) );
 
   	}      
 

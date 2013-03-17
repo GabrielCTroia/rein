@@ -65,9 +65,6 @@ class Fetch_vimeo extends Fetch_model{
   		$formatted[$index] = array(
   			
   			  'post_foreign_id'   => Util::format_foreign_id( $post->id , $this->service_id )
-  			, 'u_id'              => $this->user_id
-  			, 's_id'              => $this->service_id
-  			
   			 
   			, 'created_date'      => $post->upload_date
   			, 'favorited_date'    => $post->liked_on

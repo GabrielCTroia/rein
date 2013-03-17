@@ -64,8 +64,6 @@ class Fetch_behance extends Fetch_model{
 		  $formatted[$index] = array(
 
 		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
-  			, 'u_id'             => $this->user_id
-  			, 's_id'             => $this->service_id
   			
   			, 'created_date'     => date( $date_format, $post->project->created_on )
   			, 'status'           => 'active'

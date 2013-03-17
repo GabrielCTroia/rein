@@ -63,14 +63,12 @@ Class Posts_model extends CI_Model {
 	
 	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false , $order_by = 'created_date' , $order_dir = 'DESC' ) {	
 		
-		$select_str = "*"; //this should be more restriced but work for the testing phase
+		$select_str = "*"; //this should be more restriced but works for the testing phase
 
 
     $sql  = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' AS p' 
-         . ' JOIN users AS u ON u.u_id = ' . $this->user_id
-         . ' JOIN services AS s ON s.s_id = ( SELECT s_id FROM ' . $this->base_table . ' pp WHERE pp.p_id = p.p_id  )'
-         //. ' JOIN posts_( SELECT service_name FROM pp WHERE ppp.s_id = pp.s_id ) p_f ON p_f.p_id = p.p_id ' 
-         
+         . ' JOIN users_posts_services AS ups ON ups.FK_p_id = p.post_foreign_id '
+         . ' JOIN services AS s ON s.s_id = ups.FK_s_id'         
          . ' WHERE ';
          if( !empty( $specifics ) ) {
            foreach( $specifics as $ref=>$val ) {              
@@ -78,7 +76,8 @@ Class Posts_model extends CI_Model {
            }
          } 
 
-    $sql .= 'p.u_id = ' . $this->user_id
+    $sql .= 'ups.FK_u_id = ' . $this->user_id
+         . ' GROUP BY ups.FK_p_id ' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
          . ' ORDER BY p.' . $order_by . ' ' . $order_dir
          . ' LIMIT ' . $limit 
          ; 
@@ -153,6 +152,7 @@ Class Posts_model extends CI_Model {
 	
 	function insert( $posts ) {
 
+  	
 		if( !$this->user_id || !$posts ) {
   		$this->error = true;
       $this->error_msg = "No User or Service defined";
@@ -167,34 +167,113 @@ Class Posts_model extends CI_Model {
     	
     	return false;
   	}
+  	
+/*
+  	var_dump( $posts[0] );
+  	exit();
+*/
+  	
+/*   	$sql = ' BEGIN ' */
+        $sql = ' INSERT INTO ' . $this->base_table;
 
-  	$sql  = 'INSERT INTO ' . $this->base_table;
-        $sql .= '(';
-          foreach( $posts[0] as $ref=>$value ) :
+        $sql .= ' (';
+         
+          foreach( $posts[0] as $key=>$value ) :
+            
+            $sql .= '`' . $key . '`';
+            $sql .= ( $value != end($posts[0]) ) ? ' , ' : ''; 
+            
+          endforeach;
+          
+        $sql .= ') ';
+
+        $sql .= ' VALUES ';
+         
+        foreach( $posts as $post ) :
+          $sql .= '(';
+          
+          foreach( $post as $key=>$value ) :
+
+            $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
+            $sql .= ( $value != end($post) ) ? ' , ' : '';  
+            
+          endforeach;
+          
+          $sql .= ') ';
+          $sql .= ( $post != end($posts) ) ? ' , ' : '';
+          
+        endforeach; 
+        
+    $sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id ';    
+
+    
+/*     $sql .= ' COMMIT ';      */
+  
+/*
+        $sql .= ' (';
+          foreach( $posts[0] as $ref=>&$value ) :
             $sql .= '`' . $ref . '`';
             $sql .= ( $value != end($posts[0]) ) ? ' , ' : ''; 
           endforeach;
         $sql .= ') ';      
-      $sql .= ' VALUES';
-        foreach( $posts as $post ) :
-          $sql .= '(';
-          foreach( $post as $ref=>$value ) :
-            $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
-            $sql .= ( $value != end($post) ) ? ' , ' : '';  
-          endforeach;
-          $sql .= ') ';
-          $sql .= ( $post != end($posts) ) ? ' , ' : '';
-        endforeach;   
-    	$sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id';
+        
+        $sql .= ' VALUES';
+          foreach( $posts as $post ) :
+            $sql .= '(';
+            foreach( $post as $ref=>$value ) :
+              $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
+              $sql .= ( $value != end($post) ) ? ' , ' : '';  
+            endforeach;
+            $sql .= ') ';
+            $sql .= ( $post != end($posts) ) ? ' , ' : '';
+          endforeach; 
+*/  
+          
+          
+/*
+      	$sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id ';
+      	
+      	$sql .= ' INSERT INTO users_posts_services ( FK_u_id , FK_p_id , FK_s_id )'
+      	      . " VALUES( {$this->user_id} , $post  ,  ) "
+    
+    $sql .= ' COMMIT';
+     
+  	
+  	BEGIN
+INSERT INTO users (username, password) 
+  VALUES('test', 'test')
+INSERT INTO profiles (userid, bio, homepage) 
+  VALUES(LAST_INSERT_ID(),'Hello world!', 'http://www.stackoverflow.com');
+COMMIT;
+*/
+  	
       
-      if( !$this->db->query( $sql ) ){
-        $this->error = true;
-      	$this->error_msg = 'no posts to insert';
-      	
-      	return false;
-      	
+    if( !$this->db->query( $sql ) ){
+      $this->error = true;
+    	$this->error_msg = 'no posts to insert';
+    	
+    	return false;
+    	
+    } else {
+          
+      $sql2  = ' INSERT INTO users_posts_services '
+            . ' (  FK_p_id , FK_u_id , FK_s_id ) '
+            . ' VALUES';
+           foreach( $posts as $post ) :
+              $sql2 .= " ( '" . $post['post_foreign_id'] . "'," . $this->user_id . "," . $this->service_id . ") ";
+              $sql2 .= ( $post != end($posts) ) ? ' , ' : '';  
+           endforeach;             
+           
+      if( !$this->db->query( $sql2 ) ){
+        
+        return false;
+        
       }
-					
+      
+
+    }
+    
+
 	}
 
 	

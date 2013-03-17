@@ -15,30 +15,53 @@ class User_Controller extends CI_Controller {
 		
 		$this->load->model( 'User_model' , '' , false );
 		
-		
-		
+		/* 
+		 * load the segments in any page starting from the component 
+     * 	
+		*/
+		$this->url_params = $this->uri->uri_to_assoc(3);
 		
 		//init the user model and load all of it's content at the very begining
 		if( $this->User_model->init( $this->session->userdata['u_id'] ) !== false  ){
 
       $this->userdata = $this->User_model->get_user();
   		
+
 		}		
 		
   }
     
-    /* 
-     * check if it's logged in 
-     */  
-    private function _check_authentication() {
-    			
-  		if( !$this->session->userdata( 'logged_in' ) ) {
-  		  
-  		  redirect( '/log-in' );
-  		  
-  		}
-  		
+  /* 
+   * check if it's logged in 
+   */  
+  private function _check_authentication() {
+  			
+		if( !$this->session->userdata( 'logged_in' ) ) {
+		  
+		  redirect( '/log-in' );
+		  
+		}
+		
+	}
+	
+	
+	public function get_url_param( $param , $default = null ){
+  	
+  	if( isset( $this->url_params[ $param ] ) ) {
+      
+      if( $param === 'redirect' ){
+        
+        return str_replace( '-' , '/' , $this->url_params[$param] );
+        
+      }
+      
+      return $this->url_params[$param];	
+    	
   	}
+  	 
+    return $default;	
+  	
+	}
   
   
 }

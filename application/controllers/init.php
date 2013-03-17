@@ -174,7 +174,7 @@ class Init extends Anonym_controller {
 		  $this->session->set_userdata(
 		      array(
 		        'logged_in' => TRUE,
-		        'user_id' => $user_id,
+		        'u_id' => $user_id,
 		        'tutorial' => TRUE,
 		        'message' => 'Congratulations on signing up!'
 		      )

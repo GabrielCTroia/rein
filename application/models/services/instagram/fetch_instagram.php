@@ -19,6 +19,20 @@ class Fetch_instagram extends Fetch_model{
   protected $service_name = "instagram";
   
 
+  public function __construct(){
+    
+    parent::__construct();
+    
+    //instantiate the api object
+    $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ));
+    $loader->register();
+    
+    $this->api = new Instagram\Instagram;
+    
+    
+    
+  }
+
   /* 
    * fetches the posts 
    * @count - number of posts to fetch
@@ -30,21 +44,23 @@ class Fetch_instagram extends Fetch_model{
     // Right now if one of this condition is not fulfiled the server return an error and is not right
     // If those are not working it should let me reconnect
     
+/*
     $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ) );
 		$loader->register();
     
     $instagram = new Instagram\Instagram;
     
 		$instagram->setAccessToken( $this->access_token );
+*/
+    $this->api->setAccessToken( $this->access_token ); 
 		
 		$param_arr = array(
 				'count'		=> $count			       	
     );
-
       
-    $current_user = $instagram->getCurrentUser();
-                		        
-    return  $this->format( $current_user->getMedia( $param_arr ) );		
+    $current_user = $this->api->getCurrentUser();
+
+    return  $this->format( $current_user->getLikedMedia() );		
     
   }
   
@@ -72,10 +88,7 @@ class Fetch_instagram extends Fetch_model{
 					
   		$formatted[$index] = array(
   			
-  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )
-  			, 'u_id'             => $this->user_id
-  			, 's_id'             => $this->service_id
-  			
+  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )  			
   			 
   			, 'created_date' => date( $date_format, $post->created_time )
   			, 'status' => 'active'

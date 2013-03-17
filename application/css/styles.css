@@ -9,4 +9,8 @@ input{display:block;margin-bottom:1em}
 .push{margin-bottom:-200px}
 .push,.sticky-footer{height:200px}
 .navbar-inverse .navbar-inner{background-color:#312140;background-image:none}
+#settings .services li{text-align:center;-webkit-filter:grayscale(.9)}
+#settings .services li.active,#settings .services li:hover{-webkit-filter:grayscale(0)}
 .clear{clear:both}
+.error{color:#f00}
+.success{color:#c484fd}
