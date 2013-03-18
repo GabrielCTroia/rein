@@ -6,7 +6,7 @@
  * 
  */
  
- include_once( APPPATH . '/libraries/behance/network_api_php/lib/Be/Api.php' );
+ include_once( APPPATH . '/lib/behance/Api.php' );
 
 
 
