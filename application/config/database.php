@@ -48,16 +48,32 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-/*
-$db['default']['hostname'] = 'fluffyspikes.com';
-$db['default']['username'] = 'fluffysp_reingit';
-$db['default']['password'] = 'liberty1234';
-$db['default']['database'] = 'fluffysp_reingit';
-*/
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'root';
-$db['default']['database'] = 'rein';
+//set the environment
+
+switch ( $_SERVER['SERVER_NAME'] ) {
+
+  case 'rein.smalldeskideas.com' :
+
+    $db['default']['hostname'] = 'localhost';
+    $db['default']['username'] = 'sdi_rein';
+    $db['default']['password'] = 'liberty12345';
+    $db['default']['database'] = 'sdi_rein';
+    $db['default']['dbdriver'] = 'mysql';
+
+  break;
+  
+  default : 
+
+    $db['default']['hostname'] = 'localhost';
+    $db['default']['username'] = 'root';
+    $db['default']['password'] = 'root';
+    $db['default']['database'] = 'rein';
+    
+  break;
+  
+}  
+
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
