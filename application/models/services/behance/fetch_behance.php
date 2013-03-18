@@ -58,6 +58,7 @@ class Fetch_behance extends Fetch_model{
     //this needs to be out in a separate .config file or something
 		$date_format = 'Y-m-d H:i:s';
 		
+		date_default_timezone_set('America/New_York');
 
 		foreach( $posts as $index=>$post ){
       		

@@ -6,7 +6,7 @@
  * 
  */
  
- include_once( APPPATH . 'lib/instagram/_SplClassLoader.php' );
+ include_once( APPPATH . 'lib/Instagram/_SplClassLoader.php' );
 
  $loader = new SplClassLoader( 'Instagram', APPPATH . 'lib' );
  $loader->register();

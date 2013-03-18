@@ -24,8 +24,6 @@ class Fetch_instagram extends Fetch_model{
     parent::__construct();
     
     //instantiate the api object
-    $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ));
-    $loader->register();
     
     $this->api = new Instagram\Instagram;
     

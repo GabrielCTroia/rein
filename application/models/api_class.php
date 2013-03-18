@@ -127,6 +127,9 @@ class Api_class extends CI_Model{
       
     }
     
+    //need to make sure it's lowercase
+    $this->service_name = strtolower( $this->service_name );
+    
     $this->load_library();
     
   }
