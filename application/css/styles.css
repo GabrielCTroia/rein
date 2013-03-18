@@ -9,6 +9,8 @@ input{display:block;margin-bottom:1em}
 .push{margin-bottom:-200px}
 .push,.sticky-footer{height:200px}
 .navbar-inverse .navbar-inner{background-color:#312140;background-image:none}
+#feed header{margin-bottom:1em;}
+#feed header .dropdown-filter{margin-right:1em;margin-top:.3em}
 #settings .services li{text-align:center;-webkit-filter:grayscale(.9)}
 #settings .services li.active,#settings .services li:hover{-webkit-filter:grayscale(0)}
 .clear{clear:both}

@@ -110,7 +110,7 @@ class Home extends User_Controller {
     
     $this->load->model( 'Posts_model' , '' , false );
     
-    //make sure the init passes with no errors
+    //make sure the Posts_model init passes with no errors
     if ( $this->Posts_model->init( $this->session->userdata['u_id'] ) !== false ) {
       
       $specifics = null;
@@ -121,9 +121,28 @@ class Home extends User_Controller {
           
       }
       
-      $data['posts'] = $this->Posts_model->get_posts( $specifics , $this->get_url_param( 'limit' , 20 ) );
+      switch( $this->get_url_param( 'filter' ) ) {
+        
+        case 'by-service' : $filter = ' ups.FK_s_id, ups.collected_date ';
+          break;
+          
+        case 'by-collected-date' : $filter = 'ups.collected_date';
+          break;
+          
+        default : $filter = 'ups.collected_date';
+          break;                    
+      }
+      
+      
+      $data['posts'] = $this->Posts_model->get_posts( $specifics , $this->get_url_param( 'limit' , 20 ) , false , $filter );
+      
+      $data['filter'] = $this->get_url_param( 'filter' );
        
     }
+    
+    
+    
+    
     
     //write the error msg
     if( $data['error'] = $this->Posts_model->error ) {
@@ -135,6 +154,14 @@ class Home extends User_Controller {
     $this->load->view( 'index' , $data );
     
   }
+  
+  
+  public function logout(){
+    
+    $this->_logout();
+    
+  }
+  
 	
 }
 

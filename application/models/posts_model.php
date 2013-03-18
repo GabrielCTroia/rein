@@ -61,7 +61,7 @@ Class Posts_model extends CI_Model {
   
   
 	
-	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false , $order_by = 'created_date' , $order_dir = 'DESC' ) {	
+	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false , $order_by = 'p.created_date' , $order_dir = 'DESC' ) {	
 		
 		$select_str = "*"; //this should be more restriced but works for the testing phase
 
@@ -77,8 +77,9 @@ Class Posts_model extends CI_Model {
          } 
 
     $sql .= 'ups.FK_u_id = ' . $this->user_id
-         . ' GROUP BY ups.FK_p_id ' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
-         . ' ORDER BY p.' . $order_by . ' ' . $order_dir
+         . ' GROUP BY ups.FK_p_id' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
+/*          . ' GROUP BY ups.FK_s_id '  */
+         . ' ORDER BY ' . $order_by . ' ' . $order_dir
          . ' LIMIT ' . $limit 
          ; 
 
@@ -167,86 +168,38 @@ Class Posts_model extends CI_Model {
     	
     	return false;
   	}
-  	
-/*
-  	var_dump( $posts[0] );
-  	exit();
-*/
-  	
-/*   	$sql = ' BEGIN ' */
-        $sql = ' INSERT INTO ' . $this->base_table;
 
-        $sql .= ' (';
-         
-          foreach( $posts[0] as $key=>$value ) :
-            
-            $sql .= '`' . $key . '`';
-            $sql .= ( $value != end($posts[0]) ) ? ' , ' : ''; 
-            
-          endforeach;
-          
-        $sql .= ') ';
+    $sql = ' INSERT INTO ' . $this->base_table;
 
-        $sql .= ' VALUES ';
-         
-        foreach( $posts as $post ) :
-          $sql .= '(';
-          
-          foreach( $post as $key=>$value ) :
+    $sql .= ' (';
+     
+      foreach( $posts[0] as $key=>$value ) :
+        
+        $sql .= '`' . $key . '`';
+        $sql .= ( $value != end($posts[0]) ) ? ' , ' : ''; 
+        
+      endforeach;
+      
+    $sql .= ') ';
 
-            $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
-            $sql .= ( $value != end($post) ) ? ' , ' : '';  
-            
-          endforeach;
-          
-          $sql .= ') ';
-          $sql .= ( $post != end($posts) ) ? ' , ' : '';
-          
-        endforeach; 
+    $sql .= ' VALUES ';
+     
+    foreach( $posts as $post ) :
+      $sql .= '(';
+      
+      foreach( $post as $key=>$value ) :
+
+        $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
+        $sql .= ( $value != end($post) ) ? ' , ' : '';  
+        
+      endforeach;
+      
+      $sql .= ') ';
+      $sql .= ( $post != end($posts) ) ? ' , ' : '';
+      
+    endforeach; 
         
     $sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id ';    
-
-    
-/*     $sql .= ' COMMIT ';      */
-  
-/*
-        $sql .= ' (';
-          foreach( $posts[0] as $ref=>&$value ) :
-            $sql .= '`' . $ref . '`';
-            $sql .= ( $value != end($posts[0]) ) ? ' , ' : ''; 
-          endforeach;
-        $sql .= ') ';      
-        
-        $sql .= ' VALUES';
-          foreach( $posts as $post ) :
-            $sql .= '(';
-            foreach( $post as $ref=>$value ) :
-              $sql .= '\'' . mysql_real_escape_string( $value ) . '\'';
-              $sql .= ( $value != end($post) ) ? ' , ' : '';  
-            endforeach;
-            $sql .= ') ';
-            $sql .= ( $post != end($posts) ) ? ' , ' : '';
-          endforeach; 
-*/  
-          
-          
-/*
-      	$sql .= ' ON DUPLICATE KEY UPDATE post_foreign_id = post_foreign_id ';
-      	
-      	$sql .= ' INSERT INTO users_posts_services ( FK_u_id , FK_p_id , FK_s_id )'
-      	      . " VALUES( {$this->user_id} , $post  ,  ) "
-    
-    $sql .= ' COMMIT';
-     
-  	
-  	BEGIN
-INSERT INTO users (username, password) 
-  VALUES('test', 'test')
-INSERT INTO profiles (userid, bio, homepage) 
-  VALUES(LAST_INSERT_ID(),'Hello world!', 'http://www.stackoverflow.com');
-COMMIT;
-*/
-  	
       
     if( !$this->db->query( $sql ) ){
       $this->error = true;
@@ -275,8 +228,6 @@ COMMIT;
     
 
 	}
-
-	
 
 }
 

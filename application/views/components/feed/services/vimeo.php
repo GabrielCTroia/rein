@@ -10,7 +10,7 @@ $post->param = json_decode( $post->param );
 			 <img src="<?php echo $post->param->thumbnail; ?>">
 		  </a>
 		  
-		  <p><?php echo $post->param->title; ?> from <a href="http://vimeo.com/<?php echo $post->param->user_id; ?>"></p>
+		  <p><?php echo $post->param->title; ?> from <a href="http://vimeo.com/<?php echo $post->param->user_id; ?>"></a></p>
 			
 			
 			

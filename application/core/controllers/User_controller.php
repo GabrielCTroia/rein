@@ -11,10 +11,12 @@ class User_Controller extends CI_Controller {
 	
 		parent::__construct();
 		
-		$this->_check_authentication();
-		
-		$this->load->model( 'User_model' , '' , false );
-		
+		if( !$this->_check_authentication() ) {
+      
+  		$this->_logout();
+  		
+		}
+
 		/* 
 		 * load the segments in any page starting from the component 
      * 	
@@ -22,12 +24,7 @@ class User_Controller extends CI_Controller {
 		$this->url_params = $this->uri->uri_to_assoc(3);
 		
 		//init the user model and load all of it's content at the very begining
-		if( $this->User_model->init( $this->session->userdata['u_id'] ) !== false  ){
 
-      $this->userdata = $this->User_model->get_user();
-  		
-
-		}		
 		
   }
     
@@ -36,11 +33,26 @@ class User_Controller extends CI_Controller {
    */  
   private function _check_authentication() {
   			
-		if( !$this->session->userdata( 'logged_in' ) ) {
+  	/* 
+  	 * load the user model 
+  	 */		
+  	$this->load->model( 'User_model' , '' , false );		
+  			
+		if( $this->session->userdata( 'logged_in' ) ) {
 		  
-		  redirect( '/log-in' );
+		  if( $this->User_model->init( $this->session->userdata['u_id'] ) !== false  ){
+
+        if( $this->userdata = $this->User_model->get_user() ) {
+
+          return true;
+          
+        }
+  		
+      }		 
 		  
 		}
+		
+		return false;
 		
 	}
 	
@@ -62,6 +74,31 @@ class User_Controller extends CI_Controller {
     return $default;	
   	
 	}
+  
+  
+  
+    protected function _logout(){
+      
+      /* 
+  		 * check if the user doens't exist in the session and fallback to index() if YES
+  		 */	
+  		if( !$this->session->userdata( 'logged_in' ) ) { 
+  		  
+  		  //if the user is in the session then index() is gonna' redirect it wherever it needs ( home.php )
+    		redirect( '/' );
+  		
+  		}
+      
+      /* ElSE */	
+  
+  		//for some reason the session id is not instantiated
+      /* if( session_id() ) session_destroy(); */
+  		
+  		$this->session->sess_destroy();
+  
+  		redirect( '/' );
+      
+    }
   
   
 }

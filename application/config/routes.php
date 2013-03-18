@@ -45,7 +45,7 @@ $route[ 'home/(:any)' ] = 'home/$1';
 
 $route[ 'sign-up' ] = 'init/signup';
 $route[ 'log-in' ] = 'init/login';
-$route[ 'log-out' ] = 'init/logout';
+$route[ 'log-out' ] = 'home/logout';
 $route[ 'verify-login' ] = 'init/verifylogin';
 
 $route[ 'config' ] = 'home/config';

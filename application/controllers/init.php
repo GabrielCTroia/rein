@@ -301,35 +301,6 @@ class Init extends Anonym_controller {
       	
     	}
 	
-	
-	
- /*
-  * SIGNOUT - Ghost Component
-  */
-	public function logout() {	
-	
-    /* 
-		 * check if the user doens't exist in the session and fallback to index() if YES
-		 */	
-		if( !$this->session->userdata( 'logged_in' ) ) { 
-		  
-		  //if the user is in the session then index() is gonna' redirect it wherever it needs ( home.php )
-  		redirect( self::$page_url );
-		
-		}
-    
-    /* ElSE */	
-
-		//for some reason the session id is not instantiated
-    /* if( session_id() ) session_destroy(); */
-		
-		$this->session->sess_destroy();
-
-		redirect( self::$page_url );
-	
-	}
-	
-	
 }	
 
 /* End of file init.php */
