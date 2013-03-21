@@ -19,7 +19,7 @@ class Home extends User_Controller {
   /* 
   * define the page url  
   */
-  private static $page_url = "/home";  
+  private $page_url = "/home";  
 
 	function __construct() {
 	
@@ -41,7 +41,7 @@ class Home extends User_Controller {
   public function index() {	
       
 		  //default redirect to feed
-		  redirect( self::$page_url . "/feed" );
+		  redirect( $this->page_url . "/feed" );
 	}
 	
 	
@@ -52,14 +52,11 @@ class Home extends User_Controller {
     **************************************************** */
 	
 	
-	
-	
-	
  /* 
   * SETTINGS component 
   */
   public function settings() {
-
+    
     //  define the component
   	$this->Components_model->init( 'settings' );
 
@@ -85,6 +82,7 @@ class Home extends User_Controller {
 */
 
     $data['success'] = $this->get_url_param( 'success' );
+
   	
   	$this->load->view( 'index' , $data );
 	}
@@ -104,6 +102,7 @@ class Home extends User_Controller {
 	
 	
   public function feed() { 
+    
     
     // initiate the component
     $this->Components_model->init( 'feed' );	

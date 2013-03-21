@@ -3,6 +3,7 @@
   /* helper */
   
   $logged_in = ( isset( $this->session->userdata['logged_in'] ) && $this->session->userdata['logged_in'] );
+
   
 ?>    
     

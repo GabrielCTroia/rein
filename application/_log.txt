@@ -15,7 +15,7 @@ TO DO:
 - add a settings link in the logged in header menu
 - B
 
-- FIXED(using only one table for - it's a 1 to 1 relation) - store the posts in the DB - got to find a way to work with thte dynamic tables posts_{Service} 
+- FIXED / (using only one table for - it's a 1 to 1 relation) - store the posts in the DB - got to find a way to work with thte dynamic tables posts_{Service} 
   
 - Add few more Services
 
@@ -31,10 +31,10 @@ TO DO:
 
 - Create the Foreign Table to handles all the foreign information about the user (bio/username/location) - all depending on the service
 
-- Make the system able to load modules (sign-up/loginf orms should actually be modules). Look 
-into http://philsturgeon.co.uk/blog/2011/09/managing-codeigniter-packages-with-git-submodules
-use the application/package to have the modules own mvc
+- Make the system able to load modules (sign-up/login forms should actually be modules). Look into http://philsturgeon.co.uk/blog/2011/09/managing-codeigniter-packages-with-git-submodules use the application/package to have the modules own mvc
 
+
+- bring the app/libraries folder back in action and load from there with $this->library() and have git submodules in as was first intended
 
 -----------------------------------------------------------------------------------------
 

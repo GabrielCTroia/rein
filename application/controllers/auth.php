@@ -13,8 +13,7 @@ class Auth extends User_Controller {
 	function __construct( $service_name = null ) {
 	
 		parent::__construct();
-		
-		$this->load->library('session');
+
 	}  
   
   
