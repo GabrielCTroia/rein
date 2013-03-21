@@ -48,9 +48,7 @@ $route[ 'log-in' ] = 'init/login';
 $route[ 'log-out' ] = 'home/logout';
 $route[ 'verify-login' ] = 'init/verifylogin';
 
-$route[ 'config' ] = 'home/config';
-
-$route[ 'connect/(:any)' ] = 'connect/$1';
+$route[ 'fetch/(:any)' ] = 'fetch/$1';
 
 $route[ '404_override' ] = '';
 

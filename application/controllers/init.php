@@ -36,6 +36,12 @@ class Init extends Anonym_controller {
     */  
     parent::__construct();
 		
+		/* 
+    load the form helpers & libraries  
+    */
+	  $this->load->helper( 'form' );
+	  $this->load->library( 'form_validation' );
+		
 		//  We are storing the Page and Components object as classes inside models
 		//  because we want to be able to access them from anywhere within the controller
 		//  instead of redefining a new variable for it everysingle time
@@ -97,7 +103,7 @@ class Init extends Anonym_controller {
   	
   	$this->load->view( 'index.php' );
   	
-	}
+ }
 	
 	
 	
@@ -124,12 +130,6 @@ class Init extends Anonym_controller {
     //  define the component
     $this->Components_model->init( 'signup' );
     
-    
-    /* 
-    load the helpers   
-    */
-	  $this->load->helper( 'form' );
-	  $this->load->library( 'form_validation' );
 	  
 	  $this->form_validation->set_rules( 
 	   
@@ -221,10 +221,7 @@ class Init extends Anonym_controller {
     /* ELSE  */
     
     //  define the component
-    $this->Components_model->init( 'login' );	
-          
-    //load the FORM helper
-    $this->load->helper('form');		
+    $this->Components_model->init( 'login' );		
 		
     $this->load->view('index.php');		      
 
@@ -241,9 +238,6 @@ class Init extends Anonym_controller {
  
       /* load the User model */
     	$this->load->model( 'User_model' , '' , false );
-    	
-    	/* load the credential validation library */
-  		$this->load->library( 'form_validation' );
   		
   		/* set the rules */
       $this->form_validation->set_rules(

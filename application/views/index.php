@@ -53,7 +53,7 @@
       
       </header>			
     
-      <section class="must-page page-<?php echo $this->Pager_model->name() ?> container well">
+      <section class="must-page page-<?php echo $this->Pager_model->name() ?>">
       
         <?php $this->load->view( $this->Pager_model->url() ); ?>			
         

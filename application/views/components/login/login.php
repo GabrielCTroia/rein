@@ -28,5 +28,7 @@
     echo form_submit( '' , 'Log in!' );
     
     ?>
-
+    
+    Not having an account? <a href="/sign-up">Register now</a>. 
+    
 </div>

@@ -359,8 +359,7 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-/* End of file config.php */
-/* Location: ./application/config/config.php */
+
 
 /*
 function __autoload( $class = 'util' ){ 
@@ -370,3 +369,6 @@ function __autoload( $class = 'util' ){
 */
 
 ini_set('display_errors',1);
+
+/* End of file config.php */
+/* Location: ./application/config/config.php */

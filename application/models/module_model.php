@@ -8,7 +8,9 @@ Class Pager_model extends CI_Model {
   private $url;
   
   function __construct() {
-    parent::__construct();
+  
+  	parent::__construct();
+  
   }
   
   public function init( $name ) {
