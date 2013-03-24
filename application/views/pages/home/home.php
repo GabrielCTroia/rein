@@ -2,6 +2,16 @@
 
 <div class="container well">
 
-  <?php $this->load->view( $this->Components_model->url() ); ?>
+  <?php   
+    
+    
+    
+/*     if( ['feed'] ) echo "Da"; */
+    
+/*     if( $this->Components_model->url() ) */
+      
+      $this->Components_model->show( 'feed' ); 
+
+  ?>
   
 </div>

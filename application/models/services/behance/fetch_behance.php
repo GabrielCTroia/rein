@@ -58,6 +58,7 @@ class Fetch_behance extends Fetch_model{
     //this needs to be out in a separate .config file or something
 		$date_format = 'Y-m-d H:i:s';
 		
+		//this too
 		date_default_timezone_set('America/New_York');
 
 		foreach( $posts as $index=>$post ){
@@ -67,6 +68,7 @@ class Fetch_behance extends Fetch_model{
 		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
   			
   			, 'created_date'     => date( $date_format, $post->project->created_on )
+  			, 'favorited_date'   => date( $date_format, $post->timestamp )
   			, 'status'           => 'active'
   			, 'value'            => end( $post->project->covers )
   		  , 'source'           => $post->project->url

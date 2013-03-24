@@ -55,7 +55,7 @@ class Fetch extends User_Controller {
     //load the services model
     $this->load->model( 'Services_model' , '' , false );       
               	
-    $service_name = $this->get_url_param( 'service' );
+    $service_name = $this->get_url_param( 'service' , '' );
 
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
   	if( !$service_name || !$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' ) ) {
@@ -84,7 +84,7 @@ class Fetch extends User_Controller {
           $data['error_msg'] = $this->fetch_service->error_msg;
         
         } else {
-        
+          
           //if there is an error than show it 
         	if ( !$fetched_data = $this->fetch_service->fetch( $this->get_url_param( 'limit' ) ) ) {
         	   
@@ -114,6 +114,7 @@ class Fetch extends User_Controller {
               $this->load->view( 'index' , $data );
               
               return;
+
               
             } else {
               

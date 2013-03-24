@@ -9,6 +9,8 @@ TO KEEP IN MIND:
       redirect( '/home/settings?service=twitter&status_code=200' );
 - Skim over the auth_twitter class and how it talks to the auth/controller to keep things similar
 
+- For the services that do not provide favorited date - the favorited date becomes created date( not good but till I find a better solution this should work );
+
 TO DO:
 - build a status_code + status_message repository so if an error comes across whil adding new services we can better debug them
 - /controller/auth - line 92 - double check if users already authenticated before inserting another entry
@@ -25,7 +27,7 @@ TO DO:
 
 - DONE / Launch alpha version
 
-- CRTEATE AN ERROR CLASS available everytwhere 
+- CREATE AN ERROR CLASS available everytwhere 
 
 - FIXED / Look a little on the sign-up adding to session procedure
 
@@ -33,10 +35,21 @@ TO DO:
 
 - Make the system able to load modules (sign-up/login forms should actually be modules). Look into http://philsturgeon.co.uk/blog/2011/09/managing-codeigniter-packages-with-git-submodules use the application/package to have the modules own mvc
 
-
 - bring the app/libraries folder back in action and load from there with $this->library() and have git submodules in as was first intended
 
 -----------------------------------------------------------------------------------------
+
+Log started - Mar 23 2013, 9:30AM                                          GABRIEL
+  
+  
+  
+  - pagination DONE (was actually pretty simple - made use of sql LIMIT $start, $end )
+  
+  - NOT DONE - currently working on adding reusables(modules/components) into the app. Should be able to extend the Loader class to just load modules or components.
+
+Log ended - Mar 17 2013 - 
+
+----------
 
 Log started - Mar 17 2013, 12:00PM                                          GABRIEL
   

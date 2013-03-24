@@ -47,6 +47,28 @@ Class Util extends CI_Model {
 		
 	}
 
+
+
+
+	/* 
+	 * returns the same url structure(same params) with different values 
+	 */
+	public function get_new_url( $segments = array() , $param , $new_val ){
+       
+    $segments[$param] = $new_val;   
+       
+    return '/' . $this->uri->assoc_to_uri( $segments ); 
+      
+  }
+  
+  
+  
+  public function safe_name( $name ){
+    
+    return preg_replace( '/\s/' , '_' , $name );
+    
+  }
+
 }
 
 

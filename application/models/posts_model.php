@@ -34,6 +34,16 @@ Class Posts_model extends CI_Model {
   public $error_msg = null;  
   
   
+  
+  /*
+   * caches the last get query specs here
+   * this way we do not to specify the same ones to times if the happen one after the other
+   *
+   * NOT USED YET
+   /
+  /* private $get_query_specs = array(); */
+  
+  
   function init( $user_id , $service_id = null ){
     
     if( empty( $user_id ) ) {
@@ -61,28 +71,56 @@ Class Posts_model extends CI_Model {
   
   
 	
-	function get_posts( $specifics = array() , $limit = 20 ,  $extra_fields = false , $order_by = 'p.created_date' , $order_dir = 'DESC' ) {	
+	function get_posts( $query_specs = array() ) {	
 		
-		$select_str = "*"; //this should be more restriced but works for the testing phase
+		//define the default $query_specs
+		if( empty( $query_specs['select'] ) ) 
+		   $query_specs[ 'select' ] = '*';
+		
+		if( empty( $query_specs['limit'] ) OR $query_specs['limit'] > 20 ) 
+		   $query_specs[ 'limit' ] = 20;
+		   
+		if( empty( $query_specs['order_by'] ) ) 
+		   $query_specs[ 'order_by' ] = 'p.favorited_date';   
+		   
+    if( empty( $query_specs['order_dir'] ) ) 
+		   $query_specs[ 'order_dir' ] = 'DESC';   		   
+		
 
 
-    $sql  = 'SELECT ' . $select_str . ' FROM ' . $this->base_table . ' AS p' 
+    $sql  = 'SELECT ' . $query_specs['select'] . ' FROM ' . $this->base_table . ' AS p' 
          . ' JOIN users_posts_services AS ups ON ups.FK_p_id = p.post_foreign_id '
          . ' JOIN services AS s ON s.s_id = ups.FK_s_id'         
-         . ' WHERE ';
-         if( !empty( $specifics ) ) {
-           foreach( $specifics as $ref=>$val ) {              
-             $sql .= $ref . ' = ' . '\'' . $val . '\' AND ';              
+      
+         . ' WHERE ';   
+         //check for AND_where
+         if( !empty( $query_specs['where'] ) ) {
+           foreach( $query_specs['where'] as $ref=>$val ) {              
+             //$sql .= $ref . ' = ' . '\'' . $val . '\' AND ';              
+             $sql .= $val . ' AND ';
            }
          } 
+         
+         //check for OR_where
+         if( !empty( $query_specs['or_where'] ) ) {
+           foreach( $query_specs['where'] as $ref=>$val ) {
+             $sql .= $val . ' OR ';
+           }
+         }
 
-    $sql .= 'ups.FK_u_id = ' . $this->user_id
-         . ' GROUP BY ups.FK_p_id' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
+    $sql .= ' ups.FK_u_id = ' . $this->user_id
+          . ' GROUP BY ups.FK_p_id' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
 /*          . ' GROUP BY ups.FK_s_id '  */
-         . ' ORDER BY ' . $order_by . ' ' . $order_dir
-         . ' LIMIT ' . $limit 
-         ; 
+          . ' ORDER BY ' . $query_specs['order_by']
+          . ' ' . $query_specs['order_dir']
+          . ' LIMIT ' . $query_specs['limit']
+          ; 
 
+/*
+		var_dump($sql);
+		exit();
+*/
+  
 		if ( !$query = $this->db->query($sql) ) {
   		
   		$this->error = true;
@@ -97,6 +135,8 @@ Class Posts_model extends CI_Model {
   			$result = $query->result();
   			
   			$query->free_result();
+  			
+  			$this->get_query_specs = $query_specs;
   			
   			return (object)$result;
   			
@@ -115,7 +155,14 @@ Class Posts_model extends CI_Model {
 	}
 
 	//get the latest post in a specified query
-	function get_last_post( $service_id = false , $fields = false , $order_by = 'created_date' , $dir = 'desc' ) {
+	function get_last_post( $query_specs = array() ) {
+		
+		$result = $this->get_posts( $query_specs );
+		
+		return reset($result);
+		
+		/*
+
 		
 		if( $fields ) 
 		{
@@ -147,8 +194,79 @@ Class Posts_model extends CI_Model {
 		  
 			return false;
 		}
+*/
 		
 	}
+	
+	
+	/* 
+	 * returns the total no of posts of user( by default) and of a specific service if desired
+	 */
+	function get_total_posts( $by_service = false , $by_user = true ){
+  	
+  	$sql = ' SELECT COUNT( DISTINCT( FK_p_id ) ) FROM users_posts_services AS ups ';
+  	     
+  	     if( $by_user OR $by_service ) {
+    	     
+    	     $sql .= ' WHERE ';
+    	     
+    	     if( $by_service ){
+      	     
+      	     $sql .= ' ups.FK_s_id = ' . $this->service_id;
+      	     
+    	     }
+    	     
+    	     if( $by_user AND $by_service ) {
+      	     
+      	     $sql .= ' AND ';
+      	     
+    	     }
+    	     
+    	     if( $by_user ){
+      	     
+      	     $sql .= ' ups.FK_u_id = ' . $this->user_id;
+      	     
+    	     }
+    	     
+  	     }
+  	
+/*   	echo ( $sql ); */
+  	     
+  	//I feel like this needs to be a reusable function
+    if ( !$query = $this->db->query($sql) ) {
+  		
+  		$this->error = true;
+  		
+  		$this->error_msg = "Error in the query or DB";		  
+  		
+		} else {
+  		
+  		if( $query->num_rows() ) {
+  				
+  			//free the result
+  			$result = $query->result();
+  			
+  			$query->free_result();
+  			
+  			//return only the value not the reference too
+  			return reset( $result[0] );
+  			
+  		} else {
+    		
+    		$this->error = true;
+        
+        $this->error_msg = "There are no posts";		  
+    		
+    		return false;
+    		
+  		}	
+  		
+		}
+  	     
+	}
+	
+	
+	
 	
 	
 	function insert( $posts ) {

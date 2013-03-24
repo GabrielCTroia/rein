@@ -89,9 +89,6 @@ class Anonym_Controller extends Main_Controller {
 		  //  register a new user to the database and return his unique user_id
 		  $user_id = $this->User_model->register_user( $this->input->post() );
 		  
-		  
-		  $this->load->library('session');
-		  
 		  $this->session->set_userdata(
 		      array(
 		        'logged_in' => TRUE,

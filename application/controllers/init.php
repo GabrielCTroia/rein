@@ -47,6 +47,7 @@ class Init extends Anonym_controller {
 		//  instead of redefining a new variable for it everysingle time
     $this->load->model( 'Pager_model' , '' , FALSE );
     $this->load->model( 'Components_model' , '' , FALSE );
+    $this->load->model( 'Module_model' , '' , FALSE );
     
     //  At the time of writing this, both models are identical, so they accept a single
     //  $name variable which automatically generates $name/$path/$url inside the init function
@@ -81,10 +82,22 @@ class Init extends Anonym_controller {
   */
   public function splash() {
 
-    //  define the component	  
+    //define the component	  
   	$this->Components_model->init( 'splash' );
   	
+  	
+/*   	$this->load->module( 'signUp' , '' ); */
+/*   	$this->load->add_package_path( APPPATH . 'modules/test/' ); */
+/*   	 $this->load->view( 'test.php' ); */
+/*   	 $this->load->model('Test_model'); */
+/*   	$this->load->remove_package_path(); */
+
+/*   	echo "DA"; */
+  	
+/*   	exit();  	 */
   	$this->load->view( 'index.php' );
+  	
+
   	
  }
 	

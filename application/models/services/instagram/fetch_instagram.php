@@ -83,12 +83,13 @@ class Fetch_instagram extends Fetch_model{
 		date_default_timezone_set('America/New_York');
 		
 		foreach( $posts as $index=>$post ) {	
-					
+			
   		$formatted[$index] = array(
   			
   			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )  			
   			 
   			, 'created_date' => date( $date_format, $post->created_time )
+  			, 'favorited_date' => date( $date_format, $post->created_time )
   			, 'status' => 'active'
   			, 'value' => $post->images->standard_resolution->url
   		  , 'source' => ''

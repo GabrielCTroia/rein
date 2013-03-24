@@ -1,3 +1,5 @@
-<div class="" component="splash" style="background-image: url('<?php echo APPPATH; ?>pictures/halfway.jpg');height:200px" >
+<div class="" component="splash">
+
+<?php $this->load->view( '/components/signup/signup.php' ); ?>
 
 </div>

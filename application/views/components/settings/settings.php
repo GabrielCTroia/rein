@@ -14,7 +14,7 @@
       
       <li class="span1 <?php echo ( !empty( $service->active ) ) ? 'active' : ''; ?>">
         <a href="/auth/request_temp_token/<?php echo $service->service_name; ?>">
-          <img src="/<?php echo APPPATH . 'images/social-media-icon-set-yaruno/' . $service->service_name . '.png' ?>" alt="<?php echo $service->service_name; ?>">
+          <img src="/<?php echo 'images/social-media-icon-set-yaruno/' . $service->service_name . '.png' ?>" alt="<?php echo $service->service_name; ?>">
           <span><?php echo $service->service_name; ?></span>
         </a>
       </li>

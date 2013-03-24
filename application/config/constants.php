@@ -37,5 +37,8 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+
+define('COMPONENTS_PATH' , APPPATH . 'components/');
+define('MODULES_PATH' , APPPATH . 'modules/');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

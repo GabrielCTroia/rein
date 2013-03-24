@@ -1,0 +1,1 @@
+<!-- all the view logic happens here - it should be smart enough to know if it needs to display a template or no --> 

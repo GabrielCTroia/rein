@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
 	
-Class Pager_model extends CI_Model {
+Class Module_model extends CI_Model {
   
   private $name;
   private $path = 'pages/';

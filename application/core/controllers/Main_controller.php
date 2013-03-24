@@ -13,11 +13,40 @@ class Main_Controller extends CI_Controller {
   
   protected $current_controller = false;
   
+  
+  public $components = array();
+  
+  
+  
   public function __construct(){
     
     parent::__construct();
     
-  }	
+    /* 
+		 * load the segments in any page starting from the component 
+     * 	
+		*/
+		$this->url_params = $this->uri->uri_to_assoc(1);
+    
+  }
+  
+  
+  public function init_component( $component ) {
+  	
+  	$path = APPPATH . 'components/';
+  	
+  	$this->load->add_package_path( $path . $component . '/' );
+  	
+  	$this->load->library( 'feed' );
+  	
+  	$this->feed->show();
+  	
+	}	
+	
+	public function show_component( $component ) {
+  	
+  	
+	}
   	
   	
   /* 
@@ -49,24 +78,64 @@ class Main_Controller extends CI_Controller {
 		return false;
 		
 	}	
-  	
-  	
-	public function get_url_param( $param , $default = null ){
-  	
-  	if( isset( $this->url_params[ $param ] ) ) {
+  
+  /* this needs to be written somewhere else - UTIL or something 
+   * 
+   * return the the desired datatype
+   * @type - var you wish to turn it into
+   * @var - the var you wish to convert
+  */
+  private function force_datatype( $type_var , $var ){
+    
+    switch( gettype( $type_var ) ){
       
+      case 'integer' : return (int)$var;
+        break;
+        
+      case 'boolean' : return (boolean)$var;
+        break;  
+      
+      case 'string' : return (string)$var;
+        break;
+        
+      default : return $var;
+        break;  
+      
+    }
+    
+  }
+  	
+  /*
+   * this returns the correct url
+   * I feel like it should be in UTIL_model
+  */
+	public function get_url_param( $param , $default = null ){
+  	  	 	
+  	if( isset( $this->url_params[ $param ] ) ) {
+    	
       if( $param === 'redirect' ){
         
         return str_replace( '-' , '/' , $this->url_params[$param] );
         
       }
       
-      return $this->url_params[$param];	
+      if( $this->url_params[$param]  ){
+        
+        return $this->force_datatype( $default , $this->url_params[$param] );	
+        
+      }
+               
+      return $default;
     	
   	}
   	 
     return $default;	
   	
 	}
+	
+	
+
+  
+  
   
 }

@@ -27,43 +27,12 @@ class User_Controller extends Main_Controller {
 		}
 		
 		$this->logged_in = true;
-
-		/* 
-		 * load the segments in any page starting from the component 
-     * 	
-		*/
-		$this->url_params = $this->uri->uri_to_assoc(3);
 		
 		//init the user model and load all of it's content at the very begining
 
 		
   }
     	
-  /*
-   * this returns the correct url
-   * I feel like it should be in UTIL_model
-  */
-	public function get_url_param( $param , $default = null ){
-  	
-  	if( isset( $this->url_params[ $param ] ) ) {
-      
-      //special case   
-      if( $param === 'redirect' ){
-        
-        return str_replace( '-' , '/' , $this->url_params[$param] );
-        
-      }
-      
-      return $this->url_params[$param];	
-    	
-  	}
-  	 
-    return $default;	
-  	
-	}
-  
-  
-  
   
   /* $METHODS */
   
@@ -89,6 +58,12 @@ class User_Controller extends Main_Controller {
   		redirect( '/' );
       
     }
+    
   
+  public function logout(){
+    
+    $this->_logout();
+    
+  }    
   
 }

@@ -2,12 +2,9 @@
   
   /* helper */
   
-  $logged_in = ( isset( $this->session->userdata['logged_in'] ) && $this->session->userdata['logged_in'] );
-
-  
 ?>    
     
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar navbar-inverse">
           <div class="navbar-inner">
               <div class="container">
                   <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -18,18 +15,15 @@
                   <a class="brand" href="/">ReIn</a>
                   <div class="nav-collapse collapse">
                       <ul class="nav">
-                          <li class="active"><a href="#">Home</a></li>
-                          <li><a href="#contact">Discover</a></li>
+                          <li class="active"><a href="/home">Home</a></li>
                       </ul>
                       
-                      <?php if( $logged_in ) : ?>
+                      <?php if( $this->logged_in ) : ?>
                         <ul class="nav pull-right">
                           <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->userdata->user_name;?><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/home/settings">Settings</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                     <li class="divider"></li>
                                     <li><a href="/log-out">Log Out</a></li>
                                 </ul>

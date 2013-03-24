@@ -23,14 +23,14 @@
           padding-bottom: 40px;
       }
     </style>
-    <link rel="stylesheet" href="/<?php echo APPPATH; ?>css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="/<?php echo APPPATH; ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     
-    <link rel="stylesheet" type="text/css" href="/<?php echo APPPATH; ?>css/plugins/shadowbox-3.0.3/shadowbox.css">
+    <link rel="stylesheet" type="text/css" href="/css/plugins/shadowbox-3.0.3/shadowbox.css">
     
-		<link rel="stylesheet" href="/<?php echo APPPATH; ?>css/styles.css" />
+		<link rel="stylesheet" href="/css/styles.css" />
 		
-		<script src="/<?php echo APPPATH; ?>javascript/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+		<script src="/javascript/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
   </head>
   <body>
@@ -41,9 +41,11 @@
   
         <div class="container">
       
+<!--
         	<a href="/" class="logo pull-left">
         	  <h1>Recycled Inspiration</h1>
         	</a>
+-->
       	
           <div class="pull-right">
             <?php $this->load->view( '/modules/navigation/navigation' ); ?>
@@ -72,14 +74,14 @@
     </footer>
 			
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/<?php echo APPPATH; ?>javascript/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="js/javascript/vendor/jquery-1.9.1.min.js"><\/script>')</script>
   
-    <script src="/<?php echo APPPATH; ?>javascript/vendor/bootstrap.min.js"></script>
+    <script src="/javascript/vendor/bootstrap.min.js"></script>
   
-    <script src="/<?php echo APPPATH; ?>javascript/plugins.js"></script>
-    <script src="/<?php echo APPPATH; ?>javascript/main.js"></script>		
+    <script src="/javascript/plugins.js"></script>
+    <script src="/javascript/main.js"></script>		
     
-    <script type="text/javascript" src="/<?php echo APPPATH; ?>javascript/shadowbox-3.0.3/shadowbox.js"></script>
+    <script type="text/javascript" src="/javascript/shadowbox-3.0.3/shadowbox.js"></script>
     <script type="text/javascript">
     Shadowbox.init({
         handleOversize: "drag",
