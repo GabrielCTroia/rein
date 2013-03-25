@@ -61,9 +61,9 @@ class Fetch_behance extends Fetch_model{
 		//this too
 		date_default_timezone_set('America/New_York');
 
-		foreach( $posts as $index=>$post ){
+		foreach( $posts as $post ){
       		
-		  $formatted[$index] = array(
+		  $formatted[] = array(
 
 		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
   			
@@ -73,15 +73,14 @@ class Fetch_behance extends Fetch_model{
   			, 'value'            => end( $post->project->covers )
   		  , 'source'           => $post->project->url
   			
+  			, 'owner'            => json_encode( $post->project->owners )
+  			, 'caption'          => $post->project->name
+  		
   			, 'param'            => '{
-      				  "user_id" 		   : "' . $post->project->owners[0]->id . '"
-      				, "user_name"      : "' . $post->project->owners[0]->display_name . '"
-      				
-      				, "user_url"       : "' . $post->project->owners[0]->url . '"
-      				, "country"        : "' . $post->project->owners[0]->country . '"
-      				, "post_type" 	   : "appreciated"
+      				  "post_type" 	   : "appreciated"
       				, "tags"   			   : "' . $post->project->fields[0] .'"
-      				, "thumbnail"      : "' . end( $post->project->covers )   . '"
+      				, "thumbnail"      : "' . end( $post->project->covers ) . '"
+      				, "fields"         : "' . implode( ',' ,  $post->project->fields ) . '"
         }'
         
 		  );

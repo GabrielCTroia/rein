@@ -1,17 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-<div class="container well">
-
-  <?php   
+  <div class="container well">
     
+    <?php if( !empty( $modules['feed'] ) ) : ?>
+        <?php echo $modules['feed']; ?>
+    <?php endif; ?>
     
-    
-/*     if( ['feed'] ) echo "Da"; */
-    
-/*     if( $this->Components_model->url() ) */
+    <?php if( !empty( $modules['settings'] ) ) : ?>
+        <?php echo $modules['settings']; ?>
+    <?php endif; ?>
       
-      $this->Components_model->show( 'feed' ); 
-
-  ?>
-  
-</div>
+  </div>

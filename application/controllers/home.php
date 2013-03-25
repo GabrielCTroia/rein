@@ -22,7 +22,7 @@ class Home extends User_Controller {
   private $page_url = "/home";  
 
 	function __construct() {
-	
+	  
 		parent::__construct();
 		
 		$this->load->model( 'User_model' , '' , TRUE );
@@ -56,6 +56,13 @@ class Home extends User_Controller {
   * SETTINGS component 
   */
   public function settings() {
+    
+    $this->load_module( 'settings' , 'widget' );
+    
+    $this->load->view( 'index.php' , $this->data );
+  
+    return;
+    
     
     //  define the component
   	$this->Components_model->init( 'settings' );
@@ -103,7 +110,12 @@ class Home extends User_Controller {
 	
   public function feed() { 
   
-    $this->init_component( 'feed' );
+    $this->load_module( 'feed' , 'widget' );
+    
+    $this->load->view( 'index.php' , $this->data );
+  
+    return;
+/*     $this->init_component( 'feed' ); */
     
 /*     $this->feed->show();     */
     
@@ -113,7 +125,7 @@ class Home extends User_Controller {
     
 /*     $this->load->view( 'index' ); */
     
-    return;
+/*     return; */
     
     // initiate the component
     $this->Components_model->init( 'feed' );	

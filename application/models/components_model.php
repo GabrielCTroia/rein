@@ -3,10 +3,9 @@
 	
 Class Components_model extends CI_Model {
   
-  /* 
-   * cache all the components that are initiated 
-   */
-  private $components = array();
+  private $name;
+  private $path = 'components/';
+  private $url;
   
 
   
@@ -18,7 +17,20 @@ Class Components_model extends CI_Model {
 
   }
   
-  public function init( $name ) {
+  public function init( $name ){
+    
+    
+    $this->name = $name;
+    $safe_name = preg_replace( '/\s/' , '_' , $name );
+    $this->path .= $safe_name . '/';
+    $this->url = "{$this->path}{$safe_name}";
+    return true;
+    
+  }
+  
+  
+  
+  public function init2( $name ) {
     
     //  init can only be called once
     //  it defines the base properties for the component

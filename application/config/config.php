@@ -14,7 +14,10 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+
+//set the environment
+
+$config['base_url']	= 'http://' . $_SERVER['HTTP_HOST'] . '/'; // this should be static but work for now with different environments
 
 /*
 |--------------------------------------------------------------------------
@@ -359,6 +362,8 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
+
+$config['modules_locations'] = array( APPPATH . 'modules/' => '../modules/' );
 
 
 /*

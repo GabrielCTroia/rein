@@ -4,7 +4,7 @@
    
   */
 
-class Cron_Controller extends CI_Controller {
+class Cron_Controller extends MY_Controller {
 
   /* to implement when CRON is gonna be active */
   

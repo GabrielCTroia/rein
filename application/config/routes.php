@@ -43,10 +43,10 @@ $route[ 'default_controller' ] = 'init';
 $route[ 'home' ] = 'home';
 $route[ 'home/(:any)' ] = 'home/$1';
 
-$route[ 'sign-up' ] = 'init/signup';
-$route[ 'log-in' ] = 'init/login';
+/* $route[ 'sign-up' ] = 'init/signup'; */
+/* $route[ 'log-in' ] = 'init/login'; */
 $route[ 'log-out' ] = 'home/logout';
-$route[ 'verify-login' ] = 'init/verifylogin';
+/* $route[ 'verify-login' ] = 'init/verifylogin'; */
 
 $route[ 'fetch/(:any)' ] = 'fetch/$1';
 

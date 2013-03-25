@@ -83,27 +83,30 @@ class Fetch_instagram extends Fetch_model{
 		date_default_timezone_set('America/New_York');
 		
 		foreach( $posts as $index=>$post ) {	
-			
-  		$formatted[$index] = array(
+		
+  		$formatted[] = array(
   			
   			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )  			
   			 
-  			, 'created_date' => date( $date_format, $post->created_time )
+  			, 'created_date'   => date( $date_format, $post->created_time )
   			, 'favorited_date' => date( $date_format, $post->created_time )
-  			, 'status' => 'active'
-  			, 'value' => $post->images->standard_resolution->url
-  		  , 'source' => ''
-  		
-  			, 'param' => '{
-  				  "user_id" 		: "' . $post->user->id . '"
-  				, "user_name" 	: "' . $post->user->username . '"
-  				, "profile_image" : "' . $post->user->profile_picture . '"
-  				, "user_bio" 		: "if the bio is russian the object breaks"
-  				, "post_type" 	: "favorited"
-  				, "filter"   		: "' . $post->filter . '"
-  				, "tags"   			: "' . '$post->tags' .'"
-          , "caption" 		: "if the caption is russian the object breaks"
-  			}'
+  			, 'status'         => 'active'
+  			, 'value'          => $post->images->standard_resolution->url
+  		  , 'source'         => $post->link
+  		  , 'caption'        => 'no caption for now'
+  		  
+  		  , 'owner'          => json_encode( array( 
+  		                            'user_id'       => $post->user->id
+  		                           ,'user_name'     => $post->user->username
+  		                           ,'profile_image' => $post->user->profile_picture 
+  		                           ,'user_bio' 		  => $post->user->bio
+  		                        ) )
+  		  
+  			, 'param'          => '{
+              				  "post_type" 	  : "liked"
+              				, "filter"   		  : "' . $post->filter . '"
+              				, "tags"   			  : "' . implode( ',' , $post->tags ) .'"
+        			}'
   			
   		);
   		

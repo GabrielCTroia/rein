@@ -4,50 +4,33 @@
    This controller extends from the CI controller but provides some User helpful methods like: _logged_in
   */
 
-class Main_Controller extends CI_Controller {
+class Main_Controller extends MY_Controller {
   
   /* cache the log state */
   public $logged_in = false;
   
   
+  //this is the data that needs to be passed to the views
+  protected $data = array();
   
-  protected $current_controller = false;
-  
-  
-  public $components = array();
-  
+  //cache all the laoded modules
+  protected $modules = array();
   
   
   public function __construct(){
     
     parent::__construct();
-    
+        
     /* 
 		 * load the segments in any page starting from the component 
      * 	
 		*/
 		$this->url_params = $this->uri->uri_to_assoc(1);
     
+    
+    $this->data['modules'] = &$this->modules;
   }
   
-  
-  public function init_component( $component ) {
-  	
-  	$path = APPPATH . 'components/';
-  	
-  	$this->load->add_package_path( $path . $component . '/' );
-  	
-  	$this->load->library( 'feed' );
-  	
-  	$this->feed->show();
-  	
-	}	
-	
-	public function show_component( $component ) {
-  	
-  	
-	}
-  	
   	
   /* 
    * check if it's logged in 
@@ -78,6 +61,33 @@ class Main_Controller extends CI_Controller {
 		return false;
 		
 	}	
+	
+	
+	
+	/* 
+	 * This function loads and assigns the module to the global $this->data['module'] var using HMVC method
+	 * @param - module name
+	 * @method - the method used to load the module
+	 */ 
+	protected function load_module( $module , $method = null , $params = null ){
+  	
+  	if( !$module ){
+    	
+      return;
+      	
+  	}
+  	
+  	if( $method ) {
+    	
+    	$method = '/' . $method;
+    	
+  	}
+  	
+  	$this->modules[ $module ] = Modules::run( $module . $method , $params );
+  	
+	}
+	
+	
   
   /* this needs to be written somewhere else - UTIL or something 
    * 

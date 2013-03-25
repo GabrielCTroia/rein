@@ -37,17 +37,28 @@ TO DO:
 
 - bring the app/libraries folder back in action and load from there with $this->library() and have git submodules in as was first intended
 
+- TO LOOK INTO WHY THE MODULES LOAD THE MY_LOADER CONTROLLER AGAIN AND HOW TO STOP THIS( for each new module theres a new instance of the Controller)
+
 -----------------------------------------------------------------------------------------
 
+
+Log started - Mar 24 2013, 9:30AM                                          GABRIEL
+
+  - Created a modules for (SignUp, Login, Settings, Active services, Feed ) - cuurently working on Feed - apparently thats the biggest module to develop (needs filters,layouts - sorting....)
+  
+  - implemented HMVC
+  
+Log ended - Mar 15 2013m, 2AM 
+  
+---------
+
 Log started - Mar 23 2013, 9:30AM                                          GABRIEL
-  
-  
   
   - pagination DONE (was actually pretty simple - made use of sql LIMIT $start, $end )
   
   - NOT DONE - currently working on adding reusables(modules/components) into the app. Should be able to extend the Loader class to just load modules or components.
 
-Log ended - Mar 17 2013 - 
+Log ended - Mar 24 2013, 3AM
 
 ----------
 
