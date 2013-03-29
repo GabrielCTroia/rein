@@ -366,6 +366,8 @@ $config['proxy_ips'] = '';
 $config['modules_locations'] = array( APPPATH . 'modules/' => '../modules/' );
 
 
+date_default_timezone_set('America/New_York');
+
 /*
 function __autoload( $class = 'util' ){ 
  	include_once( APPPATH . $class . ".php" ); 

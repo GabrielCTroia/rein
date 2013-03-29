@@ -29,7 +29,9 @@ class Login extends MY_Controller {
 		
 		} else if( $this->input->post() ) {
   		
-  		redirect( $this->input->post()['url'] . "/message/fail" );
+  		$post = $this->input->post();
+  		
+  		redirect( $post['url'] . "/message/fail" );
   		
 		}
 		
