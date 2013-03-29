@@ -65,7 +65,7 @@ class Fetch_behance extends Fetch_model{
       		
 		  $formatted[] = array(
 
-		      'post_foreign_id'  => Util::format_foreign_id( $post->project->id , $this->service_id )
+		      'post_foreign_id'  => format_foreign_id( $post->project->id , $this->service_id )
   			
   			, 'created_date'     => date( $date_format, $post->project->created_on )
   			, 'favorited_date'   => date( $date_format, $post->timestamp )

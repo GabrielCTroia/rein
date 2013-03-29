@@ -59,13 +59,13 @@ class Login extends MY_Controller {
       
         array(
   	       array(
-  	              'field' => 'user_name',
+  	              'field' => 'l-username_email',
   	              'label' => 'User Name',
   	              'rules' => 'trim|required|xss_clean'
   	        ),
   	        
   	        array(
-  	              'field' => 'password',
+  	              'field' => 'l-password',
   	              'label' => 'Password',
   	              'rules' => 'trim|required|xss_clean|callback__check_db'
   	        )
@@ -77,8 +77,8 @@ class Login extends MY_Controller {
   		if( $this->form_validation->run() ){
         
         /* cache the inputs */  
-        $user_name = $this->input->post('user_name');
-        $password  = $this->input->post('password');  
+        $user_name = $this->input->post('l-username_email');
+        $password  = $this->input->post('l-password');  
         
         /* retrieve the USER_INFO */          
   		  if( !$user_info = User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) , true ) ) {
@@ -109,7 +109,7 @@ class Login extends MY_Controller {
     	public function _check_db( $password ) {      	
         
         /* cache the inputs */
-        $user_name = $this->input->post('user_name');
+        $user_name = $this->input->post('l-username_email');
         
         return User_model::validate_login( array( "user_name" => $user_name , "password" => $password ) );	
       	

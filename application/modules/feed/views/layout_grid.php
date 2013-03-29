@@ -14,8 +14,6 @@
         
         <div class="thumbnail">
           
-          <?php echo 'favorited: ' . $post->favorited_date; ?>
-          
   		    <?php	include( __DIR__ . '/service_templates/' . $post->service_name . '.php' ); ?>
   		  
   		    <?php echo 'p_id: ' . $post->p_id ?>

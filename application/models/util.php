@@ -1,5 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
+/* this is going to be deprecated */	
+	
+	
 Class Util extends CI_Model {	
 
   function __construct() {

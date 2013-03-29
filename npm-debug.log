@@ -1,0 +1,206 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.8.19/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'stylus',
+1 verbose cli   '-g' ]
+2 info using npm@1.2.10
+3 info using node@v0.8.19
+4 verbose read json /usr/local/share/npm/lib/package.json
+5 verbose read json /usr/local/share/npm/lib/package.json
+6 verbose cache add [ 'stylus', null ]
+7 verbose cache add name=undefined spec="stylus" args=["stylus",null]
+8 verbose parsed url { pathname: 'stylus', path: 'stylus', href: 'stylus' }
+9 silly lockFile 27c0f414-stylus stylus
+10 verbose lock stylus /Users/gabriel/.npm/27c0f414-stylus.lock
+11 silly lockFile 27c0f414-stylus stylus
+12 silly lockFile 27c0f414-stylus stylus
+13 verbose addNamed [ 'stylus', '' ]
+14 verbose addNamed [ null, '' ]
+15 silly lockFile 5140332e-stylus stylus@
+16 verbose lock stylus@ /Users/gabriel/.npm/5140332e-stylus.lock
+17 silly addNameRange { name: 'stylus', range: '', hasData: false }
+18 verbose url raw stylus
+19 verbose url resolving [ 'https://registry.npmjs.org/', './stylus' ]
+20 verbose url resolved https://registry.npmjs.org/stylus
+21 info trying registry request attempt 1 at 23:42:37
+22 verbose etag "BNGVSV8AK4PMS61QQ5XAOUIMT"
+23 http GET https://registry.npmjs.org/stylus
+24 http 200 https://registry.npmjs.org/stylus
+25 silly registry.get cb [ 200,
+25 silly registry.get   { vary: 'Accept',
+25 silly registry.get     server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+25 silly registry.get     etag: '"BBDV7DWI28YTUU0CLQQ5TU5M8"',
+25 silly registry.get     date: 'Fri, 29 Mar 2013 03:42:38 GMT',
+25 silly registry.get     'content-type': 'application/json',
+25 silly registry.get     'content-length': '167386' } ]
+26 silly addNameRange number 2 { name: 'stylus', range: '', hasData: true }
+27 silly addNameRange versions [ 'stylus',
+27 silly addNameRange   [ '0.0.1',
+27 silly addNameRange     '0.0.2',
+27 silly addNameRange     '0.1.0',
+27 silly addNameRange     '0.2.0',
+27 silly addNameRange     '0.2.1',
+27 silly addNameRange     '0.3.0',
+27 silly addNameRange     '0.3.1',
+27 silly addNameRange     '0.4.0',
+27 silly addNameRange     '0.4.1',
+27 silly addNameRange     '0.5.0',
+27 silly addNameRange     '0.5.1',
+27 silly addNameRange     '0.5.2',
+27 silly addNameRange     '0.5.3',
+27 silly addNameRange     '0.6.0',
+27 silly addNameRange     '0.6.2',
+27 silly addNameRange     '0.6.3',
+27 silly addNameRange     '0.6.4',
+27 silly addNameRange     '0.6.5',
+27 silly addNameRange     '0.6.6',
+27 silly addNameRange     '0.6.7',
+27 silly addNameRange     '0.7.0',
+27 silly addNameRange     '0.7.1',
+27 silly addNameRange     '0.7.2',
+27 silly addNameRange     '0.7.3',
+27 silly addNameRange     '0.7.4',
+27 silly addNameRange     '0.8.0',
+27 silly addNameRange     '0.9.0',
+27 silly addNameRange     '0.9.1',
+27 silly addNameRange     '0.9.2',
+27 silly addNameRange     '0.10.0',
+27 silly addNameRange     '0.11.0',
+27 silly addNameRange     '0.11.1',
+27 silly addNameRange     '0.11.2',
+27 silly addNameRange     '0.11.3',
+27 silly addNameRange     '0.11.4',
+27 silly addNameRange     '0.11.5',
+27 silly addNameRange     '0.11.6',
+27 silly addNameRange     '0.11.7',
+27 silly addNameRange     '0.11.8',
+27 silly addNameRange     '0.11.9',
+27 silly addNameRange     '0.11.10',
+27 silly addNameRange     '0.11.11',
+27 silly addNameRange     '0.11.12',
+27 silly addNameRange     '0.12.0',
+27 silly addNameRange     '0.12.1',
+27 silly addNameRange     '0.12.2',
+27 silly addNameRange     '0.12.3',
+27 silly addNameRange     '0.12.4',
+27 silly addNameRange     '0.13.0',
+27 silly addNameRange     '0.13.1',
+27 silly addNameRange     '0.13.2',
+27 silly addNameRange     '0.13.3',
+27 silly addNameRange     '0.13.4',
+27 silly addNameRange     '0.13.5',
+27 silly addNameRange     '0.13.6',
+27 silly addNameRange     '0.13.7',
+27 silly addNameRange     '0.13.8',
+27 silly addNameRange     '0.13.9',
+27 silly addNameRange     '0.14.0',
+27 silly addNameRange     '0.15.0',
+27 silly addNameRange     '0.15.1',
+27 silly addNameRange     '0.15.2',
+27 silly addNameRange     '0.15.3',
+27 silly addNameRange     '0.15.4',
+27 silly addNameRange     '0.16.0',
+27 silly addNameRange     '0.17.0',
+27 silly addNameRange     '0.18.0',
+27 silly addNameRange     '0.19.0',
+27 silly addNameRange     '0.19.1',
+27 silly addNameRange     '0.19.2',
+27 silly addNameRange     '0.19.3',
+27 silly addNameRange     '0.19.4',
+27 silly addNameRange     '0.19.5',
+27 silly addNameRange     '0.19.6',
+27 silly addNameRange     '0.19.7',
+27 silly addNameRange     '0.19.8',
+27 silly addNameRange     '0.20.0',
+27 silly addNameRange     '0.20.1',
+27 silly addNameRange     '0.21.0',
+27 silly addNameRange     '0.21.1',
+27 silly addNameRange     '0.21.2',
+27 silly addNameRange     '0.22.0',
+27 silly addNameRange     '0.22.1',
+27 silly addNameRange     '0.22.2',
+27 silly addNameRange     '0.22.3',
+27 silly addNameRange     '0.22.4',
+27 silly addNameRange     '0.22.5',
+27 silly addNameRange     '0.22.6',
+27 silly addNameRange     '0.23.0',
+27 silly addNameRange     '0.24.0',
+27 silly addNameRange     '0.25.0',
+27 silly addNameRange     '0.26.0',
+27 silly addNameRange     '0.26.1',
+27 silly addNameRange     '0.27.0',
+27 silly addNameRange     '0.27.1',
+27 silly addNameRange     '0.27.2',
+27 silly addNameRange     '0.28.0',
+27 silly addNameRange     '0.28.1',
+27 silly addNameRange     '0.28.2',
+27 silly addNameRange     '0.29.0',
+27 silly addNameRange     '0.30.0',
+27 silly addNameRange     '0.30.1',
+27 silly addNameRange     '0.31.0',
+27 silly addNameRange     '0.32.0',
+27 silly addNameRange     '0.32.1' ] ]
+28 verbose addNamed [ 'stylus', '0.32.1' ]
+29 verbose addNamed [ '0.32.1', '0.32.1' ]
+30 silly lockFile 2a6865b9-stylus-0-32-1 stylus@0.32.1
+31 verbose lock stylus@0.32.1 /Users/gabriel/.npm/2a6865b9-stylus-0-32-1.lock
+32 verbose read json /Users/gabriel/.npm/stylus/0.32.1/package/package.json
+33 silly lockFile 2a6865b9-stylus-0-32-1 stylus@0.32.1
+34 silly lockFile 2a6865b9-stylus-0-32-1 stylus@0.32.1
+35 silly lockFile 5140332e-stylus stylus@
+36 silly lockFile 5140332e-stylus stylus@
+37 silly resolved [ { name: 'stylus',
+37 silly resolved     description: 'Robust, expressive, and feature-rich CSS superset',
+37 silly resolved     version: '0.32.1',
+37 silly resolved     author: { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+37 silly resolved     keywords: [ 'css', 'parser', 'style', 'stylesheets', 'jade', 'language' ],
+37 silly resolved     repository: { type: 'git', url: 'git://github.com/learnboost/stylus' },
+37 silly resolved     main: './index.js',
+37 silly resolved     engines: { node: '*' },
+37 silly resolved     bin: { stylus: './bin/stylus' },
+37 silly resolved     scripts: { prepublish: 'npm prune', test: 'make test' },
+37 silly resolved     dependencies: { cssom: '0.2.x', mkdirp: '0.3.x', debug: '*' },
+37 silly resolved     devDependencies: { should: '*', mocha: '*' },
+37 silly resolved     readme: '# Stylus\n\n Stylus is a revolutionary new language, providing an efficient, dynamic, and expressive way to generate CSS. Supporting both an indented syntax and regular CSS style.\n\n## Installation\n\n```bash\n$ npm install stylus\n```\n\n### Example\n\n```\nborder-radius()\n  -webkit-border-radius: arguments\n  -moz-border-radius: arguments\n  border-radius: arguments\n\nbody a\n  font: 12px/1.4 "Lucida Grande", Arial, sans-serif\n  background: black\n  color: #ccc\n\nform input\n  padding: 5px\n  border: 1px solid\n  border-radius: 5px\n```\n\ncompiles to:\n\n```css\nbody a {\n  font: 12px/1.4 "Lucida Grande", Arial, sans-serif;\n  background: #000;\n  color: #ccc;\n}\nform input {\n  padding: 5px;\n  border: 1px solid;\n  -webkit-border-radius: 5px;\n  -moz-border-radius: 5px;\n  border-radius: 5px;\n}\n```\n\nthe following is equivalent to the indented version of Stylus source, using the CSS syntax instead:\n\n```\nborder-radius() {\n  -webkit-border-radius: arguments\n  -moz-border-radius: arguments\n  border-radius: arguments\n}\n\nbody a {\n  font: 12px/1.4 "Lucida Grande", Arial, sans-serif;\n  background: black;\n  color: #ccc;\n}\n\nform input {\n  padding: 5px;\n  border: 1px solid;\n  border-radius: 5px;\n}\n```\n\n### Features\n\n Stylus has _many_ features.  Detailed documentation links follow:\n\n  - [css syntax](docs/css-style.md) support\n  - [mixins](docs/mixins.md)\n  - [keyword arguments](docs/kwargs.md)\n  - [variables](docs/variables.md)\n  - [interpolation](docs/interpolation.md)\n  - arithmetic, logical, and equality [operators](docs/operators.md)\n  - [importing](docs/import.md) of other stylus sheets\n  - [introspection api](docs/introspection.md)\n  - type coercion\n  - [@extend](docs/extend.md)\n  - [conditionals](docs/conditionals.md)\n  - [iteration](docs/iteration.md)\n  - nested [selectors](docs/selectors.md)\n  - parent reference\n  - in-language [functions](docs/functions.md)\n  - [variable arguments](docs/vargs.md)\n  - built-in [functions](docs/bifs.md) (over 25)\n  - optional [image inlining](docs/functions.url.md)\n  - optional compression\n  - JavaScript [API](docs/js.md)\n  - extremely terse syntax\n  - stylus [executable](docs/executable.md)\n  - [error reporting](docs/error-reporting.md)\n  - single-line and multi-line [comments](docs/comments.md)\n  - css [literal](docs/literal.md)\n  - character [escaping](docs/escape.md)\n  - [@keyframes](docs/keyframes.md) support & expansion\n  - [@font-face](docs/font-face.md) support\n  - [@media](docs/media.md) support\n  - Connect [Middleware](docs/middleware.md)\n  - TextMate [bundle](docs/textmate.md)\n  - Coda/SubEtha Edit [Syntax mode](https://github.com/atljeremy/Stylus.mode)\n  - gedit [language-spec](docs/gedit.md)\n  - VIM [Syntax](https://github.com/wavded/vim-stylus)\n  - [Firebug extension](docs/firebug.md)\n  - heroku [web service](http://styl.heroku.com) for compiling stylus\n  - [style guide](https://github.com/lepture/ganam) parser and generator\n  - transparent vendor-specific function expansion\n\n### Framework Support\n\n   - [Connect](docs/middleware.md)\n   - [Play! 2.0](https://github.com/patiencelabs/play-stylus)\n   - [Ruby On Rails](https://github.com/lucasmazza/ruby-stylus)\n\n### CMS Support\n\n   - [DocPad](https://github.com/bevry/docpad)\n   - [Punch](https://github.com/laktek/punch-stylus-compiler)\n\n### Screencasts\n\n  - [Stylus Intro](http://screenr.com/bNY)\n  - [CSS Syntax & Postfix Conditionals](http://screenr.com/A8v)\n\n### Authors\n\n  - [TJ Holowaychuk (visionmedia)](http://github.com/visionmedia)\n\n### More Information\n\n  - Language [comparisons](docs/compare.md)\n\n## License \n\n(The MIT License)\n\nCopyright (c) 2010 LearnBoost &lt;dev@learnboost.com&gt;\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\'Software\'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \'AS IS\', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
+37 silly resolved     readmeFilename: 'Readme.md',
+37 silly resolved     _id: 'stylus@0.32.1',
+37 silly resolved     _from: 'stylus@' } ]
+38 info install stylus@0.32.1 into /usr/local/share/npm/lib
+39 info installOne stylus@0.32.1
+40 verbose from cache /Users/gabriel/.npm/stylus/0.32.1/package/package.json
+41 info /usr/local/share/npm/lib/node_modules/stylus unbuild
+42 verbose read json /usr/local/share/npm/lib/node_modules/stylus/package.json
+43 info preuninstall stylus@0.32.1
+44 info uninstall stylus@0.32.1
+45 verbose true,/usr/local/share/npm/lib/node_modules,/usr/local/share/npm/lib/node_modules unbuild stylus@0.32.1
+46 verbose /usr/local/share/npm/bin,[object Object] binRoot
+47 info postuninstall stylus@0.32.1
+48 info /usr/local/share/npm/lib/node_modules/stylus unbuild
+49 verbose read json /usr/local/share/npm/lib/node_modules/stylus/package.json
+50 info preuninstall stylus@0.32.1
+51 info uninstall stylus@0.32.1
+52 verbose true,/usr/local/share/npm/lib/node_modules,/usr/local/share/npm/lib/node_modules unbuild stylus@0.32.1
+53 verbose /usr/local/share/npm/bin,[object Object] binRoot
+54 info postuninstall stylus@0.32.1
+55 error error rolling back Error: EACCES, unlink '/usr/local/share/npm/lib/node_modules/stylus/bin'
+55 error error rolling back  stylus@0.32.1 { [Error: EACCES, unlink '/usr/local/share/npm/lib/node_modules/stylus/bin']
+55 error error rolling back   errno: 3,
+55 error error rolling back   code: 'EACCES',
+55 error error rolling back   path: '/usr/local/share/npm/lib/node_modules/stylus/bin' }
+56 error Error: EACCES, unlink '/usr/local/share/npm/lib/node_modules/stylus/bin'
+56 error  { [Error: EACCES, unlink '/usr/local/share/npm/lib/node_modules/stylus/bin']
+56 error   errno: 3,
+56 error   code: 'EACCES',
+56 error   path: '/usr/local/share/npm/lib/node_modules/stylus/bin' }
+57 error Please try running this command again as root/Administrator.
+58 error System Darwin 12.2.0
+59 error command "/usr/local/Cellar/node/0.8.19/bin/node" "/usr/local/bin/npm" "install" "stylus" "-g"
+60 error cwd /Users/gabriel/Projects/Websites/rein
+61 error node -v v0.8.19
+62 error npm -v 1.2.10
+63 error path /usr/local/share/npm/lib/node_modules/stylus/bin
+64 error code EACCES
+65 error errno 3
+66 error stack Error: EACCES, unlink '/usr/local/share/npm/lib/node_modules/stylus/bin'
+67 verbose exit [ 3, true ]

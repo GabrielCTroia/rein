@@ -16,7 +16,7 @@ $post->owner = $post->owner[0];
 		
 		  <div class="span9">
 			 
-			  <span><?php echo 'favorited: ' . $post->favorited_date; ?></span>
+			  <span><?php echo 'Appreciated: ' . ago( $post->favorited_date ); ?></span>
 			 
 			  <br/>
   			<a href="<?php echo $post->source; ?>" rel="shadowbox['all']"><img src="<?php echo $post->param->thumbnail; ?>" /></a>
@@ -38,6 +38,8 @@ $post->owner = $post->owner[0];
 		  </div>
 		
 		<?php else : ?>
+		
+		  <span><?php echo 'Appreciated: ' . ago( $post->favorited_date ); ?></span>
 		
 			<a href="<?php echo $post->source; ?>" rel="shadowbox['all']"><img src="<?php echo $post->param->thumbnail; ?>" /></a>
 			

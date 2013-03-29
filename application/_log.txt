@@ -15,9 +15,6 @@ TO DO:
 - build a status_code + status_message repository so if an error comes across whil adding new services we can better debug them
 - /controller/auth - line 92 - double check if users already authenticated before inserting another entry
 - add a settings link in the logged in header menu
-- B
-
-- FIXED / (using only one table for - it's a 1 to 1 relation) - store the posts in the DB - got to find a way to work with thte dynamic tables posts_{Service} 
   
 - Add few more Services
 
@@ -25,15 +22,9 @@ TO DO:
 
 - Keep it simple for now, focus more on speed than optimization 
 
-- DONE / Launch alpha version
-
 - CREATE AN ERROR CLASS available everytwhere 
 
-- FIXED / Look a little on the sign-up adding to session procedure
-
 - Create the Foreign Table to handles all the foreign information about the user (bio/username/location) - all depending on the service
-
-- Make the system able to load modules (sign-up/login forms should actually be modules). Look into http://philsturgeon.co.uk/blog/2011/09/managing-codeigniter-packages-with-git-submodules use the application/package to have the modules own mvc
 
 - bring the app/libraries folder back in action and load from there with $this->library() and have git submodules in as was first intended
 
@@ -41,12 +32,21 @@ TO DO:
 
 -----------------------------------------------------------------------------------------
 
+Log started - Mar 28 2013, 9:30PM                                          GABRIEL
+
+  - started to handle the user DB fields
+
+Log ended - 
 
 Log started - Mar 24 2013, 9:30AM                                          GABRIEL
 
   - Created a modules for (SignUp, Login, Settings, Active services, Feed ) - cuurently working on Feed - apparently thats the biggest module to develop (needs filters,layouts - sorting....)
   
   - implemented HMVC
+  
+  - DONE / Make the system able to load modules (sign-up/login forms should actually be modules). Look into http://philsturgeon.co.uk/blog/2011/09/managing-codeigniter-packages-with-git-submodules use the application/package to have the modules own mvc
+  
+  - FIXED / Look a little on the sign-up adding to session procedure
   
 Log ended - Mar 15 2013m, 2AM 
   
@@ -56,13 +56,17 @@ Log started - Mar 23 2013, 9:30AM                                          GABRI
   
   - pagination DONE (was actually pretty simple - made use of sql LIMIT $start, $end )
   
-  - NOT DONE - currently working on adding reusables(modules/components) into the app. Should be able to extend the Loader class to just load modules or components.
+  - DONE DIFFERENTLY - currently working on adding reusables(modules/components) into the app. Should be able to extend the Loader class to just load modules or components.
+  
+  - FIXED / (using only one table for - it's a 1 to 1 relation) - store the posts in the DB - got to find a way to work with thte dynamic tables posts_{Service}
 
 Log ended - Mar 24 2013, 3AM
 
 ----------
 
 Log started - Mar 17 2013, 12:00PM                                          GABRIEL
+  
+  - LAUNCHED alpha version
   
   - Able to filter by date and by services ( probably not owrking very best but still fine for now)
 

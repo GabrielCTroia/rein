@@ -86,7 +86,7 @@ class Fetch_instagram extends Fetch_model{
 		
   		$formatted[] = array(
   			
-  			  'post_foreign_id'  => Util::format_foreign_id( $post->id , $this->service_id )  			
+  			  'post_foreign_id'  => format_foreign_id( $post->id , $this->service_id )  			
   			 
   			, 'created_date'   => date( $date_format, $post->created_time )
   			, 'favorited_date' => date( $date_format, $post->created_time )

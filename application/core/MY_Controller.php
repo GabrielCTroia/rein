@@ -20,7 +20,7 @@ class MY_Controller extends MX_Controller {
   public function __construct(){
     
     parent::__construct();
-    
+      
     //set the logged in state here and for ever
     if( $this->_check_authentication() ) {
       
@@ -131,6 +131,24 @@ class MY_Controller extends MX_Controller {
       
     }
     
+  }
+  
+  
+  /* 
+	 * returns the same url structure(same params) with different values 
+	 */
+	function get_new_url( $param , $new_val , $segments = array() ){
+    
+    if( empty( $segments ) ) {
+      
+      $segments = $this->url_params;
+      
+    }
+       
+    $segments[$param] = $new_val;   
+       
+    return '/' . $this->uri->assoc_to_uri( $segments ); 
+      
   }
   	
   /*

@@ -75,7 +75,7 @@ class Feed extends MY_Controller {
           }
           
           //make sure there's no negative page
-          if( $start < 0 ) redirect( Util::get_new_url( $this->url_params , 'page' , 1 ) );
+          if( $start < 0 ) redirect( $this->get_new_url( 'page' , 1 ) );
           
           $posts_query = array( 'where' => $specifics , 'limit' =>  $start . ' , ' . $limit , 'order_by' => $order_by );
                   
