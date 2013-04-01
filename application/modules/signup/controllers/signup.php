@@ -17,39 +17,20 @@ class Signup extends MY_Controller {
 		 * OR if the entered credentials are good and log him in if YES
 		 */	
 		 
-		if( $this->logged_in || self:: _validate() ) { 
+		if( $this->logged_in ) { 
 	    
   		redirect( "home" );
 		
-		} else if( $this->input->post() ) {
-  		
-  		redirect( $this->input->post()['url'] . "/message/fail" );
-  		
-		}
-		
+		} 
 		
 	}  
   
     
   public function widget(){
     
-    $this->load->view('default.php');
-    
-  }	
-  
-  
-    public function _validate(){
-        
-      /* ElSE */    
-  	  
-  	  $this->form_validation->set_rules( 
+    $this->form_validation->set_rules( 
   	   
   	     array(
-  	        array(
-  	              'field' => 'user_name',
-  	              'label' => 'User Name',
-  	              'rules' => 'trim|required|min_length[5]|max_length[30]|is_unique[users.user_name]'
-  	        ),
   	        array(
   	              'field' => 'email',
   	              'label' => 'Email',
@@ -69,9 +50,8 @@ class Signup extends MY_Controller {
   	     
   	   );
      
+  	  $this->form_validation->set_error_delimiters('<p class="error">', '</p>'); 
 
-
-          	      
   	  if( $return = $this->form_validation->run() ) {
   		  
   		  $this->load->model( 'User_model' , '' , TRUE );
@@ -88,15 +68,14 @@ class Signup extends MY_Controller {
   		      )
   		  );
   		  
-  		  return true;
+  		  redirect( 'home' );
   
   		}	
-  		
-  		/* if it got this far means it's not valid */
-  		return false;
-  
-    }
-  
+    
+    
+    $this->load->view('signup_default.php');
+    
+  }	
   
 }
 

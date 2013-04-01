@@ -129,13 +129,14 @@ Class Access_model extends CI_Model {
 	}
 	
 	 //returns all the services that are active for the USER
-/*
-	function get_active_accesses() {
-		$this->db->select( 's_id' );
-		$this->db->from( $this->base_table );
-		$this->db->where( 'u_id' , $this->user_id );
-		$this->db->where( 'service_status' , 'active' );
-		$this->db->order_by( 'service_id' );
+	function get_users_accesses( $select = 'a.s_id , s.service_name' ){
+		
+		$this->db->select( $select );
+		$this->db->from( $this->base_table . ' AS a' );
+		$this->db->join( 'services AS s' , ' s.s_id = a.s_id ' );
+		$this->db->where( 'a.u_id' , $this->user_id );
+		$this->db->where( 'a.access_status' , 'active' );
+		$this->db->order_by( 's.service_name' );
 		
 		$query = $this->db->get( );
 		
@@ -151,7 +152,6 @@ Class Access_model extends CI_Model {
 		return false;
 
 	}
-*/
 	
 	
 	

@@ -22,6 +22,9 @@ class User_Controller extends MY_Controller {
     	$this->logout();
     	
     }
+  	
+    //bring in the active services module
+  	$this->load_module( 'active_services' , 'raw' , 'true' );
   		
   }
   	

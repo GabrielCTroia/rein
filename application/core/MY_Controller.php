@@ -17,10 +17,14 @@ class MY_Controller extends MX_Controller {
   //cache all the loaded modules
   protected $modules = array();
   
+  //cache the URL segments as array and pass them to the View for when it's needed 
+  protected $segments = array();
+  
+  
   public function __construct(){
     
     parent::__construct();
-      
+
     //set the logged in state here and for ever
     if( $this->_check_authentication() ) {
       
@@ -36,10 +40,11 @@ class MY_Controller extends MX_Controller {
 		 * load the segments in any page starting from the component 
      * 	
 		*/
-		$this->url_params = $this->uri->uri_to_assoc(1);
+		$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1);
     
     
     $this->data['modules'] =& $this->modules;
+    
   }
   
   	
@@ -113,7 +118,7 @@ class MY_Controller extends MX_Controller {
    * @type - var you wish to turn it into
    * @var - the var you wish to convert
   */
-  private function force_datatype( $type_var , $var ){
+  protected function force_datatype( $type_var , $var ){
     
     switch( gettype( $type_var ) ){
       
@@ -157,21 +162,15 @@ class MY_Controller extends MX_Controller {
   */
 	public function get_url_param( $param , $default = null ){
   	  	 	
-  	if( isset( $this->url_params[ $param ] ) ) {
+  	if( !empty( $this->url_params[ $param ] ) ) {
     	
       if( $param === 'redirect' ){
         
-        return str_replace( '-' , '/' , $this->url_params[$param] );
+        return str_replace( '-' , '/' , $this->url_params[ $param ] );
         
       }
-      
-      if( $this->url_params[$param]  ){
-        
-        return $this->force_datatype( $default , $this->url_params[$param] );	
-        
-      }
-               
-      return $default;
+  
+      return $this->force_datatype( $default , $this->url_params[ $param ] );	
     	
   	}
   	 

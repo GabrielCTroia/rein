@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Feed extends MY_Controller {
+require_once( MODULES_PATH . 'Component_Controller.php' );
+
+class Feed extends Component_Controller {
 
 	
 	function __construct() {
@@ -10,17 +12,11 @@ class Feed extends MY_Controller {
 	}  
 
 
-	public function widget(){
+	public function component(){
   	
   	$data =& $this->data;
   	
-  	$data['layout'] = $this->get_url_param( 'layout' , 'grid' );
-  	
-  	
-  	//bring in the active services module
-  	$this->load_module( 'active_services' , 'raw' );
-  	
-  	
+  	$data['layout'] = $this->get_url_param( 'layout' , 'grid' );  	
     
     $this->load->model( 'Posts_model' , '' , false );
     
@@ -83,8 +79,10 @@ class Feed extends MY_Controller {
         
       }
       
-      $data['posts']  = $this->Posts_model->get_posts( $posts_query );
       
+      //add the template type
+      $data['posts'] = $this->_format( $this->Posts_model->get_posts( $posts_query ) );
+
       $data['filter'] = $this->get_url_param( 'filter' );
        
     }
@@ -98,10 +96,55 @@ class Feed extends MY_Controller {
     
     
   	
-  	$this->load->view( 'default' , $this->data );
+  	$this->load->view( 'feed_default' , $this->data );
   	
 	}
-
+	
+	
+	/* 
+	 * add the needing fields 
+	 */
+	private function _format( $posts ){
+	   
+	  if( empty( $posts ) ) {
+  	  
+  	  return false;
+  	  
+	  }
+	 
+	  foreach( $posts as $post ) {
+    	
+    	$this->_set_template( $post );
+    	
+    	$this->_json_decode( $post );
+        	
+    }
+	
+    return $posts;
+	
+	}
+	
+  /* 
+	 * adds the template type for each service  
+	 */
+	 private function _set_template( $post ){
+	   
+	   switch( $post->service_name ){	
+      	
+      	case 'vimeo' : $post->template = 'vimeo';
+      	 break;
+      	 
+      	default : $post->template = 'default';
+      	 break;
+    	}
+	 
+	 }
+	 
+	 private function _json_decode( $post ){
+	   
+	   $post->thumbnails = json_decode( $post->thumbnails , true );
+	 
+	 }
   	
 }
 

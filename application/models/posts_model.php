@@ -161,41 +161,6 @@ Class Posts_model extends CI_Model {
 		
 		return reset($result);
 		
-		/*
-
-		
-		if( $fields ) 
-		{
-			$select_str = $fields;
-		}
-		else
-		{
-			$select_str = 'post_id, post_foreign_id, service_id, posts.created_date, value, source, param ';
-		}
-		
-		$this->db->select( $select_str );
-		$this->db->from( 'posts' );
-		$this->db->join( 'users' , 'users.user_id=posts.user_id' , 'right' );
-		$this->db->where( 'posts.user_id', $this->user_id );
-		$this->db->where( 'posts.service_id', $this->service_id );
-		$this->db->order_by( 'posts.' . $order_by . ' ' . $dir );
-		
-		$query = $this->db->get( '' , 1 );
-		
-		if( $query->num_rows() > 0 ) {
-
-			return $query->result();
-
-		} else {
-		  
-      $this->error = true;
-      
-      $this->error_msg = "There are mo posts to show!";		  
-		  
-			return false;
-		}
-*/
-		
 	}
 	
 	
@@ -230,7 +195,6 @@ Class Posts_model extends CI_Model {
     	     
   	     }
   	
-/*   	echo ( $sql ); */
   	     
   	//I feel like this needs to be a reusable function
     if ( !$query = $this->db->query($sql) ) {

@@ -1,36 +1,45 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Settings extends MY_Controller {
+require_once( MODULES_PATH . 'Component_Controller.php' );
 
-	
-/*
-	function __construct() {
-	
-		parent::__construct();
-
-	}  
-*/
-
-
-  function widget(){
-    
-    $this->load_module( 'active_services' , 'widget' );
-    
-    $this->load->view('default.php' , $this->data );
-
-  }
+class Settings extends Component_Controller {
   
   
-/*
   function component(){
+  
+    switch( $this->get_url_param('tab') ){
       
-    
-    
-    $this->load->view('default.php' , $this->data );
+      case 'profile' : $this->_profile();
+        break;
+      
+      case 'connect' : $this->_connect();
+        break;  
+        
+      default : redirect( $this->get_new_url( 'tab' , 'profile' ) );
+        break;  
+      
+    }
+   
+    $this->load->view('settings_default.php' , $this->data );
     
   }
-*/
+  
 
+    function _profile(){
+      
+      $this->load_module( 'profile' , 'widget' ); 
+      
+      $this->data['tab'] = 'profile';
+      
+    }
+  
+    function _connect(){
+     
+      $this->load_module( 'active_services' , 'widget' ); 
+      
+      $this->data['tab'] = 'connect';
+      
+    }
   	
 }
 

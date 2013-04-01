@@ -41,19 +41,16 @@ Class User_model extends CI_Model {
     
 	}
 	
-	
-	
 
-	public function register_user( $post ) {
-  	$email = $post[ 'email' ];
-	  $user_name = $post[ 'user_name' ];
+	public function register_user( $input ) {
+  	
+  	$email = $input[ 'email' ];
 	  
 	  // Enter information into database
 	  $this->db->insert( 'users' ,
 	      array(
-	        'user_name' => $user_name,
 	        'email' => $email,
-	        'password' => $post[ 'password' ],
+	        'password' => $input[ 'password' ],
 	        'user_status' => 'active'
 	      ) );
 	  
@@ -62,7 +59,6 @@ Class User_model extends CI_Model {
 	  $this->db->select( 'u_id' );
 	  $this->db->where(
 	      array(
-	        'user_name' => $user_name,
 	        'email' => $email
 	      )
 	  );
@@ -76,13 +72,12 @@ Class User_model extends CI_Model {
 	
 	
 	
-	private function login( $user_name , $password ){
-	 
+	private function login( $email , $password ){
 	 
 		$this->db->select( '*' );	
 		$this->db->from( 'users' );
-		$this->db->where( "user_name = '$user_name'" );
-		$this->db->where( "password = '" . md5($password) . "'" );
+		$this->db->where( "email = '$email'" );
+		$this->db->where( "password = '" . $password . "'" );
 		$this->db->limit( 1 );
 		
 		$query = $this->db->get();
@@ -105,7 +100,7 @@ Class User_model extends CI_Model {
   public function validate_login( $input = array() , $return = false ) {
 		
 		//query the db
-		$result = self::login( $input['user_name'] , $input['password'] );
+		$result = self::login( $input['email'] , $input['password'] );
 		
 		if( $result ){
 			
@@ -115,12 +110,6 @@ Class User_model extends CI_Model {
           
         foreach( $result as $row ){
 			
-/*
-    				$user_info = array(
-  						          'u_id' => $row->u_id,
-  						          'email'   => $row->email				
-  						          );  				
-*/          
             $user_info = (array) $row;
             unset( $user_info['password'] );
   						          
@@ -133,12 +122,27 @@ Class User_model extends CI_Model {
 			
 		} 
 			
-		$this->form_validation->set_message( 'check_database', 'Invalid username or password' );
+		$this->form_validation->set_message( 'check_database', 'Invalid email or password' );
 			
 		return false;
 		
   }
   
+  
+  public function update_user( $input = array() ) {
+      
+/*       var_dump(); */
+/*       var_dump( $input );     */
+    
+    $this->db->where( 'u_id' , $this->session->userdata['u_id'] ); 
+    
+    if( $this->db->update( $this->base_table , $input ) )
+
+      return true;
+      
+    return false;
+
+  }
   
   /*returns all the necessay infos about the USER
   
@@ -148,7 +152,7 @@ Class User_model extends CI_Model {
    */
   public function get_user( $basic = false ){
 
-    $sql  = " SELECT u.u_id, email, user_name, created_date, user_status, user_type, GROUP_CONCAT( s_id ) "
+    $sql  = " SELECT u.u_id, email, first_name, last_name, dob, avatar, created_date, user_status, user_type, GROUP_CONCAT( s_id ) "
           . " FROM users AS u "
           . " LEFT JOIN access AS a ON a.u_id = u.u_id "
           . " WHERE u.u_id = " . $this->user_id

@@ -11,13 +11,12 @@ class Active_services extends MY_Controller {
 		
 	}  
 
-
-  function widget(){
-  
+	/* if by_user = true than return all the active services of the user */
+  function widget( $by_user = false ){
+    
   	//get the active services
-  	$this->data['active_services'] = $this->Services_model->get_active_services();
-  	
-  	
+  	$this->data['active_services'] = $this->raw( $by_user );
+  
   	//still need to do a difference between the active and the users active and show them properly
   	// I guess I'll go with a loop - it's fine for now
 /*
@@ -36,15 +35,27 @@ class Active_services extends MY_Controller {
     
     
 
-    $this->load->view('default' , $this->data );
+    $this->load->view('active_services_default' , $this->data );
   
   }
   
   
   //this return just the datas - no template
-  function raw(){
+  function raw( $by_user = false ){
+  
     
-    return $this->Services_model->get_active_services();    
+    if( $by_user ){
+      
+      $this->load->model( 'Access_model' , '' , TRUE );
+      
+      $this->Access_model->init( $this->userdata->u_id );
+      
+      return $this->Access_model->get_users_accesses();
+      
+    }
+    
+    
+    return $this->Services_model->get_active_services();
     
   }
 

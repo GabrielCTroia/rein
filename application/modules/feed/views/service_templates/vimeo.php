@@ -2,6 +2,7 @@
 
 $post->param = json_decode( $post->param ); 
 
+$post->thumbnails = json_decode( $post->thumbnails );
 ?>		
   		
 		<div class="wrapper">
@@ -29,10 +30,10 @@ $post->param = json_decode( $post->param );
 			  <span><?php echo 'Faved: ' . ago( $post->favorited_date ); ?></span>
 			
   			<a href="http://player.vimeo.com/video/<?php echo $post->value; ?>" rel="shadowbox['all']">
-  			 <img src="<?php echo $post->param->thumbnail; ?>">
+  			 <img src="<?php echo end($post->thumbnails); ?>">
   		  </a>
   		  
-  		  <p><?php echo $post->param->title; ?> from <a href="http://vimeo.com/<?php echo $post->param->user_id; ?>"></a></p>
+<!--   		  <p><?php echo $post->caption; ?> from <a href="http://vimeo.com/<?php echo $post->param->user_id; ?>"></a></p> -->
 						
 			<?php endif; ?>
 

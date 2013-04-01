@@ -84,38 +84,38 @@ class Fetch_instagram extends Fetch_model{
 		
 		foreach( $posts as $index=>$post ) {	
 		
-  		$formatted[] = array(
-  			
-  			  'post_foreign_id'  => format_foreign_id( $post->id , $this->service_id )  			
-  			 
-  			, 'created_date'   => date( $date_format, $post->created_time )
-  			, 'favorited_date' => date( $date_format, $post->created_time )
-  			, 'status'         => 'active'
-  			, 'value'          => $post->images->standard_resolution->url
-  		  , 'source'         => $post->link
-  		  , 'caption'        => 'no caption for now'
-  		  
-  		  , 'owner'          => json_encode( array( 
-  		                            'user_id'       => $post->user->id
-  		                           ,'user_name'     => $post->user->username
-  		                           ,'profile_image' => $post->user->profile_picture 
-  		                           ,'user_bio' 		  => $post->user->bio
-  		                        ) )
-  		  
-  			, 'param'          => '{
-              				  "post_type" 	  : "liked"
-              				, "filter"   		  : "' . $post->filter . '"
-              				, "tags"   			  : "' . implode( ',' , $post->tags ) .'"
-        			}'
-  			
-  		);
-  		
-		}
+		  $param = array(
+		              'filter'    => $post->filter
+		            , 'location'  => $post->location
+              );
 
+		/* 		abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param ) */  
+		  
+/* 		  exit(); */
+		  
+			$formatted[] = $this->abstract_format( 
+          			       format_foreign_id( $post->id , $this->service_id )
+          			     , date( $date_format, $post->created_time )
+          			     , date( $date_format, $post->created_time )
+          			     , $post->images->standard_resolution->url
+          			     , $post->link
+          			     , $post->tags // array
+          			     , '' 
+          			     , (array)$post->images->thumbnail->url
+          			     , $param
+        			   );		 
+		}
+		
+		
+/*
+		var_dump( $formatted );
+		
+		exit();
+*/
+		
 		return $formatted;
     
-  }
-  
+  }  
   
 }  
 

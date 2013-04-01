@@ -22,7 +22,6 @@ class Fetch_vimeo extends Fetch_model{
     
     $this->api = new phpVimeo( $this->consumer_key , $this->consumer_secret );
     
-
   }
   
   
@@ -58,37 +57,37 @@ class Fetch_vimeo extends Fetch_model{
 		
 		//not the best place to put it but works for now
 		// - if not here it would generate an error
-		date_default_timezone_set('America/New_York');
+		date_default_timezone_set('America/New_York');  
 		
-		foreach( $posts as $index=>$post ) {	
+		foreach( $posts as $post ) {	
 					
-  		$formatted[$index] = array(
-  			
-  			  'post_foreign_id'   => format_foreign_id( $post->id , $this->service_id )
-  			 
-  			, 'created_date'      => $post->upload_date
-  			, 'favorited_date'    => $post->liked_on
-  			, 'status'            => 'active'
-  			, 'value'             => $post->id
-  		  , 'source'            => ''
-  			
-  			, 'param'             => '{
-      				  "user_id" 		   : "' . $post->owner . '"
-      				, "user_name"      : "' . $this->get_username( $post->owner ) . '"
-      				, "title"      	   : "' . addslashes( $post->title ) . '"
-      				, "upload_date" 	 : "' . $post->modified_date . '"
-      				, "privacy"   		 : "' . $post->privacy . '"
-      				, "is_hd"   			 : "' . $post->is_hd .'"
-      				, "thumbnail"      : "' . $this->get_thumbnail( $post->id ) . '" 
-  			}'
-  			
-  		);
-  		
+			$param = array(
+                  "privacy"   		 => $post->privacy
+                , "is_hd"   			 => $post->is_hd
+              );
+		/* 		abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param ) */  
+		  
+			$formatted[] = $this->abstract_format( 
+          			       format_foreign_id( $post->id , $this->service_id ) 
+          			     , $post->upload_date 
+          			     , $post->liked_on 
+          			     , $post->id
+          			     , '' 
+          			     , array()
+          			     , addslashes( $post->title ) 
+          			     , (array)$this->get_thumbnail( $post->id )
+          			     , $param
+        			   );		 
+  		  		
 		}
 
 		return $formatted;
     
   }
+  
+  
+  
+  /* The extra Calls shouldn't be called so much due to the calls limitations - HAVE TO LOOK INTO THIS LATER */
   
   /* 
    * this makes necessary calls - like user information or similar 

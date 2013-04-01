@@ -62,31 +62,28 @@ class Fetch_behance extends Fetch_model{
 		date_default_timezone_set('America/New_York');
 
 		foreach( $posts as $post ){
-      		
-		  $formatted[] = array(
+					
+			$param = array();
+		  
+		  
+/* 		abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param ) */
 
-		      'post_foreign_id'  => format_foreign_id( $post->project->id , $this->service_id )
-  			
-  			, 'created_date'     => date( $date_format, $post->project->created_on )
-  			, 'favorited_date'   => date( $date_format, $post->timestamp )
-  			, 'status'           => 'active'
-  			, 'value'            => end( $post->project->covers )
-  		  , 'source'           => $post->project->url
-  			
-  			, 'owner'            => json_encode( $post->project->owners )
-  			, 'caption'          => $post->project->name
   		
-  			, 'param'            => '{
-      				  "post_type" 	   : "appreciated"
-      				, "tags"   			   : "' . $post->project->fields[0] .'"
-      				, "thumbnail"      : "' . end( $post->project->covers ) . '"
-      				, "fields"         : "' . implode( ',' ,  $post->project->fields ) . '"
-        }'
-        
-		  );
-		
+		  
+			$formatted[] = $this->abstract_format( 
+          			       format_foreign_id( $post->project->id , $this->service_id )
+          			     , date( $date_format, $post->project->created_on )
+          			     , date( $date_format, $post->timestamp )
+          			     , end( $post->project->covers )
+          			     , $post->project->url
+          			     , $post->project->fields //array
+          			     , addslashes( $post->project->name ) 
+          			     , (array)$post->project->covers
+          			     , $param
+        			   );				
+          			   
 		}
-
+		
 		return $formatted;
     
   }

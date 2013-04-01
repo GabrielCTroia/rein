@@ -48,11 +48,34 @@ class Fetch_model extends Api_class implements Fetch_interface{
   function fetch( $count = 20 ){}
   
   
-  /* 
-   * formats the posts 
-   * not sure if the best is to be here or in a separate class file
-   */ 
   function format( $posts ){}
+  
+  /* 
+   * abstracts the posts format
+   * here are all the fields present in the table
+   */ 
+  function abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param = array() ){
+    
+    $formatted = array(
+
+		      'post_foreign_id'  => $p_fgn_id
+  			
+  			, 'created_date'     => $created_date
+  			, 'favorited_date'   => $favorited_date
+  			, 'status'           => 'active'
+  			, 'value'            => $value
+  		  , 'source'           => $source
+  			, 'tags'             => json_encode( $tags )
+  			, 'caption'          => $caption
+  			, 'thumbnails'       => json_encode( $thumbnails )
+  		
+   			, 'param'            => json_encode( $param )
+        
+		);
+    
+    return $formatted;
+    
+  }
   
 }
 

@@ -1,6 +1,3 @@
-@import url( "http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css" )
-
-
 //////////////// $VARIABLES ////////////////
 
 ///// $Colors /////
@@ -14,10 +11,12 @@ $dark     = #61417D
 $darker   = #312140
 $black    = #333
 
+$grey = #444
+$grey-light = #cdcdcd
 
 ////// $SIZES /////
 
-$footer_height = 200px
+$footer_height = 20px
 
 
 //////////////// $MIXINS ////////////////
@@ -54,17 +53,27 @@ text-shadow( color , mode = darken )
 //////////////// $GENERAL //////////////////
 
 html, body
-  height 100%
+  //height 100%
 
 body
-  font-size 14px // define em value
+  padding 3em 0
+  background-image url('/images/bkgs/bkg-grain.png')
+  background-color white
+  
+  font-family 'Lato' , 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 .all
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
+  //min-height: 100%;
+  //height: auto !important;
+  //height: 100%;
   
-  background-image url('../images/bkgs/bkg-grain.png')
+  
+  //background-repeat no-repeat
+  //background-size 100%
+
+
+h5
+  font-weight 300
 
 
 input
@@ -80,15 +89,14 @@ input
 //////////////// $ELEMENTS ////////////////
 
 .must-header
-  background-color $darker
-  color $white
+  //background-color $darker
+  //color $white
 
 
 
 
 .must-page
-  margin-top 3em
-  margin-bottom 3em
+  margin-top 2em
 
   
 
@@ -102,14 +110,25 @@ input
 
 .push,.sticky-footer
   height $footer_height
+  
+.page-init
 
-
+  .supersized  
+    background-image url('/images/bkgs/bkg-manhattan-night-blurry_mini.jpg')
+    background-repeat no-repeat
+    background-size cover
+    background-position 50%
+    position fixed
+    width 100%
+    height 100%
+    top 0
+    z-index -999
 
 //////////////// $MODULES & $COMPONENTS //////////////////
 
 .navbar-inverse .navbar-inner
-  background-color $darker
-  background-image none
+  //background-color $darker
+  //background-image none
 
 
 
@@ -124,6 +143,50 @@ input
       margin-right 1em
       margin-top .3em
 
+#layout-grid
+  
+  .thumb
+    height 220px
+    
+    .wrapper
+      height 170px
+      overflow hidden
+      display block
+      position relative
+      margin-bottom .5em
+      background #333
+      
+      img 
+        width 100%
+        
+      .caption
+        color white
+        bottom 0  
+        position absolute
+        
+        width 100%
+        padding 0 .3em 
+        background-image url('/images/bkgs/transparent/bkg-transparent-b7.png')        
+        font-weight 100
+        
+    .post-info
+      color #aaa     
+  
+#layout-list
+  
+  .item
+    padding 1.5em 0
+    border-top 1px solid white
+    border-bottom 1px solid $grey-light
+    
+  .item:first-child
+    border-top 0
+    
+  .item:last-child
+    border-bottom 0
+    
+      
+  
 
 /// $SETTINGS
 
@@ -133,10 +196,10 @@ input
     
     li
       text-align center
-      -webkit-filter grayscale(.9)
+      //-webkit-filter grayscale(.9)
       
     li.active,li:hover
-      -webkit-filter: grayscale(0);  
+      //-webkit-filter: grayscale(0);  
 
 
 
@@ -151,3 +214,6 @@ input
 .success
   color $medium    
 
+.transparent
+  background-color transparent
+  background-image url('/images/bkgs/transparent/bkg-transparent-w8.png')  

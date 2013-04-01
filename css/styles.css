@@ -1,18 +1,23 @@
-@import url("http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css");
-html,body{height:100%}
-body{font-size:14px}
-.all{min-height:100%;height:auto !important;height:100%;background-image:url("../images/bkgs/bkg-grain.png")}
+body{padding:3em 0;background-image:url("/images/bkgs/bkg-grain.png");background-color:#fff;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif}
+h5{font-weight:300}
 input{display:block;margin-bottom:1em}
-.must-header{background-color:#312140;color:#fff}
-.must-page{margin-top:3em;margin-bottom:3em}
+.must-page{margin-top:2em}
 .must-footer{background-color:#312140;color:#fff}
-.push{margin-bottom:-200px}
-.push,.sticky-footer{height:200px}
-.navbar-inverse .navbar-inner{background-color:#312140;background-image:none}
+.push{margin-bottom:-20px}
+.push,.sticky-footer{height:20px}
+.page-init .supersized{background-image:url("/images/bkgs/bkg-manhattan-night-blurry_mini.jpg");background-repeat:no-repeat;background-size:cover;background-position:50%;position:fixed;width:100%;height:100%;top:0;z-index:-999}
 #feed header{margin-bottom:1em;}
 #feed header .dropdown-filter{margin-right:1em;margin-top:.3em}
-#settings .services li{text-align:center;-webkit-filter:grayscale(.9)}
-#settings .services li.active,#settings .services li:hover{-webkit-filter:grayscale(0)}
+#layout-grid .thumb{height:220px;}
+#layout-grid .thumb .wrapper{height:170px;overflow:hidden;display:block;position:relative;margin-bottom:.5em;background:#333;}
+#layout-grid .thumb .wrapper img{width:100%}
+#layout-grid .thumb .wrapper .caption{color:#fff;bottom:0;position:absolute;width:100%;padding:0 .3em;background-image:url("/images/bkgs/transparent/bkg-transparent-b7.png");font-weight:100}
+#layout-grid .thumb .post-info{color:#aaa}
+#layout-list .item{padding:1.5em 0;border-top:1px solid #fff;border-bottom:1px solid #cdcdcd}
+#layout-list .item:first-child{border-top:0}
+#layout-list .item:last-child{border-bottom:0}
+#settings .services li{text-align:center}
 .clear{clear:both}
 .error{color:#f00}
 .success{color:#c484fd}
+.transparent{background-color:transparent;background-image:url("/images/bkgs/transparent/bkg-transparent-w8.png")}

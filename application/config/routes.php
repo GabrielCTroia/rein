@@ -40,6 +40,8 @@
 
 $route[ 'default_controller' ] = 'init';
 
+
+
 $route[ 'home' ] = 'home';
 $route[ 'home/(:any)' ] = 'home/$1';
 
@@ -50,7 +52,7 @@ $route[ 'log-out' ] = 'home/logout';
 
 $route[ 'fetch/(:any)' ] = 'fetch/$1';
 
-$route[ '404_override' ] = '';
+$route[ '404_override' ] = 'init';
 
 
 /* End of file routes.php */

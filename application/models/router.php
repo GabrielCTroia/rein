@@ -2,8 +2,10 @@
 	
 //here will be all the redierect and routing	
 	
-Class Router extends CI_Model
-{	
+Class Router extends CI_Model{	
+
+
+  public function get_new_route(  ){}
 
 }
 

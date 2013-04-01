@@ -63,7 +63,7 @@
     
     $time = strtotime( $time );
     
-    $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+    $periods = array("sec", "min", "h", "d", "w", "M", "y", "dec" );
     $lengths = array("60","60","24","7","4.35","12","10");
     
     $now = time();
@@ -79,11 +79,11 @@
     
     $difference = round( $difference );
     
-    if($difference != 1) {
-       $periods[$j].= "s";
-    }
+/*     if($difference != 1) { */
+/*        $periods[$j].= "s"; */
+/*      } */
     
-    return "$difference $periods[$j] ago ";
+    return "$difference $periods[$j]";
    
   }
 

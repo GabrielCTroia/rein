@@ -32,11 +32,33 @@ TO DO:
 
 -----------------------------------------------------------------------------------------
 
+Log started - Mar 31 2013, 12:00PM                                          GABRIEL
+
+  - getting it ready for another launh
+
+  - did quite a lot. User profile - retoruched the feed style a little ...
+  
+Log ended - Apr 1 2013, 1:11AM
+ 
+---------
+
+Log started - Mar 30 2013, 9:30AM                                          GABRIEL
+
+  - going to style a littl emore the feed section
+  
+  - a little design for the splash page - added a bkg img
+  
+Log ended - 
+ 
+---------
+
 Log started - Mar 28 2013, 9:30PM                                          GABRIEL
 
   - started to handle the user DB fields
 
 Log ended - 
+
+---------
 
 Log started - Mar 24 2013, 9:30AM                                          GABRIEL
 

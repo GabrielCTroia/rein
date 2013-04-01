@@ -44,6 +44,11 @@ class Init extends Anonym_controller {
     //  At the time of writing this, both models are identical, so they accept a single
     //  $name variable which automatically generates $name/$path/$url inside the init function
     $this->Pager_model->init( 'init' ); 
+    
+    
+    //load the common modules fro this page
+    
+    $this->load_module( 'splash' , 'widget' );
       
 	}
   
@@ -55,7 +60,7 @@ class Init extends Anonym_controller {
   */
 	public function index() {	
 		
-		redirect( $this->page_url . '/splash' );
+		redirect( $this->page_url . '/login' );
 
 	}
 	
@@ -68,34 +73,6 @@ class Init extends Anonym_controller {
 	
 	
 	
-	
- /* 
-  * SPLASH component
-  */
-  public function splash() {
-
-    //define the component	  
-/*   	$this->Components_model->init( 'splash' ); */
-    
-      	
-  	$this->load_module( 'splash' , 'widget' );
-  	
-  	$this->load_module( 'login' , 'widget' );
-  	
-/*   	$this->load->module( 'signUp' , '' ); */
-/*   	$this->load->add_package_path( APPPATH . 'modules/test/' ); */
-/*   	 $this->load->view( 'test.php' ); */
-/*   	 $this->load->model('Test_model'); */
-/*   	$this->load->remove_package_path(); */
-
-/*   	echo "DA"; */
-  	
-/*   	exit();  	 */
-
-  	$this->load->view( 'index.php' , $this->data );
-  	
- }
- 
 
  /* Signup Component */
  public function signup(){
@@ -108,11 +85,21 @@ class Init extends Anonym_controller {
  
  /* Login Component */
  public function login(){
-   
+       
    $this->load_module( 'login' , 'widget' );
    
    $this->load->view( 'index.php' , $this->data );
    
+ }
+ 
+ 
+ 
+ public function form(){
+   
+   $this->load_module( 'form' , 'widget' );
+   
+   $this->load->view( 'index.php' , $this->data );
+      
  }
  
  

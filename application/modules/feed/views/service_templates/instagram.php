@@ -2,7 +2,9 @@
 
 $post->param = json_decode( $post->param ); 
 
-$post->owner = json_decode( $post->owner ); 
+/* $post->owner = json_decode( $post->owner );  */
+
+/* var_dump(json_decode( $post->tags )); */
 
 ?>
 	
@@ -23,7 +25,7 @@ $post->owner = json_decode( $post->owner );
       
       <div class="span3">
         
-        <span class="spacer spacer-text"><?php echo $post->owner->user_name; ?></span>
+<!--         <span class="spacer spacer-text"><?php echo $post->owner->user_name; ?></span> -->
         
       </div>
 		
@@ -33,7 +35,7 @@ $post->owner = json_decode( $post->owner );
 		
 		  <a href="<?php echo $post->value; ?>" rel="shadowbox['all']"><img class="" src="<?php echo $post->value; ?>" /></a>
     		
-    	<span class="spacer spacer-text"><?php echo $post->owner->user_name; ?></span>
+<!--     	<span class="spacer spacer-text"><?php echo $post->owner->user_name; ?></span> -->
 		  
 		<?php endif; ?>
 		

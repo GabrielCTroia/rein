@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-  <div class="well container">
+  <div class="container">
     
     <div class="pull-left">
       
@@ -10,7 +10,7 @@
       
     </div>
     
-    <div class="pull-right">  
+    <div class="well transparent pull-right">  
       <?php if( !empty( $modules['login'] ) ) : ?>
           <?php echo $modules['login']; ?>
       <?php endif; ?>
@@ -18,9 +18,11 @@
       <?php if( !empty( $modules['signup'] ) ) : ?>
           <?php echo $modules['signup']; ?>
       <?php endif; ?>
+      
+      
+      <?php if( !empty( $modules['form'] ) ) : ?>
+          <?php echo $modules['form']; ?>
+      <?php endif; ?>
     </div>
     
-    
   </div>
-
-
