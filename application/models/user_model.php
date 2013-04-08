@@ -120,7 +120,7 @@ Class User_model extends CI_Model {
 			
 			return true;
 			
-		} 
+		} 	
 			
 		$this->form_validation->set_message( 'check_database', 'Invalid email or password' );
 			
@@ -152,7 +152,7 @@ Class User_model extends CI_Model {
    */
   public function get_user( $basic = false ){
 
-    $sql  = " SELECT u.u_id, email, first_name, last_name, dob, avatar, created_date, user_status, user_type, GROUP_CONCAT( s_id ) "
+    $sql  = " SELECT u.u_id, email, first_name, last_name, dob, avatar, u.created_date, user_status, user_type, GROUP_CONCAT( s_id ) "
           . " FROM users AS u "
           . " LEFT JOIN access AS a ON a.u_id = u.u_id "
           . " WHERE u.u_id = " . $this->user_id

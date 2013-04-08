@@ -35,13 +35,13 @@ Class Posts_model extends CI_Model {
   
   
   
+  
   /*
    * caches the last get query specs here
    * this way we do not to specify the same ones to times if the happen one after the other
    *
-   * NOT USED YET
-   /
-  /* private $get_query_specs = array(); */
+   */
+   private $query_specs = array(); 
   
   
   function init( $user_id , $service_id = null ){
@@ -71,7 +71,7 @@ Class Posts_model extends CI_Model {
   
   
 	
-	function get_posts( $query_specs = array() ) {	
+	function get_posts( $query_specs = array() , $count_only = false ) {	
 		
 		//define the default $query_specs
 		if( empty( $query_specs['select'] ) ) 
@@ -86,29 +86,40 @@ Class Posts_model extends CI_Model {
     if( empty( $query_specs['order_dir'] ) ) 
 		   $query_specs[ 'order_dir' ] = 'DESC';   		   
 		
-
-
+		 
+		//this replaces the get_total_posts function 
+		//it needs to be here because I need to get the number 
+		//of posts of the same query that shows the posts
+		if( $count_only ){
+  		
+  		$query_specs['select'] = 'COUNT( DISTINCT( FK_p_id ) )';
+  		
+  		$query_specs['limit'] = 200;
+  		
+		} 
+		  
     $sql  = 'SELECT ' . $query_specs['select'] . ' FROM ' . $this->base_table . ' AS p' 
          . ' JOIN users_posts_services AS ups ON ups.FK_p_id = p.post_foreign_id '
          . ' JOIN services AS s ON s.s_id = ups.FK_s_id'         
       
          . ' WHERE ';   
+         
          //check for AND_where
          if( !empty( $query_specs['where'] ) ) {
-           foreach( $query_specs['where'] as $ref=>$val ) {              
-             //$sql .= $ref . ' = ' . '\'' . $val . '\' AND ';              
-             $sql .= $val . ' AND ';
+           foreach( $query_specs['where'] as $ref=>$val ) {                   
+             $sql .= $ref . ' = \'' . $val . '\' AND ';
            }
          } 
          
          //check for OR_where
          if( !empty( $query_specs['or_where'] ) ) {
-           foreach( $query_specs['where'] as $ref=>$val ) {
+           foreach( $query_specs['or_where'] as $ref=>$val ) {
              $sql .= $val . ' OR ';
            }
          }
 
     $sql .= ' ups.FK_u_id = ' . $this->user_id
+          . ' AND ups.status = \'active\' '
           . ' GROUP BY ups.FK_p_id' //this is not the best but works - I need to find a way to not insert duplicates in the 1st place       
 /*          . ' GROUP BY ups.FK_s_id '  */
           . ' ORDER BY ' . $query_specs['order_by']
@@ -116,29 +127,29 @@ Class Posts_model extends CI_Model {
           . ' LIMIT ' . $query_specs['limit']
           ; 
 
-/*
-		var_dump($sql);
-		exit();
-*/
-  
+/* var_dump( $sql ); */
+/* 		exit(); */
+    
+
+    
 		if ( !$query = $this->db->query($sql) ) {
   		
   		$this->error = true;
   		
   		$this->error_msg = "Couldn't insert the posts in the database!";		  
-  		
+    		
 		} else {
   		
   		if( $query->num_rows() ) {
-  				
+				
   			//free the result
   			$result = $query->result();
   			
   			$query->free_result();
   			
-  			$this->get_query_specs = $query_specs;
-  			
-  			return (object)$result;
+  			$this->query_specs = $query_specs;
+  	     		
+  	 		return (object)$result;
   			
   		} else {
     		
@@ -151,7 +162,7 @@ Class Posts_model extends CI_Model {
   		}	
   		
 		}
-				    
+		
 	}
 
 	//get the latest post in a specified query
@@ -164,13 +175,115 @@ Class Posts_model extends CI_Model {
 	}
 	
 	
-	/* 
+  /*
 	 * returns the total no of posts of user( by default) and of a specific service if desired
 	 */
-	function get_total_posts( $by_service = false , $by_user = true ){
+	function get_total_posts( $by_service = false , $by_user = true , $query_specs = array() ){
   	
-  	$sql = ' SELECT COUNT( DISTINCT( FK_p_id ) ) FROM users_posts_services AS ups ';
-  	     
+  	if( empty( $query_specs ) ){
+    	
+    	$query_specs = $this->query_specs;
+    	
+  	}
+  	
+  	$sql = ' SELECT COUNT( DISTINCT( FK_p_id ) ) FROM users_posts_services AS ups '
+         . ' JOIN services AS s ON s.s_id = ups.FK_s_id'         
+         . ' JOIN posts AS p ON ups.FK_p_id = p.post_foreign_id'
+         
+         . ' WHERE ups.FK_u_id = ' . $this->user_id
+  	     . ' AND ups.status = \'active\' '
+  	     ;
+
+  	     ;
+         
+         //check for AND_where
+         if( !empty( $query_specs['where'] ) ) {
+           
+           $i = 0;
+           $count = count( $query_specs['where'] );           
+           foreach( $query_specs['where'] as $ref=>$val ) {                   
+             $sql .= $ref . ' = \'' . $val . '\'';
+           
+             if( $i < ( $count - 1 ) ){
+             
+               $sql .= ' AND ';
+               
+             }
+           
+           }
+                      
+         } 
+         
+         //check for OR_where
+         if( !empty( $query_specs['or_where'] ) ) {
+           
+           $i = 0;
+           $count = count( $query_specs['where'] );                      
+           foreach( $query_specs['or_where'] as $ref=>$val ) {
+             $sql .= $ref . ' = \'' . $val . '\'';
+             
+             if( $i < ( $count - 1 ) ){
+             
+               $sql .= ' OR ';
+             
+             }
+
+           }
+         }
+                          
+         
+         //check for LIKE
+         if( !empty( $query_specs['like'] ) || !empty( $query_specs['or_like'] ) ){
+           
+          $sql .= ' AND ';
+           
+         }   
+         
+         //check for AND_like
+         if( !empty( $query_specs['like'] ) ) {
+           
+           $i = 0;
+           $count = count( $query_specs['like'] );
+           foreach( $query_specs['like'] as $ref=>$val ) {                   
+      
+             $sql .= $ref . ' LIKE \'%' . $val . '%\'';
+             
+             if( $i < ( $count - 1 ) ){
+               
+               $sql .= ' AND ';
+                           
+             }
+        
+             $i++; 
+               
+           }
+         } 
+         
+         
+   
+         //check for OR_like
+         if( !empty( $query_specs['or_like'] ) ) {
+           
+           $i = 0;
+           $count = count( $query_specs['or_like'] );           
+           foreach( $query_specs['or_like'] as $ref=>$val ) {                   
+      
+             $sql .= $ref . ' LIKE \'%' . $val . '%\'';
+             
+             if( $i < ( $count - 1 ) ){
+               
+               $sql .= ' OR ';
+                           
+             }
+        
+             $i++;
+             
+           }
+         } 
+
+
+
+/*
   	     if( $by_user OR $by_service ) {
     	     
     	     $sql .= ' WHERE ';
@@ -194,9 +307,22 @@ Class Posts_model extends CI_Model {
     	     }
     	     
   	     }
-  	
-  	     
+*/
+    
+/*
+  	     if( $by_user || $by_service ) {
+      	     
+      	   $sql .= ' AND ';
+      	     
+    	   }
+*/
+    
+/*
+    $sql .= ' ups.status = \'active\''
+  	      ;
+*/
   	//I feel like this needs to be a reusable function
+  	
     if ( !$query = $this->db->query($sql) ) {
   		
   		$this->error = true;
@@ -209,10 +335,10 @@ Class Posts_model extends CI_Model {
   				
   			//free the result
   			$result = $query->result();
-  			
+  			  			
   			$query->free_result();
   			
-  			//return only the value not the reference too
+  			//return only the value not the reference too  			
   			return reset( $result[0] );
   			
   		} else {
@@ -231,6 +357,67 @@ Class Posts_model extends CI_Model {
 	
 	
 	
+	function get_all_categories(){
+  	
+  	
+  	
+	}
+	
+	
+	//this needs to be called after the posts was called
+	function get_active_categories( $query_specs = array() ){
+  	
+  	if( !$this->user_id ){
+    	
+    	return false;
+  	}
+  	
+  	if( empty( $query_specs ) ){
+    	
+    	$query_specs = $this->query_specs;
+    	
+  	}
+  	
+  	$sql = ' SELECT category from ' . $this->base_table . ' p '
+  	     . ' JOIN users_posts_services AS ups ON ups.FK_p_id = p.post_foreign_id '
+  	     . ' WHERE ups.FK_u_id = ' . $this->user_id
+  	     . ' AND ups.status = \'active\' '
+  	     . ' GROUP BY category '
+  	     ;
+  	     
+  	     
+  	//I feel like this needs to be a reusable function
+    if ( !$query = $this->db->query($sql) ) {
+  		
+  		$this->error = true;
+  		
+  		$this->error_msg = "Error in the query or DB";		  
+  		
+		} else {
+  		
+  		if( $query->num_rows() ) {
+  				
+  			//free the result
+  			$result = $query->result();
+  			  			
+  			$query->free_result();
+  			
+  			//return only the value not the reference too
+  			return $result;
+  			
+  		} else {
+    		
+    		$this->error = true;
+        
+        $this->error_msg = "There are no posts";		  
+    		
+    		return false;
+    		
+  		}	
+  		
+		}  	     
+  	     
+	}    
 	
 	
 	function insert( $posts ) {
@@ -238,7 +425,7 @@ Class Posts_model extends CI_Model {
   	
 		if( !$this->user_id || !$posts ) {
   		$this->error = true;
-      $this->error_msg = "No User or Service defined";
+      $this->error_msg = 'No User or Service defined';
 		
       return false;
 		};
@@ -291,15 +478,19 @@ Class Posts_model extends CI_Model {
     	
     } else {
           
-      $sql2  = ' INSERT INTO users_posts_services '
-            . ' (  FK_p_id , FK_u_id , FK_s_id ) '
+          //here I should use a procedure of somethig else for these 2 queries
+      $sql_ups  = ' INSERT INTO users_posts_services '
+            . ' ( FK_p_id , FK_u_id , FK_s_id ) '
             . ' VALUES';
            foreach( $posts as $post ) :
-              $sql2 .= " ( '" . $post['post_foreign_id'] . "'," . $this->user_id . "," . $this->service_id . ") ";
-              $sql2 .= ( $post != end($posts) ) ? ' , ' : '';  
-           endforeach;             
+              $sql_ups .= " ( '" . $post['post_foreign_id'] . "'," . $this->user_id . "," . $this->service_id . ") ";
+              $sql_ups .= ( $post != end($posts) ) ? ' , ' : '';  
+           endforeach;     
+      
+/*       $sql_ups .= ' ON DUPLICATE KEY UPDATE  '  */
+                   
            
-      if( !$this->db->query( $sql2 ) ){
+      if( !$this->db->query( $sql_ups ) ){
         
         return false;
         
@@ -310,6 +501,200 @@ Class Posts_model extends CI_Model {
     
 
 	}
+	
+	
+	
+	//changes the status in the USERS_POSTS_SERVICES to 'service_deactivated'
+	function deactivate_posts( $service_id ){
+  	
+  	if( !$this->user_id && !$this->service_id) {
+  		
+  		/* echo error - no user defined */
+  		
+  		return false; 
+  		
+		}
+		
+		$sql = ' UPDATE users_posts_services AS ups'
+		     . ' JOIN services AS s ON ups.FK_s_id = s.s_id '
+				 . ' SET status = \'s_deactivated\'' 
+				 . ' WHERE FK_u_id = ' . $this->user_id				 
+				 . ' AND s.service_name = \'' . $service_id . '\''
+				 ;
+		
+		if( !$this->db->query( $sql ) ) {
+		
+			//echo error
+			return false;
+			
+		}
+		
+		/* echo error */
+	  return true;	
+		
+  	
+  	
+	}
+	
+	
+	
+	/* it actually only changes the status in the USERS_POSTS_SERVICES table */
+	function trash_posts( $post_ids ){
+	
+		if( !$this->user_id ) {
+  		
+  		return false; 
+  		
+		}
+		
+		if( is_array( $post_ids ) ){
+				
+				$post_ids = implode( ',' , $post_ids );
+			
+		}
+		
+		$sql = ' UPDATE users_posts_services'
+				 . ' SET status = \'trash\'' 
+				 . ' WHERE FK_u_id = ' . $this->user_id
+				 . ' AND FK_p_id = \'' . $post_ids . '\''
+				 ;
+		
+		if( !$this->db->query( $sql ) ) {
+		
+			//echo error
+			return false;
+			
+		}
+		
+		/* echo error */
+	  return true;	
+	
+	}
+	
+	
+	
+	
+	/* deletes the row in UPS  */
+	function delete_posts( $post_ids = array() ){
+
+		if( !$this->user_id ) {
+  		
+  		/* echo error - no user defined */
+  		
+  		return false; 
+  		
+		}
+		
+		if( is_array( $post_ids ) ){
+				
+				$post_ids = implode( ',' , $post_ids );
+			
+		}
+		
+		$sql = 'DELETE FROM users_posts_services'
+				 . ' WHERE FK_u_id = ' . $this->user_id
+				 . ' AND FK_p_id IN (\'' . $post_ids . '\')'
+				 ;
+		
+		if( !$this->db->query( $sql ) ) {
+			
+			//echo error
+			return false;
+			
+		}
+		
+		/* echo error */
+	 
+	  return true;	
+		
+	}
+	
+	
+	/* 
+	 * this function can only be called by the admin and 
+	 * it really deletes the posts in the POSTS table 
+	 * rather than just changing the status in the USERS_POSTS_SERVICES
+	 */
+	function real_delete_posts( $post_ids = array() ){
+		
+		if( is_array( $post_ids ) ){
+				
+				$post_ids = implode( ',' , $post_ids );
+			
+		}
+		
+		$sql = 'DELETE FROM ' . $this->base_table
+				 . ' WHERE p_id IN (\'' . $post_ids . '\')'
+				 ;
+		
+		if( !$this->db->query( $sql ) ) {
+			
+			return false;
+			
+		}
+	   
+	  return true;	
+		
+	}
+	
+	//this resets the query_specs array 
+	function reset_query(){
+  	
+  	$this->query_specs = array();
+  	
+	}
+	
+	//search method
+	function search_posts( $q ){
+  	
+  	$this->db->select( '*' );
+  	$this->db->from( $this->base_table . ' AS p');
+  	$this->db->join( 'users_posts_services AS ups' , 'ups.FK_p_id = p.post_foreign_id' );
+  	$this->db->join( 'services AS s' , 's.s_id = ups.FK_s_id' );
+  	
+  	
+		//set the query_specs
+		$query_specs = array();
+		$or_like = array();
+		
+		//THEY ARE ALL CASE INSENSTIVE
+		$or_like['UPPER(p.caption)'] = strtoupper( $q );
+		$or_like['UPPER(p.value)'] = strtoupper( $q );
+		$or_like['UPPER(p.tags)'] = strtoupper( $q );
+		$or_like['UPPER(p.category)'] = strtoupper( $q );
+		$or_like['UPPER(s.service_name)'] = strtoupper( $q );
+		
+		$query_specs['or_like'] = $or_like; 
+
+		foreach( $or_like as $key=>$val ){
+  	 
+      $this->db->or_like( $key , $val );	
+  		
+		}
+		
+		if( empty( $query_specs['limit'] ) OR $query_specs['limit'] > 20 ) 
+      $query_specs[ 'limit' ] = 20;
+		
+		$this->db->limit( $query_specs['limit'] );
+  	
+    $query = $this->db->get();
+		
+		if( $query->num_rows() ) {
+			//free the result
+			$result = $query->result();
+			
+			$query->free_result();
+			
+			$this->query_specs = $query_specs;
+			
+			return $result;
+		} 
+		
+		return false;
+
+  	
+	}
+	
 
 }
 

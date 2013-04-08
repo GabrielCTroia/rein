@@ -4,40 +4,57 @@ require_once( MODULES_PATH . 'Component_Controller.php' );
 
 class Settings extends Component_Controller {
   
+  public $default_url = null;
+  
   
   function component(){
-  
-    switch( $this->get_url_param('tab') ){
-      
-      case 'profile' : $this->_profile();
-        break;
-      
-      case 'connect' : $this->_connect();
-        break;  
-        
-      default : redirect( $this->get_new_url( 'tab' , 'profile' ) );
-        break;  
-      
-    }
-   
-    $this->load->view('settings_default.php' , $this->data );
+    
+    $this->default_url = $this->router->new_method( 'show' );
+	  	
+		if( !$this->router->curr_method ){
+  		
+  		redirect( $this->default_url );
+  		
+		}
+    
+    parent::component();
     
   }
   
+  
+  public function show(){
+    
+    
+    if( method_exists( $this , $this->router->get_arg_value('tab') ) ){
+      
+      $tab = $this->router->get_arg_value('tab');
+      
+      $this->$tab();
+      
+      $this->data['tab'] = $tab;
+      
+    } else {
+      
+      redirect( $this->router->switch_args( array( 'tab' => 'connect') ) );
+      
+    }
+    
+    $this->load->view('settings_default.php' , $this->data );
+    
+  }
 
-    function _profile(){
+    
+    /* Tabs views */
+    
+    function profile(){
       
       $this->load_module( 'profile' , 'widget' ); 
       
-      $this->data['tab'] = 'profile';
-      
     }
   
-    function _connect(){
+    function connect(){
      
       $this->load_module( 'active_services' , 'widget' ); 
-      
-      $this->data['tab'] = 'connect';
       
     }
   	

@@ -8,17 +8,17 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_instagram extends Fetch_model{
+class Fetch_instagram extends Fetch_class{
   
-  //should come from the DB but will do for now
-  protected $service_id = 2;
-  
-  //should come from the DB but will do for now
   protected $service_name = "instagram";
   
-
+  //set the post category 
+  protected $post_category = 'pictures';
+  
+  
+  
   public function __construct(){
     
     parent::__construct();

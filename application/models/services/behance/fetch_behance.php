@@ -8,11 +8,14 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_behance extends Fetch_model{
+class Fetch_behance extends Fetch_class{
   
   protected $service_name = "behance";
+  
+  //set the post category 
+  protected $post_category = 'projects';
   
   /* $PARTICULAR VARS */
   
@@ -25,7 +28,7 @@ class Fetch_behance extends Fetch_model{
     
     //instantiate the api object
     $this->api = new Be_Api( $this->consumer_key , $this->consumer_secret );
-    
+
   }
   
   /* 
@@ -33,7 +36,7 @@ class Fetch_behance extends Fetch_model{
    * @count - number of posts to fetch
    */
   function fetch( $count = 20 ){
-
+    
     $this->api->setAccessToken( $this->access_token );    
      
 /*     var_dump($this->api->getUserAppreciations( $this->fgn_user_id ));  */

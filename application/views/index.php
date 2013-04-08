@@ -75,11 +75,10 @@
     <script>
       
       Shadowbox.init({
-          handleOversize: "drag",
-          modal: true
+          handleOversize: "drag"
+         ,overlayColor: "#fff"
       });
 
-		
 		</script>	
     	
 	</body>

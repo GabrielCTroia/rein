@@ -6,11 +6,10 @@ require_once( APPPATH . 'models/fetch_model.php' );
 class Fetch_twitter extends Fetch_model{
   
   //should come from the DB but will do for now
-  protected $service_id = 1;
-  
-  //should come from the DB but will do for now
   protected $service_name = "Twitter";
   
+  //set the post category
+  protected $post_category = 'text';
   
   /* 
    * init function 

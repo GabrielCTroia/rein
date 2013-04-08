@@ -6,8 +6,6 @@ input{display:block;margin-bottom:1em}
 .push{margin-bottom:-20px}
 .push,.sticky-footer{height:20px}
 .page-init .supersized{background-image:url("/images/bkgs/bkg-manhattan-night-blurry_mini.jpg");background-repeat:no-repeat;background-size:cover;background-position:50%;position:fixed;width:100%;height:100%;top:0;z-index:-999}
-#feed header{margin-bottom:1em;}
-#feed header .dropdown-filter{margin-right:1em;margin-top:.3em}
 #layout-grid .thumb{height:220px;}
 #layout-grid .thumb .wrapper{height:170px;overflow:hidden;display:block;position:relative;margin-bottom:.5em;background:#333;}
 #layout-grid .thumb .wrapper img{width:100%}

@@ -15,9 +15,20 @@
     <?php foreach( $active_services as $service ): ?>
       
       <div class=" <?php echo ( !empty( $service->active ) ) ? 'active' : ''; ?>">
-        <a href="/auth/request_temp_token/<?php echo $service->service_name; ?>">
-          <img src="/<?php echo 'images/social-media-icon-set-yaruno/' . $service->service_name . '.png' ?>" alt="<?php echo $service->service_name; ?>">
-        </a>
+        
+        <img src="/<?php echo 'images/social-media-icon-set-yaruno/' . $service->service_name . '.png' ?>" alt="<?php echo $service->service_name; ?>">
+
+        
+        <?php if ( !empty( $service->active ) ) : ?>
+        
+          <a href="<?php echo $this->router->switch_args( array( 'method' => 'deactivate' , 'service' => $service->service_name ) ); ?>">Deactivate</a>
+          
+        <?php else : ?>
+          
+          <a href="<?php echo $this->router->new_page( 'auth' , 'request_temp_token' , $service->service_name ); ?>">Activate</a>
+          
+        <?php endif; ?>
+        
       </div>
        
     <?php endforeach; ?>

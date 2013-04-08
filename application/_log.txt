@@ -30,7 +30,29 @@ TO DO:
 
 - TO LOOK INTO WHY THE MODULES LOAD THE MY_LOADER CONTROLLER AGAIN AND HOW TO STOP THIS( for each new module theres a new instance of the Controller)
 
+- TO DO A STANDARD IN THE URL ROUTING - 1st segment = PAGE(the main controller), 2nd segment = COMPONENT(the module controller), 3rd segment = METHOD(THE components controller method), 4th = ARGUMENTS
+
 -----------------------------------------------------------------------------------------
+
+Log started - Apr 05 2013, 06:00PM                                          GABRIEL
+
+  -
+  
+Log ended - Apr 05 2013,
+ 
+---------
+
+Log started - Apr 04 2013, 06:00PM                                          GABRIEL
+
+  - added the MY_Router class with new_url()/ new_page(), new_component(), new_method() and new_args(). By doing this I set a standard in url formating.
+  1st segment is the page, 2nd = component, 3rd = method and the rest are arguments grouped together by key = value like this 4h with 5th, 6th with 7th.
+  I hope that by doing this I didn't mess somehting bigger up and hopefully I can standadrize the whole thing like this.
+  
+  - FIXED / NEEDS TO BE FIXED - discovered an error - to many loops when logs in
+
+Log ended - Apr 4 2013, 7:50AM
+ 
+---------
 
 Log started - Mar 31 2013, 12:00PM                                          GABRIEL
 

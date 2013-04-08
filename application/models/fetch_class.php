@@ -13,7 +13,10 @@ require_once( APPPATH . 'models/api_class.php' );
   
 require_once( APPPATH . 'models/fetch_interface.php' );  
   
-class Fetch_model extends Api_class implements Fetch_interface{
+class Fetch_class extends Api_class implements Fetch_interface{
+  
+  
+  protected $post_category = null;
     
   /* 
    * init function 
@@ -38,7 +41,7 @@ class Fetch_model extends Api_class implements Fetch_interface{
     $this->access_token_secret = $access[0]->access_token_secret;
     
     $this->fgn_user_id = $access[0]->fgn_user_id;
-    
+
   }
   
  /* 
@@ -63,6 +66,7 @@ class Fetch_model extends Api_class implements Fetch_interface{
   			, 'created_date'     => $created_date
   			, 'favorited_date'   => $favorited_date
   			, 'status'           => 'active'
+  			, 'category'         => $this->post_category
   			, 'value'            => $value
   		  , 'source'           => $source
   			, 'tags'             => json_encode( $tags )

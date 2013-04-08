@@ -10,9 +10,45 @@ class Component_Controller extends MY_Controller {
     
     
     //no segmnets for the compoennt yet - not working properly -- need to create  router class to manage all the links
-/*     $this->data['segments'] = $this->component_url_params = $this->uri->uri_to_assoc(3); */
+    $this->component_url_params = $this->uri->uri_to_assoc(2);
 
   }
+  
+  
+  
+  function component(){
+     
+    //this should be handled somehow else probably - the CIs way, ut probably it's working for now
+		if( method_exists( $this , $this->router->curr_method ) ){
+		 	  	
+	 	  $method =	$this->router->curr_method;
+	 		
+	 		$this->$method();
+		 		
+		}
+    
+    
+  }
+  
+  
+  function widget(){
+
+    if( method_exists( $this , $this->router->get_arg_value('method') ) ) {
+      
+      $method = $this->router->curr_args['method'];
+      
+      $this->$method();
+            
+    }
+
+  }
+  
+  
+  
+  
+  
+  /* NEED TO BE DELETED */
+  
   
   
   /* 

@@ -8,13 +8,14 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_vimeo extends Fetch_model{
+class Fetch_vimeo extends Fetch_class{
   
   protected $service_name = "vimeo";
 
-
+  //set the post category 
+  protected $post_category = 'videos';
 
   function __construct(){
     

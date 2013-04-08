@@ -14,6 +14,6 @@
 		  
   <div class="span3">
 	
-    <span class="date" title="<?php echo $post->favorited_date; ?>"><?php echo ago( $post->favorited_date ); ?></span>
+    <span class="date" title="<?php echo $post->favorited_date; ?>"><?php echo $post->favorited_date; ?></span>
     
   </div>

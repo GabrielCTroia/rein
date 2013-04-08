@@ -19,26 +19,3 @@
     <?php endforeach; ?>
   
   </div>
-  
-  <?php if( $pages > 1 ) : ?>
-  
-    <div class="pagination pull-right">
-      <ul>
-  
-        <?php if( $current_page > 1 ) : ?>
-          <li><a href="<?php echo Util::get_new_url( $segments , 'page' , $current_page - 1 ); ?>">Prev</a></li>
-      	<?php endif; ?>
-      	
-      	<?php for( $i = 1; $i < $pages + 1; $i++ ) : ?>
-          <li><a href="<?php echo Util::get_new_url( $segments , 'page' , $i ); ?>"><?php echo $i; ?></a></li>
-        <?php endfor; ?>
-          
-        <?php if( $current_page - 1 < count( $pages ) )  : ?>    		
-          <li><a href="<?php echo Util::get_new_url( $segments , 'page' , $current_page + 1 ); ?>">Next</a></li>
-        <?php endif; ?>  
-      
-      </ul>
-      
-    </div>
-  
-  <?php endif; ?>

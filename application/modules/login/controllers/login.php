@@ -51,6 +51,8 @@ class Login extends MY_Controller {
 	   );     
 	   
 	   $this->form_validation->set_error_delimiters('<p class="error">', '</p>'); 
+	   
+
 
 	   if( $this->form_validation->run() ){
       

@@ -6,7 +6,7 @@
  * 
  */
  
- include_once( APPPATH . '/lib/vimeo/vimeo.php' );
+ require_once( APPPATH . '/lib/vimeo/vimeo.php' );
 
 
 

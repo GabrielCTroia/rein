@@ -23,14 +23,16 @@ class Home extends User_Controller {
 
 	function __construct() {
 	  
-		parent::__construct();
-		
+		parent::__construct();		
+
 		$this->load->model( 'User_model' , '' , TRUE );
 		
 		$this->load->model( 'Pager_model' , '' , FALSE );
     $this->load->model( 'Components_model' , '' , FALSE );
     
+    
     $this->Pager_model->init( 'home' );
+   
 	}
 
 		
@@ -56,7 +58,7 @@ class Home extends User_Controller {
   * SETTINGS component 
   */
   public function settings() {
-    
+
     $this->load_module( 'settings' , 'component' );
     
     $this->load->view( 'index.php' , $this->data );
@@ -67,7 +69,7 @@ class Home extends User_Controller {
 	
 	
   public function feed() { 
-  
+
     $this->load_module( 'feed' , 'component' );
     
     $this->load->view( 'index.php' , $this->data );

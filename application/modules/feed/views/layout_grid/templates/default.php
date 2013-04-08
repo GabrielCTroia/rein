@@ -1,4 +1,8 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+
+
+/*  var_dump($post); */
+?>
 
 
 	<a href="<?php echo $post->source; ?>" class="wrapper" rel="shadowbox['all']">
@@ -27,6 +31,8 @@
   	<div class="pull-right">
     	
     	<span class="date" title="<?php echo $post->favorited_date; ?>"><?php echo ago( $post->favorited_date ); ?></span>
+    	
+    	<a href="<?php echo $this->router->new_method( 'delete' , array( "id" => $post->post_foreign_id ) ); ?>"><i class="icon-remove-sign"></i></a>
     	
   	</div>
   	

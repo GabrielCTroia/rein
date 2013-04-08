@@ -6,7 +6,7 @@ require APPPATH."third_party/MX/Controller.php";
 
 class MY_Controller extends MX_Controller {
   
-    /* cache the log state */
+  /* cache the loged in state */
   public $logged_in = false;
   
   
@@ -24,7 +24,16 @@ class MY_Controller extends MX_Controller {
   public function __construct(){
     
     parent::__construct();
-
+    
+    
+    //initialize the ROUTER
+     if( !$this->router->curr_page ){
+      
+      //make sure it's only called once
+       $this->router->init();  
+     }
+    
+    
     //set the logged in state here and for ever
     if( $this->_check_authentication() ) {
       
@@ -53,8 +62,6 @@ class MY_Controller extends MX_Controller {
    */  
   protected function _check_authentication() {
   			
-/*   	 var_dump($this->session->userdata( 'logged_in' )); */
-  	
   	/* 
   	 * load the user model 
   	 */		
