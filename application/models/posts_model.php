@@ -199,6 +199,8 @@ Class Posts_model extends CI_Model {
          //check for AND_where
          if( !empty( $query_specs['where'] ) ) {
            
+           $sql .= ' AND ';
+           
            $i = 0;
            $count = count( $query_specs['where'] );           
            foreach( $query_specs['where'] as $ref=>$val ) {                   
@@ -217,6 +219,8 @@ Class Posts_model extends CI_Model {
          //check for OR_where
          if( !empty( $query_specs['or_where'] ) ) {
            
+           $sql .= ' AND ';
+           
            $i = 0;
            $count = count( $query_specs['where'] );                      
            foreach( $query_specs['or_where'] as $ref=>$val ) {
@@ -231,16 +235,11 @@ Class Posts_model extends CI_Model {
            }
          }
                           
-         
-         //check for LIKE
-         if( !empty( $query_specs['like'] ) || !empty( $query_specs['or_like'] ) ){
-           
-          $sql .= ' AND ';
-           
-         }   
-         
+        
          //check for AND_like
          if( !empty( $query_specs['like'] ) ) {
+           
+           $sql .= ' AND ';
            
            $i = 0;
            $count = count( $query_specs['like'] );
@@ -263,6 +262,8 @@ Class Posts_model extends CI_Model {
    
          //check for OR_like
          if( !empty( $query_specs['or_like'] ) ) {
+           
+           $sql .= ' AND ';
            
            $i = 0;
            $count = count( $query_specs['or_like'] );           
@@ -316,7 +317,7 @@ Class Posts_model extends CI_Model {
       	     
     	   }
 */
-    
+/*     echo $sql; */
 /*
     $sql .= ' ups.status = \'active\''
   	      ;
@@ -338,6 +339,10 @@ Class Posts_model extends CI_Model {
   			  			
   			$query->free_result();
   			
+/*
+  			echo "<br/>";
+  			var_dump(reset( $result[0] ));
+*/
   			//return only the value not the reference too  			
   			return reset( $result[0] );
   			
@@ -652,7 +657,6 @@ Class Posts_model extends CI_Model {
   	$this->db->join( 'users_posts_services AS ups' , 'ups.FK_p_id = p.post_foreign_id' );
   	$this->db->join( 'services AS s' , 's.s_id = ups.FK_s_id' );
   	
-  	
 		//set the query_specs
 		$query_specs = array();
 		$or_like = array();
@@ -676,6 +680,10 @@ Class Posts_model extends CI_Model {
       $query_specs[ 'limit' ] = 20;
 		
 		$this->db->limit( $query_specs['limit'] );
+  	
+  	
+    $this->db->where( 'ups.FK_u_id' , $this->user_id );
+  	$this->db->group_by( 'ups.FK_p_id' ); // this shit need to be handled
   	
     $query = $this->db->get();
 		
