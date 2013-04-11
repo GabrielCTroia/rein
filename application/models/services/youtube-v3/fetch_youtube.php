@@ -8,9 +8,9 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_youtube extends Fetch_model{
+class Fetch_youtube extends Fetch_class{
   
   protected $service_name = "youtube";
   
@@ -50,9 +50,7 @@ class Fetch_youtube extends Fetch_model{
 
 /* var_dump( $this->access_token ); */ 
 
-    $this->google->setAccessToken( $this->access_token );    
-    
-
+    $this->google->setAccessToken( $this->access_token );
         
     $searchResponse = $this->api->activities->listActivities();
     

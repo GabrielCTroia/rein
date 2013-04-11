@@ -42,23 +42,19 @@ class Fetch_instagram extends Fetch_class{
     // Right now if one of this condition is not fulfiled the server return an error and is not right
     // If those are not working it should let me reconnect
     
-/*
-    $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ) );
-		$loader->register();
-    
-    $instagram = new Instagram\Instagram;
-    
-		$instagram->setAccessToken( $this->access_token );
-*/
     $this->api->setAccessToken( $this->access_token ); 
 		
 		$param_arr = array(
-				'count'		=> $count			       	
+				'count'		        => 100			       	
+/* 		  , 'min_id'     => '431930742046340822_31888980' */
+				
     );
       
     $current_user = $this->api->getCurrentUser();
-
-    return  $this->format( $current_user->getLikedMedia() );		
+      
+/*     var_dump( $this->api->MediaCollection->getNext() );   */
+      
+    return  $this->format( $current_user->getLikedMedia( $param_arr ) );		
     
   }
   
@@ -89,14 +85,20 @@ class Fetch_instagram extends Fetch_class{
 		            , 'location'  => $post->location
               );
 
-		/* 		abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param ) */  
-		  
-/* 		  exit(); */
+       /* abstract_format( $p_fgn_id , 
+		                       $created_date , 
+		                       $favorited_date , 
+		                       $value , 
+		                       $source , 
+		                       $tags = array() , 
+		                       $caption , 
+		                       $thumbnails = array() ,  
+		                       $param ) */  
 		  
 			$formatted[] = $this->abstract_format( 
           			       format_foreign_id( $post->id , $this->service_id )
           			     , date( $date_format, $post->created_time )
-          			     , date( $date_format, $post->created_time )
+          			     , date( $date_format, $post->created_time ) //the whole list is in order of the likes so I can just increase this with a 1 + current timestamp
           			     , $post->images->standard_resolution->url
           			     , $post->link
           			     , $post->tags // array

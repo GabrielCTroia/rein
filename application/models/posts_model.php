@@ -362,11 +362,7 @@ Class Posts_model extends CI_Model {
 	
 	
 	
-	function get_all_categories(){
-  	
-  	
-  	
-	}
+	function get_all_categories(){}
 	
 	
 	//this needs to be called after the posts was called
@@ -423,6 +419,8 @@ Class Posts_model extends CI_Model {
 		}  	     
   	     
 	}    
+	
+	
 	
 	
 	function insert( $posts ) {
@@ -492,7 +490,7 @@ Class Posts_model extends CI_Model {
               $sql_ups .= ( $post != end($posts) ) ? ' , ' : '';  
            endforeach;     
       
-/*       $sql_ups .= ' ON DUPLICATE KEY UPDATE  '  */
+      $sql_ups .= ' ON DUPLICATE KEY UPDATE FK_p_id = FK_p_id '; 
                    
            
       if( !$this->db->query( $sql_ups ) ){

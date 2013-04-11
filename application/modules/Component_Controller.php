@@ -2,20 +2,26 @@
 
 class Component_Controller extends MY_Controller {
   
-  protected $component_url_params = null;
+  protected $module = null;
+  
+  
+  
   
   function __construct(){
     
     parent::__construct();
-    
-    
-    //no segmnets for the compoennt yet - not working properly -- need to create  router class to manage all the links
-    $this->component_url_params = $this->uri->uri_to_assoc(2);
 
+/*
+    $this->module = new stdClass();
+    
+    var_dump( $this->module_name );
+*/
+    /* $this->module->path =  */
+    
   }
   
   
-  
+  /* returns a component layout (only for real components) */
   function component(){
      
     //this should be handled somehow else probably - the CIs way, ut probably it's working for now
@@ -30,7 +36,7 @@ class Component_Controller extends MY_Controller {
     
   }
   
-  
+  //returns a widget layout (only for real modules)
   function widget(){
 
     if( method_exists( $this , $this->router->get_arg_value('method') ) ) {
@@ -42,6 +48,10 @@ class Component_Controller extends MY_Controller {
     }
 
   }
+  
+  
+  //returns raw data - no layout
+  function raw(){}
   
   
   

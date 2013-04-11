@@ -4,7 +4,7 @@
     $thumb_span = 3;
     
     $segments = $this->uri->uri_to_assoc(1);
-
+    
 ?>
 
 	<div id="feed">	
@@ -125,7 +125,7 @@
                   
       				    <?php	include( __DIR__ . '/services/' . $post->service_name . '.php' ); ?>
       				  
-      				    <?php echo 'p_id: ' . $post->p_id ?>
+      				    <?php echo 'p_id: ' . $post->post_foreign_id ?>
       				  
                 </div>
       				

@@ -48,12 +48,14 @@ class MY_Controller extends MX_Controller {
     /* 
 		 * load the segments in any page starting from the component 
      * 	
+     NOT USED ANYMORE
 		*/
-		$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1);
+		//$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1); 
     
     
     $this->data['modules'] =& $this->modules;
     
+    $this->data['classes'] = null;
   }
   
   	
@@ -100,7 +102,7 @@ class MY_Controller extends MX_Controller {
   	
   	if( !$module ){
     	
-      return;
+      return false;
       	
   	}
   	
@@ -110,14 +112,21 @@ class MY_Controller extends MX_Controller {
     	
   	}
   	
-  	$this->modules[ $module ] = Modules::run( $module . $method , $params );
+  	$this->modules[$module] = Modules::run( $module . $method , $params );
   	
   	if( $return ) 
-  	 return $this->modules[ $module ];
+  	 return $this->modules[$module];
   	
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	/* NEEDS TO BE DELETED */
   
   /* this needs to be written somewhere else - UTIL or something 
    * 

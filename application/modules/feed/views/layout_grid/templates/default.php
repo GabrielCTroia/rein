@@ -5,10 +5,9 @@
 ?>
 
 
-	<a href="<?php echo $post->source; ?>" class="wrapper" rel="shadowbox['all']">
+	<a href="<?php echo $post->source; ?>" class="wrapper" >
 	 
 	 <img src="<?php echo end( $post->thumbnails ); ?>" />
-	 
 	 
 	 <?php if( !empty( $post->caption ) ) : ?>
 
@@ -20,7 +19,7 @@
 	 
   </a>
   
-  <div class="post-info">
+  <div class="post-info hidden">
 
   	<div class="pull-left">
   	   

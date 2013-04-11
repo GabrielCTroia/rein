@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-  <div id="layout-list" class="list clear">	 
+  <div id="layout-list" class="container list clear">	 
   			
   	<?php foreach ( $posts as $index => $post ) : ?>
   	   

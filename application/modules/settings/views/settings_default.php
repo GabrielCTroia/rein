@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
+<div class="container">
+
   <div id="settings" class="row">
     
     <div class="span3">
@@ -23,3 +25,5 @@
     </div>
     
   </div>
+  
+</div>  

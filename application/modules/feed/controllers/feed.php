@@ -15,7 +15,7 @@ class Feed extends Component_Controller {
 	
 	
 	
-	
+	/* this works like a constructor */
 	public function component(){
 	  
 	  $this->default_url = $this->router->new_method( 'show' );
@@ -63,41 +63,72 @@ class Feed extends Component_Controller {
       
     }
     
-    //get the pagination right
-    $limit = $this->router->get_arg_value( 'limit' , 20 );	
+    $layout = $this->router->get_arg_value( 'layout' , 'grid' );
     
-      $current_page = $this->router->get_arg_value( 'page' , 1 );
     
-      $start = ( $current_page - 1 ) * $limit;
+    //set the default values for these
+    
+    $this->limit = $this->router->get_arg_value( 'limit' , 20 );
+    
+    $this->current_page = $this->router->get_arg_value( 'page' , 1 );
+    
+    $this->start_limit = '0' . ' , ' . $this->limit;
+    
+    
+    //if the method exists than these values can be overwritten
+    if( method_exists( $this , 'set_layout_' . $layout ) ){
       
-      $start_limit = $start . ' , ' . $limit;
-
-    
+      $method = 'set_layout_' . $this->router->get_arg_value( 'layout' , 'grid' );
+      
+      $this->$method();      
+      
+    }
+   
     //pass the datas
-    $this->data['posts'] = $this->_format( $this->query_feed( $order_by , $start_limit , $where ) );	 	
+    $this->data['posts']        = $this->_format( $this->query_feed( $order_by , $this->start_limit , $where ) );	 	
     
-/*     $total_posts = $this->query_feed( $order_by , 0 , $where , true ) ; */
+    $this->data['pages']        = $this->get_pages( $this->limit );
     
-/*     var_dump(  reset(reset($total_posts)) ); */
+    $this->data['current_page'] = $this->current_page;
     
-    $this->data['pages'] = $this->get_pages( $limit );
-    
-    $this->data['current_page'] = $current_page;
-    
-    $this->data['layout'] = $this->router->get_arg_value( 'layout' , 'grid' );
+    $this->data['layout']       = $layout;
    
+    $this->data['categories']   = $this->Posts_model->get_active_categories();
    
-    $this->data['categories'] = $this->Posts_model->get_active_categories();
-    
     
    
    
     //load the active_services module with raw data
     $this->load_module( 'active_services' , 'raw' , true );
-    	 	
+    
+    //load the view	 	
     $this->load->view( 'feed_default' , $this->data );
     
-  }
+  }      
+      
+  
+      private function set_layout_grid(){
+        
+        
+       //not sure if this is the best way to do it - .... 
+        
+       //get the pagination right
+       $this->limit = $this->router->get_arg_value( 'limit' , 200 );
+
+       $start = ( $this->current_page - 1 ) * $this->limit;
+        
+       $this->start_limit = $start . ' , ' . $this->limit;
+
+      }
+      
+      
+      private function set_layout_list(){
+        
+        $this->data['classes']['module'] = "container"; // not sure if the best way to do it but works for now
+        
+      }
+      
+      
   
   
       private function get_pages( $limit ){
@@ -245,20 +276,9 @@ class Feed extends Component_Controller {
 	
 	public function search(){
   	
-  	 	 	
-    
-/*     $q = $this->router->get_args_value(); */
-    
     $q = $this->input->get('term');
     
-
-    
-/*     return; */
-        
     $this->data['posts'] = $this->_format( $this->Posts_model->search_posts( $q ) );
-/*     var_dump(  reset(reset($total_posts)) ); */
-
-/*     var_dump( $this->data['posts'] ); */
 
     $current_page = $this->router->get_arg_value( 'page' , 1 );
     

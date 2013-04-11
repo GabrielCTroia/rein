@@ -57,9 +57,41 @@
     return preg_replace( '/\s/' , '_' , $name );
     
   }
+  
+  //this is the that should be used in the urls - not yet tested intensily
+  function seo_name( $name ){
+    
+    $seoname = preg_replace('/\%/',' percentage', $name); 
+    $seoname = preg_replace('/\@/',' at ', $name); 
+    $seoname = preg_replace('/\&/',' and ', $name); 
+    $seoname = preg_replace('/\s[\s]+/','-', $name);    // Strip off multiple spaces 
+    $seoname = preg_replace('/[\s\W]+/','-', $name);    // Strip off spaces and non-alpha-numeric 
+    $seoname = preg_replace('/^[\-]+/','', $name); // Strip off the starting hyphens 
+    $seoname = preg_replace('/[\-]+$/','', $name); // // Strip off the ending hyphens 
+
+    $seoname = strtolower( $name ); 
+    
+    return $seoname;
+    
+  }
+  
+  
+  function pretty_name( $name , $upper = true ){
+    
+    $pretty_name = preg_replace( '/[\-\_]/' , ' ' , $name );
+    
+    if( $upper ) {
+      
+      return ucwords( $pretty_name ); 
+      
+    }
+    
+    return $pretty_name;
+    
+  }
 
 
-  function ago( $time ){
+  function ago( $time , $suffix = null ){
     
     $time = strtotime( $time );
     
@@ -83,9 +115,17 @@
 /*        $periods[$j].= "s"; */
 /*      } */
     
-    return "$difference $periods[$j]";
+    if( $suffix ){
+      $suffix = ' ' . $suffix;
+    }
+
+    return "$difference $periods[$j]" . $suffix;
    
   }
+  
+  
+  
+  
 
 
 

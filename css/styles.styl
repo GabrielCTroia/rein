@@ -61,6 +61,7 @@ body
   background-color white
   
   font-family 'Lato' , 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background white
 
 .all
   //min-height: 100%;
@@ -144,17 +145,20 @@ input
       //margin-top .3em
 
 #layout-grid
+  margin-left 1px
+  
   
   .thumb
-    height 220px
+    //height 220px
+    margin-left 1px
+    position relative
     
     .wrapper
       height 170px
       overflow hidden
       display block
       position relative
-      margin-bottom .5em
-      background #333
+      margin-bottom 1px
       
       img 
         width 100%
@@ -170,7 +174,20 @@ input
         font-weight 100
         
     .post-info
-      color #aaa     
+      color #aaa
+      position absolute  
+      top 0 
+      left 0
+      width 100%
+      
+  .thumb:hover
+    
+    .hidden
+      visibility visible
+      display block      
+      
+    img
+      opacity .6      
   
 #layout-list
   
