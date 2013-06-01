@@ -50,7 +50,7 @@ class MY_Controller extends MX_Controller {
      * 	
      NOT USED ANYMORE
 		*/
-		//$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1); 
+		$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1); 
     
     
     $this->data['modules'] =& $this->modules;

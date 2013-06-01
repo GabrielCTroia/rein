@@ -14,7 +14,7 @@
               <li class="<?php echo ( $current_page == $i ) ? 'active' : ''; ?>"><a href="<?php echo $this->router->switch_args( array( 'page' => $i ) ); ?>"><?php echo $i; ?></a></li>
             <?php endfor; ?>
               
-            <?php if( $current_page - 1 < count( $pages ) )  : ?>    		
+            <?php if( $current_page < $pages )  : ?>    		
               <li><a href="<?php echo $this->router->switch_args( array( 'page' => $current_page + 1 ) ); ?>">Next</a></li>
             <?php endif; ?>  
           

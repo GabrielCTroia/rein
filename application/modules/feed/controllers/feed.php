@@ -113,7 +113,7 @@ class Feed extends Component_Controller {
        //not sure if this is the best way to do it - .... 
         
        //get the pagination right
-       $this->limit = $this->router->get_arg_value( 'limit' , 200 );
+       $this->limit = $this->router->get_arg_value( 'limit' , 20 );
 
        $start = ( $this->current_page - 1 ) * $this->limit;
         
@@ -133,7 +133,7 @@ class Feed extends Component_Controller {
   
       private function get_pages( $limit ){
         
-        $total_posts = $this->Posts_model->get_total_posts();
+        $this->data['total_posts'] = $total_posts = $this->Posts_model->get_total_posts();
         
         $pages = ceil( $total_posts / $limit );
         
@@ -151,7 +151,6 @@ class Feed extends Component_Controller {
             
         //make sure there's no negative page
         if( $start < 0 ) redirect( $this->get_new_url( 'page' , 1 ) );
-        
         
         return $pages;
           
@@ -276,7 +275,7 @@ class Feed extends Component_Controller {
 	
 	public function search(){
   	
-    $q = $this->input->get('term');
+    $this->data['term'] = $q = $this->input->get('term');
     
     $this->data['posts'] = $this->_format( $this->Posts_model->search_posts( $q ) );
 

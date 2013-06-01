@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 
-/*  var_dump($post); */
+  //var_dump($post);
 ?>
 
 
-	<a href="<?php echo $post->source; ?>" class="wrapper" >
+	<a href="<?php echo $post->source; ?>" class="wrapper" data-src="<?php echo reset( $post->thumbnails ); ?>">
 	 
 	 <img src="<?php echo end( $post->thumbnails ); ?>" />
 	 

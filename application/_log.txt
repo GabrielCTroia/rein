@@ -32,11 +32,29 @@ TO DO:
 
 - TO DO A STANDARD IN THE URL ROUTING - 1st segment = PAGE(the main controller), 2nd segment = COMPONENT(the module controller), 3rd segment = METHOD(THE components controller method), 4th = ARGUMENTS
 
+- TO DO - design - have a button on the right bottom corner to drag the post and make it important! on more than just one grid
+
 -----------------------------------------------------------------------------------------
+
+Log started - Apr 08 2013, 06:00PM                                          GABRIEL
+  
+  - Composite Primary Keys solved on users_posts_services
+  
+  - max id on instagram
+  
+  - fluid grid - looks better 
+
+Log ended - Apr 11 2013,
+ 
+---------
 
 Log started - Apr 05 2013, 06:00PM                                          GABRIEL
 
-  -
+  - search 
+  
+  - order by Favorited Date and Collected Date (not working perfectly though)
+  
+  - Filter by service and category - need to filter by tags too and many other stuff
   
 Log ended - Apr 05 2013,
  

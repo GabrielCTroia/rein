@@ -56,7 +56,7 @@
     
 <!--     <footer class="must-footer sticky-footer"> -->
   
-      <div class="supersized"></div>
+<!--       <div class="supersized"></div> -->
     
     </footer>
 	 
@@ -75,8 +75,9 @@
     <script>
       
       Shadowbox.init({
-          handleOversize: "drag"
-         ,overlayColor: "#fff"
+          handleOversize  : "drag"
+         ,overlayColor    : "#fff"
+         ,modal           : true
       });
 
 		</script>	

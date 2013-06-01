@@ -660,10 +660,10 @@ Class Posts_model extends CI_Model {
 		$or_like = array();
 		
 		//THEY ARE ALL CASE INSENSTIVE
-		$or_like['UPPER(p.caption)'] = strtoupper( $q );
-		$or_like['UPPER(p.value)'] = strtoupper( $q );
-		$or_like['UPPER(p.tags)'] = strtoupper( $q );
-		$or_like['UPPER(p.category)'] = strtoupper( $q );
+		$or_like['UPPER(p.caption)'] 			= strtoupper( $q );
+		$or_like['UPPER(p.value)'] 				= strtoupper( $q );
+		$or_like['UPPER(p.tags)'] 				= strtoupper( $q );
+		$or_like['UPPER(p.category)'] 		= strtoupper( $q );
 		$or_like['UPPER(s.service_name)'] = strtoupper( $q );
 		
 		$query_specs['or_like'] = $or_like; 
@@ -674,18 +674,19 @@ Class Posts_model extends CI_Model {
   		
 		}
 		
+		$this->db->having( 'ups.FK_u_id' , $this->user_id );
+		
 		if( empty( $query_specs['limit'] ) OR $query_specs['limit'] > 20 ) 
-      $query_specs[ 'limit' ] = 20;
+   	   $query_specs[ 'limit' ] = 20;
 		
 		$this->db->limit( $query_specs['limit'] );
-  	
-  	
-    $this->db->where( 'ups.FK_u_id' , $this->user_id );
-  	$this->db->group_by( 'ups.FK_p_id' ); // this shit need to be handled
-  	
+			
     $query = $this->db->get();
+  
+  	//$this->db->group_by( 'ups.FK_p_id' ); // this shit need to be handled
 		
 		if( $query->num_rows() ) {
+
 			//free the result
 			$result = $query->result();
 			
@@ -698,7 +699,6 @@ Class Posts_model extends CI_Model {
 		
 		return false;
 
-  	
 	}
 	
 

@@ -10,7 +10,7 @@
   			//so there needs to be a conversion mad					
   			if ( is_array( $post ) ) $post = (object) $post; ?>
       
-      <div class="item layout-<?php echo $post->service_name; ?> row" >  
+      <div class="item layout-<?php echo $post->service_name; ?> row">  
         
   		    <?php	include( __DIR__ . '/templates/' . $post->template . '.php' ); ?>
   		

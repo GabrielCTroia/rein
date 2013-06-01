@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
-  <header> 
+  <header class="clearfix"> 
     		  
     <form action="<?php echo $this->router->new_method( 'search' ); ?>" class="navbar-form pull-left">
       
-      <input type="text" class="search-query" name="term" placeholder="Search">
+      <input type="text" class="search-query" name="term" placeholder="<?php echo ( !empty($term) ) ? $term : 'Search'?>">
       
     </form>		    		  
     		  
@@ -70,5 +70,18 @@
       </li>  
 
     </div>
-    
+
   </header>
+  
+  <div class="row">
+  
+  	<h4 class="span3">
+
+  		
+  		<?php if( $this->router->method == 'search' ): ?>
+  			Total Posts: <?php echo $total_posts; ?> 
+  		<?php endif; ?>
+  		
+  	</h4>
+  	
+  </div>

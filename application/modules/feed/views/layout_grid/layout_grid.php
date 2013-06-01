@@ -4,7 +4,7 @@
   	
   	<?php if( empty( $posts ) ) : ?>
     
-      there are no posts
+      There are no posts.
     
     <?php else : ?>			
 
@@ -19,7 +19,6 @@
         <div class="thumb template-<?php echo $post->template; ?> span3">  
           <?php //var_dump( $post ); ?>  
     		  <?php	include( __DIR__ . '/templates/default.php' ); ?>
-    		
         </div>
         
       <?php endforeach; ?>
