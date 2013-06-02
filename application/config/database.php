@@ -57,7 +57,7 @@ switch ( $_SERVER['SERVER_NAME'] ) {
     $db['default']['hostname'] = 'localhost';
     $db['default']['username'] = 'sdi_rein';
     $db['default']['password'] = 'liberty12345';
-    $db['default']['database'] = 'sdi_rein';
+    $db['default']['database'] = 'sdi_rein_beta';
     $db['default']['dbdriver'] = 'mysql';
 
   break;
@@ -74,7 +74,7 @@ switch ( $_SERVER['SERVER_NAME'] ) {
 }  
 
 
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbdriver'] = 'mysql'; //changed from mysql
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;

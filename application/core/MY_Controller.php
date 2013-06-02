@@ -6,7 +6,7 @@ require APPPATH."third_party/MX/Controller.php";
 
 class MY_Controller extends MX_Controller {
   
-    /* cache the log state */
+  /* cache the loged in state */
   public $logged_in = false;
   
   
@@ -17,10 +17,23 @@ class MY_Controller extends MX_Controller {
   //cache all the loaded modules
   protected $modules = array();
   
+  //cache the URL segments as array and pass them to the View for when it's needed 
+  protected $segments = array();
+  
+  
   public function __construct(){
     
     parent::__construct();
+    
+    
+    //initialize the ROUTER
+     if( !$this->router->curr_page ){
       
+      //make sure it's only called once
+       $this->router->init();  
+     }
+    
+    
     //set the logged in state here and for ever
     if( $this->_check_authentication() ) {
       
@@ -35,11 +48,14 @@ class MY_Controller extends MX_Controller {
     /* 
 		 * load the segments in any page starting from the component 
      * 	
+     NOT USED ANYMORE
 		*/
-		$this->url_params = $this->uri->uri_to_assoc(1);
+		$this->data['segments'] = $this->url_params = $this->uri->uri_to_assoc(1); 
     
     
     $this->data['modules'] =& $this->modules;
+    
+    $this->data['classes'] = null;
   }
   
   	
@@ -48,8 +64,6 @@ class MY_Controller extends MX_Controller {
    */  
   protected function _check_authentication() {
   			
-/*   	 var_dump($this->session->userdata( 'logged_in' )); */
-  	
   	/* 
   	 * load the user model 
   	 */		
@@ -88,7 +102,7 @@ class MY_Controller extends MX_Controller {
   	
   	if( !$module ){
     	
-      return;
+      return false;
       	
   	}
   	
@@ -98,14 +112,21 @@ class MY_Controller extends MX_Controller {
     	
   	}
   	
-  	$this->modules[ $module ] = Modules::run( $module . $method , $params );
+  	$this->modules[$module] = Modules::run( $module . $method , $params );
   	
   	if( $return ) 
-  	 return $this->modules[ $module ];
+  	 return $this->modules[$module];
   	
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	/* NEEDS TO BE DELETED */
   
   /* this needs to be written somewhere else - UTIL or something 
    * 
@@ -113,7 +134,7 @@ class MY_Controller extends MX_Controller {
    * @type - var you wish to turn it into
    * @var - the var you wish to convert
   */
-  private function force_datatype( $type_var , $var ){
+  protected function force_datatype( $type_var , $var ){
     
     switch( gettype( $type_var ) ){
       
@@ -157,21 +178,15 @@ class MY_Controller extends MX_Controller {
   */
 	public function get_url_param( $param , $default = null ){
   	  	 	
-  	if( isset( $this->url_params[ $param ] ) ) {
+  	if( !empty( $this->url_params[ $param ] ) ) {
     	
       if( $param === 'redirect' ){
         
-        return str_replace( '-' , '/' , $this->url_params[$param] );
+        return str_replace( '-' , '/' , $this->url_params[ $param ] );
         
       }
-      
-      if( $this->url_params[$param]  ){
-        
-        return $this->force_datatype( $default , $this->url_params[$param] );	
-        
-      }
-               
-      return $default;
+  
+      return $this->force_datatype( $default , $this->url_params[ $param ] );	
     	
   	}
   	 

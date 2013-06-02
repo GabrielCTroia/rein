@@ -8,11 +8,14 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_behance extends Fetch_model{
+class Fetch_behance extends Fetch_class{
   
   protected $service_name = "behance";
+  
+  //set the post category 
+  protected $post_category = 'projects';
   
   /* $PARTICULAR VARS */
   
@@ -25,7 +28,7 @@ class Fetch_behance extends Fetch_model{
     
     //instantiate the api object
     $this->api = new Be_Api( $this->consumer_key , $this->consumer_secret );
-    
+
   }
   
   /* 
@@ -33,7 +36,7 @@ class Fetch_behance extends Fetch_model{
    * @count - number of posts to fetch
    */
   function fetch( $count = 20 ){
-
+    
     $this->api->setAccessToken( $this->access_token );    
      
 /*     var_dump($this->api->getUserAppreciations( $this->fgn_user_id ));  */
@@ -62,31 +65,28 @@ class Fetch_behance extends Fetch_model{
 		date_default_timezone_set('America/New_York');
 
 		foreach( $posts as $post ){
-      		
-		  $formatted[] = array(
+					
+			$param = array();
+		  
+		  
+/* 		abstract_format( $p_fgn_id , $created_date , $favorited_date , $value , $source , $tags = array() , $caption , $thumbnails = array(),  $param ) */
 
-		      'post_foreign_id'  => format_foreign_id( $post->project->id , $this->service_id )
-  			
-  			, 'created_date'     => date( $date_format, $post->project->created_on )
-  			, 'favorited_date'   => date( $date_format, $post->timestamp )
-  			, 'status'           => 'active'
-  			, 'value'            => end( $post->project->covers )
-  		  , 'source'           => $post->project->url
-  			
-  			, 'owner'            => json_encode( $post->project->owners )
-  			, 'caption'          => $post->project->name
   		
-  			, 'param'            => '{
-      				  "post_type" 	   : "appreciated"
-      				, "tags"   			   : "' . $post->project->fields[0] .'"
-      				, "thumbnail"      : "' . end( $post->project->covers ) . '"
-      				, "fields"         : "' . implode( ',' ,  $post->project->fields ) . '"
-        }'
-        
-		  );
-		
+		  
+			$formatted[] = $this->abstract_format( 
+          			       format_foreign_id( $post->project->id , $this->service_id )
+          			     , date( $date_format, $post->project->created_on )
+          			     , date( $date_format, $post->timestamp )
+          			     , end( $post->project->covers )
+          			     , $post->project->url
+          			     , $post->project->fields //array
+          			     , addslashes( $post->project->name ) 
+          			     , (array)$post->project->covers
+          			     , $param
+        			   );				
+          			   
 		}
-
+		
 		return $formatted;
     
   }

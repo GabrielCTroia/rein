@@ -56,7 +56,7 @@ Class Util extends CI_Model {
 	/* 
 	 * returns the same url structure(same params) with different values 
 	 */
-	public function get_new_url( $segments = array() , $param , $new_val ){
+	public function get_new_url( $segments = array() , $param , $new_val ){   
        
     $segments[$param] = $new_val;   
        

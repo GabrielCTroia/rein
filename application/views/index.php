@@ -16,27 +16,24 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-  
-    <style>
-      body {
-          padding-top: 60px;
-          padding-bottom: 40px;
-      }
-    </style>
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+    
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     
     <link rel="stylesheet" type="text/css" href="/css/plugins/shadowbox-3.0.3/shadowbox.css">
     
+    <link rel="stylesheet" type="text/css" href="/css/plugins/supersized-3.2.1/supersized.core.css">
+    
+    
 		<link rel="stylesheet" href="/css/styles.css" />
 		
-		<script src="/javascript/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
   </head>
-  <body>
-    
+  <body class="page-<?php echo $this->Pager_model->name(); ?>">
+  
     <div class="all">
-    
+      
       <header class="must-header">   
   
         <div class="container">
@@ -47,26 +44,26 @@
       
       </header>			
     
-      <section class="must-page page-<?php echo $this->Pager_model->name() ?>">
+      <section class="must-page">
       
         <?php $this->load->view( $this->Pager_model->url() ); ?>			
         
       </section>
       
-      <div class="push"></div>
+<!--       <div class="push"></div> -->
       
-    </div>
+    </div><!-- /.all -->
     
-    <footer class="must-footer sticky-footer">
+<!--     <footer class="must-footer sticky-footer"> -->
   
-      <div class="container">
-    
-      </div><!-- eof .container -->
+<!--       <div class="supersized"></div> -->
     
     </footer>
-			
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/javascript/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+	 
+	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/javascript/vendor/jquery-1.9.1.min.js"><\/script>')</script>		
+  
+    <script src="/javascript/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   
     <script src="/javascript/vendor/bootstrap.min.js"></script>
   
@@ -74,12 +71,16 @@
     <script src="/javascript/main.js"></script>		
     
     <script type="text/javascript" src="/javascript/shadowbox-3.0.3/shadowbox.js"></script>
-    <script type="text/javascript">
-    Shadowbox.init({
-        handleOversize: "drag",
-        modal: true
-    });
-    </script>		
-			
+    
+    <script>
+      
+      Shadowbox.init({
+          handleOversize  : "drag"
+         ,overlayColor    : "#fff"
+         ,modal           : true
+      });
+
+		</script>	
+    	
 	</body>
 </html>

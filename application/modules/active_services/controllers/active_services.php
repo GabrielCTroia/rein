@@ -1,52 +1,114 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Active_services extends MY_Controller {
+require_once( MODULES_PATH . 'Component_Controller.php' );
 
+class Active_services extends Component_Controller {
+
+  //cache the total active services
+	private $total_services = array();
+	
+	//cache the total activated services by the user
+	private $active_services = array();
+	
 	
 	function __construct() {
 	
 		parent::__construct();
 		
-		$this->load->model( 'Services_model' , '' , TRUE );
+		$this->load->model( 'Services_model' , '' , true );
+		
+		$this->load->model( 'Access_model' , '' , true );
+    
+    $this->Access_model->init( $this->userdata->u_id );
+
+		
+		$total_services = $this->Services_model->get_active_services();
+		
+		$active_services = $this->Access_model->get_users_accesses();
+				
+		//really don;t like that I have to use to foreachs but it's fine for now
+		if( $active_services && $total_services){
+		
+  		foreach( $active_services as $active ){
+        
+        $active->active = 'true';
+        
+        foreach( $total_services as &$total ){
+          
+          if( $total->s_id == $active->s_id ){
+            
+            $total = $active;
+            
+          }
+        
+        }
+        
+      }
+      
+    }
+    
+    $this->total_services = $total_services;
+		
+		$this->active_services = $active_services;
 		
 	}  
-
-
-  function widget(){
-  
+	
+	
+	private function _json_encode( $val ){
+  	
+  	return json_encode( $val );
+  	
+	}
+	
+	/* if by_user = true than return all the active services of the user */
+  function widget( $by_user = false ){
+    
   	//get the active services
-  	$this->data['active_services'] = $this->Services_model->get_active_services();
-  	
-  	
-  	//still need to do a difference between the active and the users active and show them properly
-  	// I guess I'll go with a loop - it's fine for now
-/*
-  	foreach( $active_services as &$service ){
-    	
-    	$service = $service->s_id;
-    	
-  	}
+  	$this->data['active_services'] = $this->raw( $by_user );
 
-    $user_services = explode( "," , $this->userdata[0]->{'GROUP_CONCAT( s_id )'} );	
-  	
-  	$data['active_services'] = array_diff( $active_services , $user_services );
-*/
 
     $this->data['success'] = $this->get_url_param( 'success' );
-    
-    
 
-    $this->load->view('default' , $this->data );
+
+    $this->load->view('active_services_default' , $this->data );
+    
+    
+    parent::widget();
   
   }
   
   
   //this return just the datas - no template
-  function raw(){
+  function raw( $by_user = false ){
+  
+    if( $by_user ){
+        
+      return $this->active_services;
+      
+    }
     
-    return $this->Services_model->get_active_services();    
+    return $this->total_services;
     
   }
+  
+  
+  
+  function deactivate(){
+      
+    if( $this->Access_model->deactivate_service( $this->router->get_arg_value( 'service' ) ) ){
+      
+      $this->load->model( 'Posts_model' , '' , true );
+    
+      $this->Posts_model->init( $this->userdata->u_id );
+      
+      $this->Posts_model->deactivate_posts( $this->router->get_arg_value( 'service' ) );
+      
+      
+    }
+    
+    //redirect
+    
+  }  
 
 
   	

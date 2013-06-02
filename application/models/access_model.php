@@ -93,7 +93,7 @@ Class Access_model extends CI_Model {
   * updates it if finds duplicate duplicate 
   * @access = api_class->format_api_return() in /models/api_class.php
   */
-	function set_access( $access ) {
+	function set_access( $access = array() ) {
     
     if( empty( $access['access_token'] ) ){
       
@@ -110,7 +110,12 @@ Class Access_model extends CI_Model {
   	$sql = 'INSERT INTO ' . $this->base_table
   	     . ' ( a_id , u_id , s_id , access_token , access_token_secret , access_status , fgn_user_id )'
   	     . " VALUES( '$a_id' , '{$this->user_id}' , '{$this->service_id}' , '" . $access['access_token'] . "' , '" .$access['access_token_secret'] . "' , 'active' , '" . $access['fgn_user_id'] . "' )"
-  	     . ' ON DUPLICATE KEY UPDATE a_id = a_id';  	   
+  	     . ' ON DUPLICATE KEY UPDATE ' 
+  	                       . ' access_status = \'active\' , '
+  	                       . ' access_token = \'' . $access['access_token'] . '\' , '
+  	                       . ' access_token_secret = \'' . $access['access_token_secret'] . '\' , '
+  	                       . ' updated_date = NOW()'
+  	     ;  	   
 
     if( !$this->db->query( $sql ) ){
       
@@ -128,16 +133,17 @@ Class Access_model extends CI_Model {
 
 	}
 	
-	 //returns all the services that are active for the USER
-/*
-	function get_active_accesses() {
-		$this->db->select( 's_id' );
-		$this->db->from( $this->base_table );
-		$this->db->where( 'u_id' , $this->user_id );
-		$this->db->where( 'service_status' , 'active' );
-		$this->db->order_by( 'service_id' );
+	//returns all the services that are active for the USER
+	function get_users_accesses( $select = 'a.s_id , s.service_name' ){
 		
-		$query = $this->db->get( );
+		$this->db->select( $select );
+		$this->db->from( $this->base_table . ' AS a' );
+		$this->db->join( 'services AS s' , ' s.s_id = a.s_id ' );
+		$this->db->where( 'a.u_id' , $this->user_id );
+		$this->db->where( 'a.access_status' , 'active' );
+		$this->db->order_by( 's.service_name' );
+		
+		$query = $this->db->get();
 		
 		if( $query->num_rows() ) {
 			//free the result
@@ -151,7 +157,6 @@ Class Access_model extends CI_Model {
 		return false;
 
 	}
-*/
 	
 	
 	
@@ -209,6 +214,35 @@ Class Access_model extends CI_Model {
 		return false;
 		    
   }	
+	
+	
+	
+	function deactivate_service( $service_name = null ){
+  	
+  	if( !$service_name ){
+    	
+    	//error
+    	
+    	return false;
+    	
+  	}
+  	
+  	$sql = ' UPDATE ' . $this->base_table . ' AS a '
+  	     . ' JOIN services AS s ON s.s_id = a.s_id '
+  	     . ' SET access_status = \'inactive\' '
+  	     . ' WHERE a.u_id = ' . $this->user_id
+  	     . ' AND s.service_name = ' . '\'' . $service_name . '\''
+  	     ;
+  	     
+  	if( !$this->db->query( $sql ) ){
+    	
+    	return false;
+    	
+  	}     
+  	
+  	return true;
+  	     
+	}
 	
   
 }

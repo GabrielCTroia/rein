@@ -375,6 +375,8 @@ function __autoload( $class = 'util' ){
  }
 */
 
+date_default_timezone_set('America/New_York');
+
 ini_set('display_errors',1);
 
 /* End of file config.php */

@@ -1,0 +1,15 @@
+DISCLAIMER
+Add all the known errors here
+
+--------------------------------------------
+
+
+
+
+- when there is no post, it throws an uncaught error 
+
+- when searching, pagination is fucked up too
+
+- when searching, it searches in all the database instead of searching only for the current user
+
+- no view (lightbox) working

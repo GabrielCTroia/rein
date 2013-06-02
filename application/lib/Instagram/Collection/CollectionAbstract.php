@@ -49,6 +49,7 @@ abstract class CollectionAbstract implements \IteratorAggregate, \ArrayAccess, \
      * @access public
      */
     public function __construct( $raw_data = null, \Instagram\Core\Proxy $proxy = null ) {
+        
         if ( $raw_data ) {
             $this->setData( $raw_data );
         }

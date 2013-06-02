@@ -16,7 +16,13 @@ class Fetch extends User_Controller {
  /* 
   * define the page url  
   */
-  private static $page_url = "/fetch"; 
+  private $page_url = "/fetch"; 
+  
+  private $service_name = null;
+  
+  private $service_id = null;
+  
+  
 
   function __construct() {
 	
@@ -55,26 +61,26 @@ class Fetch extends User_Controller {
     //load the services model
     $this->load->model( 'Services_model' , '' , false );       
               	
-    $service_name = $this->get_url_param( 'service' , '' );
+    $this->service_name = $this->get_url_param( 'service' , '' );
 
   	//do a db check before if the service exists and redirect if it doesn't or return an error mesage
-  	if( !$service_name || !$service_id = $this->Services_model->get_service_by( 'name' , $service_name , 's_id' ) ) {
+  	if( !$this->service_name || !$this->service_id = $this->Services_model->get_service_by( 'name' , $this->service_name , 's_id' ) ) {
     	
-    	$data['error_msg'] = "No posts to show for " . $service_name;
+    	$data['error_msg'] = "No posts to show for " . $this->service_name;
           	
   	} else {   
 
-      $service_id = $service_id->s_id;
+      $this->service_id = $this->service_id->s_id;
   	 
       //load the fetch model specific to the service
-    	$this->load->model( "services/$service_name/Fetch_$service_name" , 'fetch_service' , false );
+    	$this->load->model( "services/$this->service_name/Fetch_$this->service_name" , 'fetch_service' , false );
     	
     	/* load the access model */
       $this->load->model( 'Access_model' );
     	
-    	if( !$access = $this->Access_model->get_access( $this->session->userdata['u_id'] , $service_id ) ) {
+    	if( !$access = $this->Access_model->get_access( $this->session->userdata['u_id'] , $this->service_id ) ) {
     	
-        $data['error_msg'] = "No access token in our Database for " . $service_name;
+        $data['error_msg'] = "No access token in our Database for " . $this->service_name;
     	
     	} else {
       	
@@ -92,13 +98,7 @@ class Fetch extends User_Controller {
     
         	} else {
           	
-          	/*FORMAT & INSERT the FETCHED datas*/
-          	
-            /* load the format class */
-/*             $this->load->model( "services/$service_name/Format_$service_name" , 'format_service' , false ); */
-            
-            //if to show 
-                        
+          	/* INSERT the FORMATED FETCHED data */
             if( $this->get_url_param( 'show' ) == 'true' ){            
               
               $this->Components_model->init( 'feed' );
@@ -107,7 +107,7 @@ class Fetch extends User_Controller {
               
               foreach( $data['posts'] as &$post ){
                 
-                $post['service_name'] = $service_name;
+                $post['service_name'] = $this->service_name;
                   
               }  
               
@@ -117,23 +117,8 @@ class Fetch extends User_Controller {
 
               
             } else {
-              
-              //insert
-              $this->load->model( "services/$service_name/Posts_$service_name" , 'posts_service' , false );
-              
-              if( $this->posts_service->init( $this->session->userdata['u_id'] , $service_id ) === false ){
-                
-                $data['error_msg'] = $this->posts_service->error_msg;
-                
-              } else {
-                
-                if( !$this->posts_service->insert( $fetched_data) ){
-                  
-                  $data['error_msg'] = $this->posts_service->error_msg;
-                  
-                }
-                
-              }
+                            
+              $this->_insert( $fetched_data );
               
             }
             	
@@ -157,24 +142,35 @@ class Fetch extends User_Controller {
 
 	}
 	
-	
-	
-	
- /*
-  * STEALTH - Ghost Component
-  */
-	public function stealth( $service_name = NULL ){
-  	
-    $this->_insert( $data );
-  	
-	}
 	 
 	 /* 
 	  * INSERT all the fetched datas into the db 
 	  */
-	 private function _insert( $data , $service_name ){
+	 private function _insert( $data ){
   	 
-/*   	 $data['posts'] = $this->format_service->format_posts( $data ); */
+  	 //load the model
+  	 $this->load->model( "services/$this->service_name/Posts_$this->service_name" , 'posts_service' , false );
+  	 
+  	 
+  	 if( $this->posts_service->init( $this->userdata->u_id , $this->service_id ) === false ){
+                
+        $data['error_msg'] = $this->posts_service->error_msg;
+        
+      } else {
+        
+        if( !$this->posts_service->insert( $data ) ){
+          
+          $data['error_msg'] = $this->posts_service->error_msg;
+          
+        } else {
+          
+          //insert the owner 
+          
+          //but actually all of this should be stored in a procedure, so if the mysql server dies in the middle of insertioin than we are still fine  
+          
+        }
+        
+      }  	 
   	 
 	 }
 	
@@ -182,7 +178,7 @@ class Fetch extends User_Controller {
 	 * DEBUG - Component 
 	 */
 	 
-	 public function debug( $service_name = NULL  ){
+	 public function debug(){
   	 
     /*this link should look like:
       

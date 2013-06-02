@@ -8,17 +8,17 @@
 */
 
 //load the Fetch_model
-require_once( APPPATH . 'models/fetch_model.php' );
+require_once( APPPATH . 'models/fetch_class.php' );
   
-class Fetch_instagram extends Fetch_model{
+class Fetch_instagram extends Fetch_class{
   
-  //should come from the DB but will do for now
-  protected $service_id = 2;
-  
-  //should come from the DB but will do for now
   protected $service_name = "instagram";
   
-
+  //set the post category 
+  protected $post_category = 'pictures';
+  
+  
+  
   public function __construct(){
     
     parent::__construct();
@@ -42,23 +42,19 @@ class Fetch_instagram extends Fetch_model{
     // Right now if one of this condition is not fulfiled the server return an error and is not right
     // If those are not working it should let me reconnect
     
-/*
-    $loader = new SplClassLoader( 'Instagram', dirname( APPPATH . 'libraries/PHP-Instagram-API-master/Instagram' ) );
-		$loader->register();
-    
-    $instagram = new Instagram\Instagram;
-    
-		$instagram->setAccessToken( $this->access_token );
-*/
     $this->api->setAccessToken( $this->access_token ); 
 		
 		$param_arr = array(
-				'count'		=> $count			       	
+				'count'		        => 100			       	
+/* 		  , 'min_id'     => '431930742046340822_31888980' */
+				
     );
       
     $current_user = $this->api->getCurrentUser();
-
-    return  $this->format( $current_user->getLikedMedia() );		
+      
+/*     var_dump( $this->api->MediaCollection->getNext() );   */
+      
+    return  $this->format( $current_user->getLikedMedia( $param_arr ) );		
     
   }
   
@@ -84,38 +80,44 @@ class Fetch_instagram extends Fetch_model{
 		
 		foreach( $posts as $index=>$post ) {	
 		
-  		$formatted[] = array(
-  			
-  			  'post_foreign_id'  => format_foreign_id( $post->id , $this->service_id )  			
-  			 
-  			, 'created_date'   => date( $date_format, $post->created_time )
-  			, 'favorited_date' => date( $date_format, $post->created_time )
-  			, 'status'         => 'active'
-  			, 'value'          => $post->images->standard_resolution->url
-  		  , 'source'         => $post->link
-  		  , 'caption'        => 'no caption for now'
-  		  
-  		  , 'owner'          => json_encode( array( 
-  		                            'user_id'       => $post->user->id
-  		                           ,'user_name'     => $post->user->username
-  		                           ,'profile_image' => $post->user->profile_picture 
-  		                           ,'user_bio' 		  => $post->user->bio
-  		                        ) )
-  		  
-  			, 'param'          => '{
-              				  "post_type" 	  : "liked"
-              				, "filter"   		  : "' . $post->filter . '"
-              				, "tags"   			  : "' . implode( ',' , $post->tags ) .'"
-        			}'
-  			
-  		);
-  		
-		}
+		  $param = array(
+		              'filter'    => $post->filter
+		            , 'location'  => $post->location
+              );
 
+       /* abstract_format( $p_fgn_id , 
+		                       $created_date , 
+		                       $favorited_date , 
+		                       $value , 
+		                       $source , 
+		                       $tags = array() , 
+		                       $caption , 
+		                       $thumbnails = array() ,  
+		                       $param ) */  
+		  
+			$formatted[] = $this->abstract_format( 
+          			       format_foreign_id( $post->id , $this->service_id )
+          			     , date( $date_format, $post->created_time )
+          			     , date( $date_format, $post->created_time ) //the whole list is in order of the likes so I can just increase this with a 1 + current timestamp
+          			     , $post->images->standard_resolution->url
+          			     , $post->link
+          			     , $post->tags // array
+          			     , '' 
+          			     , (array)$post->images->thumbnail->url
+          			     , $param
+        			   );		 
+		}
+		
+		
+/*
+		var_dump( $formatted );
+		
+		exit();
+*/
+		
 		return $formatted;
     
-  }
-  
+  }  
   
 }  
 

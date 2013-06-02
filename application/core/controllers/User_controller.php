@@ -4,7 +4,6 @@
    This controller extends from the CI controller but provides some User helpful methods like: _logged_in
   */
 
-
 class User_Controller extends MY_Controller {
 
   /*
@@ -22,7 +21,10 @@ class User_Controller extends MY_Controller {
     	$this->logout();
     	
     }
-  		
+  	
+    //bring in the active services module
+  	$this->load_module( 'active_services' , 'raw' , 'true' );
+
   }
   	
   
